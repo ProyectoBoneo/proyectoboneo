@@ -4,7 +4,7 @@
 
 ###1) Clonar el repositorio
 
-    git clone https://bitbucket.org/PFRamiroAylenAlvaro/code
+    git clone https://github.com/ProyectoBoneo/proyectoboneo
 
 ###2) Crear un virtualenv
 
