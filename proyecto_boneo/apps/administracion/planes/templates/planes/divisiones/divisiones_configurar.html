@@ -1,0 +1,51 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Configurar Divisiones{% endblock %}
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'planes/divisiones/divisiones_configurar.js' %}"></script>
+    <script>
+        $(function(){
+            var controller = new DivisionesConfigurarController();
+        });
+    </script>
+{% endblock %}
+{% block content %}
+    <h3>Divisiones</h3>
+    <form method="post" action=".">
+        {% csrf_token %}
+        <div class="formfields">
+            <div id="cantidad_anios" class="formfield">
+                {{ cantidad_anios_form.cantidad_anios.label_tag }}
+                {{ cantidad_anios_form.cantidad_anios }}
+                {{ cantidad_anios_form.cantidad_anios.errors }}
+            </div>
+        </div>
+        <div id="cantidad_divisiones_por_anio" class="margin-bottom">
+            <table class="table" id="forms_table">
+                <thead>
+                    <tr>
+                        <th>Año</th>
+                        <th>Cantidad divisiones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in cantidad_divisiones_formset %}
+                        <tr class="dynamic-form">
+                            <td class="line_number">{{ forloop.counter }}</td>
+                            <td class="hidden">{{ form.anio }}</td>
+                            <td class="hidden">{{ form.DELETE }}</td>
+                            <td>{{ form.cantidad_divisiones }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                {{ cantidad_divisiones_formset.management_form }}
+            </table>
+        </div>
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check-circle"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:divisiones' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

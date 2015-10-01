@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{%  block title %}Proyecto Boneo{%  endblock %}</title>
+
+    {% include 'utils/common_styles.html' %}
+
+    {% include 'utils/common_scripts.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/aula_virtual/base.css' %}">
+
+    {% block styles %}
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
+
+    <script>
+        $(function() {
+            getMainController().configure_controls();
+        });
+    </script>
+</head>
+<body>
+    <div class="page-header">
+        <span class="page-header-title"><i class="fa fa-book fa-2x valign-middle"></i> Proyecto Boneo</span>
+    </div>
+    <div id="content">
+        {% block content %}
+        {%  endblock %}
+        {% include 'typeahead/add_model_modal.html' %}
+    </div>
+</body>
+</html>

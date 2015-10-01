@@ -1,0 +1,7 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Instancias cursado{% endblock %}
+{% block content %}
+    <h3>Instancias de cursado generadas correctamente</h3>
+    <p>Las instancias de cursado para el actual ciclo lectivo han sido generadas correctamente</p>
+    <a class="btn btn-default" href="{% url 'administracion:divisiones' %}">Volver</a>
+{% endblock %}

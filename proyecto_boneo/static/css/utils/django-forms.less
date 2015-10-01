@@ -1,0 +1,30 @@
+@import "colors";
+
+.errorlist {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    margin: 0 0 0 0.4em;
+
+    li {
+        color: @error;
+    }
+}
+
+p, span{
+    &.with_errors{
+        color: @error;
+    }
+}
+
+input, textarea {
+    &.with_errors {
+        border: 1px solid @error !important;
+    }
+}
+
+select {
+    &.with_errors {
+        outline: @error solid 1px;
+    }
+}

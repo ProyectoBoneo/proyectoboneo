@@ -1,0 +1,15 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Eliminar alumno{% endblock %}
+{% block content %}
+    <h3>Eliminar alumno</h3>
+    <form method="post" action=".">
+        {% csrf_token %}
+        <p>¿Desea eliminar el alumno "{{ object }}"?</p>
+        <button type="submit" class="btn btn-danger">
+            <i class="fa fa-trash"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:alumnos' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

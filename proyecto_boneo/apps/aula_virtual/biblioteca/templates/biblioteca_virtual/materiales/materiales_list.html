@@ -1,0 +1,43 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Materiales{% endblock %}
+{% block content %}
+    <h3>Materiales</h3>
+    <form action="." method="get" class="margin-bottom-2x">
+        <div class="formfields">
+            <div class="inline">
+                <div class="formfield">
+                    {{ filter_form.descripcion.label_tag }}
+                    {{ filter_form.descripcion }}
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Filtrar" class="button"/>
+    </form>
+    <a class="button" href="{% url 'nuevo_material' %}">Nuevo material</a>
+    {% if object_list %}
+        <table class="datalist">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Descripción</th>
+                    <th>Archivo</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for material in object_list %}
+                    <tr>
+                        <td>{{ material.id }}</td>
+                        <td>{{ material.descripcion }}</td>
+                        <td>{{ material.nombre_archivo }}</td>
+                        <td><a class="button" href="{% url 'editar_material' material.id %}">Editar</a></td>
+                        <td><a class="button delete" href="{% url 'eliminar_material' material.id %}">Eliminar</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay materiales que coincidan con el criterio de filtrado</p>
+    {% endif %}
+{% endblock %}

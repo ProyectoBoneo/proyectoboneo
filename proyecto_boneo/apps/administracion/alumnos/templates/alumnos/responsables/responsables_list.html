@@ -1,0 +1,57 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Responsables{% endblock %}
+{% block content %}
+    <h3>Responsables</h3>
+    <form action="." method="get" class="margin-bottom-2x">
+        <div class="form-group">
+            {{ filter_form.nombre.label_tag }}
+            {{ filter_form.nombre }}
+        </div>
+        <div class="form-group">
+            {{ filter_form.apellido.label_tag }}
+            {{ filter_form.apellido }}
+        </div>
+        <button type="submit" class="btn btn-default">
+            <i class="fa fa-filter"></i> Filtrar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:nuevo_responsable' %}">
+            <i class="fa fa-plus-circle"></i>  Nuevo responsable
+        </a>
+    </form>
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Domicilio</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for responsable in object_list %}
+                    <tr>
+                        <td>{{ responsable.dni }}</td>
+                        <td>{{ responsable.nombre }}</td>
+                        <td>{{ responsable.apellido }}</td>
+                        <td>{{ responsable.domicilio }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'administracion:editar_responsable' responsable.id %}">
+                                <i class="fa fa-edit"></i> Editar
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="{% url 'administracion:eliminar_responsable' responsable.id %}">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay responsables que coincidan con el criterio de filtrado</p>
+    {% endif %}
+{% endblock %}

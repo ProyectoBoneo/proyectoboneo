@@ -1,0 +1,106 @@
+@import "units";
+
+.LOOP-MarginAndPadding(@counter) when (@counter > 0) {
+    .LOOP-MarginAndPadding((@counter - 1));
+
+    @margin: (@unit * @counter);
+    @padding: (@unit * @counter);
+    @widthLength: (@unit * @counter);
+    @heightLength: (@unit * @counter);
+
+
+    .margin-top-@{counter}x {
+        margin-top: @margin;
+    }
+    .margin-bottom-@{counter}x {
+        margin-bottom: @margin;
+    }
+    .margin-right-@{counter}x {
+        margin-right: @margin;
+    }
+    .margin-left-@{counter}x {
+        margin-left: @margin;
+    }
+    .margin-@{counter}x {
+        margin: @margin;
+    }
+
+    .padding-top-@{counter}x {
+        padding-top: @padding;
+    }
+    .padding-bottom-@{counter}x {
+        padding-bottom: @padding;
+    }
+    .padding-right-@{counter}x {
+        padding-right: @padding;
+    }
+    .padding-left-@{counter}x {
+        padding-left: @padding;
+    }
+    .padding-@{counter}x {
+        padding: @padding;
+    }
+
+    .max-width-@{counter}x {
+        max-width: @widthLength;
+    }
+    .min-width-@{counter}x {
+        min-width: @widthLength;
+    }
+    .width-@{counter}x {
+        width: @widthLength;
+    }
+    .max-height-@{counter}x {
+        max-height: @heightLength;
+    }
+    .min-height-@{counter}x {
+        min-height: @heightLength;
+    }
+    .height-@{counter}x {
+        height: @heightLength;
+    }
+
+} .LOOP-MarginAndPadding(100);
+
+.margin-top {
+    margin-top: @unit;
+}
+.margin-bottom {
+    margin-bottom: @unit;
+}
+.margin-right {
+    margin-right: @unit;
+}
+.margin-left {
+    margin-left: @unit;
+}
+.margin {
+    margin: @unit;
+}
+.padding-top {
+    padding-top: @unit;
+}
+.padding-bottom {
+    padding-bottom: @unit;
+}
+.padding-right {
+    padding-right: @unit;
+}
+.padding-left {
+    padding-left: @unit;
+}
+.padding {
+    padding: @unit;
+}
+
+.valign-middle {
+    vertical-align: middle;
+}
+
+.valign-top {
+    vertical-align: top;
+}
+
+.valign-bottom {
+    vertical-align: bottom;
+}

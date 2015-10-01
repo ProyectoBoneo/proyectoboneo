@@ -1,0 +1,33 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Eliminación{% endblock %}
+{% block script %}
+    <script>
+    $(function($){
+        $(".hide_divs").toggle();
+    });
+    function toggle_children(id){
+        var selector = "#" + id.trim();
+        $(selector).toggle('fast');
+    }
+    </script>
+{% endblock %}
+{% block content %}
+    <h3>Error al eliminar el objeto</h3>
+    <p>No se puede eliminar el objeto {{ object }}, ya que participa en las siguientes relaciones:</p>
+    <ul class="relaciones">
+    {% for relacion in relaciones %}
+        <li>
+            <p onclick="toggle_children('{{ relacion.nombre }}')" class="rel_name">{{ relacion.nombre|capfirst }}</p>
+            {% if relacion.objetos %}
+                <div class="hide_divs width-40x" id="{{ relacion.nombre }}">
+                    <ul class="detalle_relaciones">
+                        {% for objeto_relacionado in relacion.objetos %}
+                            <li>{{ objeto_relacionado }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

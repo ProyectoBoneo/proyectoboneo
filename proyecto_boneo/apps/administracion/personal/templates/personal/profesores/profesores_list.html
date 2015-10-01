@@ -1,0 +1,57 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Profesores{% endblock %}
+{% block content %}
+    <h3>Profesores</h3>
+    <form action="" method="get" class="margin-bottom-2x">
+        <div class="form-group">
+            {{ filter_form.nombre.label_tag }}
+            {{ filter_form.nombre }}
+        </div>
+        <div class="form-group">
+            {{ filter_form.apellido.label_tag }}
+            {{ filter_form.apellido }}
+        </div>
+        <button type="submit" class="btn btn-default">
+            <i class="fa fa-filter"></i> Filtrar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:nuevo_profesor' %}">
+            <i class="fa fa-plus-circle"></i>  Nuevo profesor
+        </a>
+    </form>
+
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Legajo</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Domicilio</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profesor in object_list %}
+                    <tr>
+                        <td>{{ profesor.legajo }}</td>
+                        <td>{{ profesor.nombre }}</td>
+                        <td>{{ profesor.apellido }}</td>
+                        <td>{{ profesor.domicilio }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'administracion:editar_profesor' profesor.id %}">
+                                <i class="fa fa-edit"></i> Editar
+                            </a>
+                        </td>
+                        <td><a class="btn btn-danger" href="{% url 'administracion:eliminar_profesor' profesor.id %}">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay profesores que coincidan con el criterio de filtrado</p>
+    {% endif %}
+{% endblock %}

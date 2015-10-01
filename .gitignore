@@ -1,0 +1,5 @@
+.idea/
+*.pyc
+
+proyecto_boneo/settings/environment_overrides/active.py
+proyecto_boneo/settings/local.py

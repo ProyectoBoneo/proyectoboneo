@@ -1,0 +1,23 @@
+{% extends 'utils/bootstrap_modal.html' %}
+{% block styles %}
+    <style>
+        #observaciones_modal_input{
+            width: 100%;
+        }
+        #observaciones_modal div.modal-dialog{
+            margin-top: 25%;
+        }
+    </style>
+{% endblock %}
+{% block scripts %}
+    {% load staticfiles %}
+    <script src="{% static 'js/utils/observaciones_modal.js' %}"></script>
+{% endblock %}
+{% block modal_title %}Observaciones{% endblock %}
+{% block modal_id %}observaciones_modal{% endblock %}
+{% block contenido_modal %}
+    <textarea id="observaciones_modal_input"></textarea>
+{% endblock %}
+{% block confirm_id %}observaciones_modal_confirm{% endblock %}
+{% block cancel_id %}observaciones_modal_cancel{% endblock %}
+{% block cancel_text %}Cerrar{% endblock %}

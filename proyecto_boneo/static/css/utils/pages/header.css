@@ -1,0 +1,13 @@
+.page-header {
+  min-height: 80px;
+  background-color: cornflowerblue;
+  margin: 0;
+}
+.page-header .page-header-title {
+  padding-top: 20px;
+  padding-left: 20px;
+  color: white;
+  font-size: 28px;
+  font-family: "bumblebee";
+  display: inline-block;
+}

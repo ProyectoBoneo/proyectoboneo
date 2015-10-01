@@ -1,0 +1,10 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Eliminar profesor{% endblock %}
+{% block content %}
+    <form method="post" action="">
+        {% csrf_token %}
+        <p>¿Desea eliminar el profesor "{{ object }}"?</p>
+        <input class="button" type="submit" value="Confirmar">
+        <a href="{% url 'administracion:profesores' %}"><input class="button" type="button" value="Volver"></a>
+    </form>
+{% endblock %}

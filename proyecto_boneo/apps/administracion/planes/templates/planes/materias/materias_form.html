@@ -1,0 +1,25 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Materia{% endblock %}
+{% block content %}
+    <h3>Materia</h3>
+    <form method="post" action=".">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
+            {{ form.descripcion.errors }}
+        </div>
+
+       <div class="form-group">
+            {{ form.anio.label_tag }}
+            {{ form.anio }}
+            {{ form.anio.errors }}
+        </div>
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check-circle"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:materias' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

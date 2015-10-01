@@ -1,0 +1,12 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Instancias cursado{% endblock %}
+{% block content %}
+    <h3>Generar instancias de cursado</h3>
+    <form method="post" action=".">
+        {% csrf_token %}
+        <p>¿Desea generar las instancias de cursado del año actual?
+            Esto permitirá inscribir alumnos al nuevo ciclo lectivo</p>
+        <input class="btn btn-success" type="submit" value="Confirmar">
+        <a class="btn btn-default" href="{% url 'administracion:divisiones' %}">Volver</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Configurar profesores de materias{% endblock %}
+{% block content %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        <h2>Profesores titulares por materia</h2>
+        <div>
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check-circle"></i> Confirmar
+            </button>
+            <a class="btn btn-default" href="{% url 'administracion:divisiones' %}">
+                <i class="fa fa-arrow-circle-left"></i>  Volver
+            </a>
+        </div>
+        {% for anio in estructura_plan %}
+            <h3>{{ forloop.counter }}° Año</h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th></th>
+                        {% for division in anio.divisiones %}
+                            <th>{{ division.letra }}</th>
+                        {% endfor %}
+                    </tr>
+                    {% for materia in anio.materias %}
+                        <tr>
+                            <th>{{ materia.materia.descripcion }}</th>
+                            {% for form in materia.formset %}
+                                <td>{{ form.profesor }}</td>
+                                <td hidden="hidden">{{ form.instancia_cursado }}</td>
+                            {% endfor %}
+                            {{ materia.formset.management_form }}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    </form>
+{% endblock %}

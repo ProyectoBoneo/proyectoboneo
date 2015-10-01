@@ -1,0 +1,6 @@
+{% extends 'utils/base.html' %}
+{% block title %}Logged out{% endblock %}
+{% block content %}
+    <h3>Ha cerrado su sesión correctamente</h3>
+    <p>Puede ingresar nuevamente haciendo click <a href="{% url 'login' %}?next=/">aquí</a></p>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'utils/base.html' %}
+{% block title %}Login{% endblock %}
+{% block navbar %}{% endblock %}
+{% block username_display %}{% endblock %}
+{% block logout %}{% endblock %}
+{% block content %}
+    <div class="container width-40x">
+        <h3>Login</h3>
+        <form method='post' action='{% url 'login' %}'>
+            {% csrf_token %}
+            {% if form.errors %}
+                <p class="with_errors">Su nombre de usuario o contraseña es incorrecto/a</p>
+            {% endif %}
+            <div class="form-group">
+                <label for="id_username">Nombre de Usuario</label>
+                <input type="text" id="id_username" name="username" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="id_password">Contraseña</label>
+                <input type="password" id="id_password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type='submit' value='Ingresar' class="btn btn-default"/>
+                <a href="{% url 'password_reset' %}">¿Olvidó su contraseña?</a>
+            </div>
+
+            <input type='hidden' name='next' value='{{ next }}' />
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Materias{% endblock %}
+{% block content %}
+    <h3>Materias</h3>
+    <form action="." method="get" class="margin-bottom-2x">
+        <div class="form-group">
+            {{ filter_form.descripcion.label_tag }}
+            {{ filter_form.descripcion }}
+        </div>
+        <button type="submit" class="btn btn-default">
+            <i class="fa fa-filter"></i> Filtrar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:nueva_materia' %}">
+            <i class="fa fa-plus-circle"></i>  Nueva materia
+        </a>
+    </form>
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Desripción</th>
+                    <th>Año</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for materia in object_list %}
+                    <tr>
+                        <td>{{ materia.id }}</td>
+                        <td>{{ materia.descripcion }}</td>
+                        <td>{{ materia.anio }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'administracion:editar_materia' materia.id %}">
+                                <i class="fa fa-edit"></i> Editar
+                            </a>
+                        </td>
+                        <td><a class="btn btn-danger" href="{% url 'administracion:eliminar_materia' materia.id %}">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay materias ingresados en el sistema</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Alumno{% endblock %}
+{% block content %}
+    <h3>Alumno</h3>
+    <form method="post" action=".">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
+            {{ form.nombre.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.apellido.label_tag }}
+            {{ form.apellido }}
+            {{ form.apellido.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.dni.label_tag }}
+            {{ form.dni }}
+            {{ form.dni.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.domicilio.label_tag }}
+            {{ form.domicilio }}
+            {{ form.domicilio.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.fecha_nacimiento.label_tag }}
+            {{ form.fecha_nacimiento }}
+            {{ form.fecha_nacimiento.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.responsable.label_tag }}
+            {{ form.responsable }}
+            {{ form.responsable.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.division.label_tag }}
+            {{ form.division }}
+            {{ form.division.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check-circle"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:alumnos' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

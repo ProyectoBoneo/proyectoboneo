@@ -1,0 +1,20 @@
+.errorlist {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0 0 0 0.4em;
+}
+.errorlist li {
+  color: red;
+}
+p.with_errors,
+span.with_errors {
+  color: red;
+}
+input.with_errors,
+textarea.with_errors {
+  border: 1px solid red !important;
+}
+select.with_errors {
+  outline: red solid 1px;
+}
