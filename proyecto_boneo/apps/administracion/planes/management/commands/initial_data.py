@@ -7,6 +7,7 @@ from proyecto_boneo.apps.administracion.planes.models import Division, Instancia
 
 
 class Command(BaseCommand):
+    help = 'This command populates the database with initial data'
 
     años_plan = range(1, 6)
     cantidad_divisiones = 4
