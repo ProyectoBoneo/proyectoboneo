@@ -94,6 +94,18 @@ class Command(BaseCommand):
             profesor.crear_usuario(email)
             profesor.save()
 
+    def _assign_profesores_materias(self):
+        profesores = Profesor.objects.all()
+        for instancia_cursado in InstanciaCursado.objects.all():
+            instancia_cursado.profesor_titular = random.choice(profesores)
+            instancia_cursado.save()
+
+    def _create_inscripciones(self):
+        for alumno in Alumno.objects.all():
+            for instancia_cursado in alumno.division.instancias_cursado.all():
+                InscripcionAlumno.objects.create(alumno=alumno,
+                                                 instancia_cursado=instancia_cursado)
+
     def _create_superuser(self):
         UsuarioBoneo.objects.create_superuser('boneo', 'boneo@admin.com', 'boneo')
 
@@ -122,16 +134,20 @@ class Command(BaseCommand):
         self._load_data()
         self.stdout.write('Limpiando estado actual...')
         self._clean_current_state()
-        self.stdout.write('Creando materias de muestra...')
+        self.stdout.write('Creando materias...')
         self._create_materias()
-        self.stdout.write('Creando divisiones de muestra...')
+        self.stdout.write('Creando divisiones...')
         self._create_divisiones()
-        self.stdout.write('Creando instancias de cursado de muestra...')
+        self.stdout.write('Creando instancias de cursado...')
         self._create_instancias_cursado()
-        self.stdout.write('Creando profesores de muestra...')
+        self.stdout.write('Creando profesores...')
         self._create_profesores()
-        self.stdout.write('Creando alumnos de muestra...')
+        self.stdout.write('Creando alumnos...')
         self._create_alumnos()
+        self.stdout.write('Asignando profesores a materias...')
+        self._assign_profesores_materias()
+        self.stdout.write('Creando inscripciones...')
+        self._create_inscripciones()
         self.stdout.write('Creando super usuario boneo / boneo...')
         self._create_superuser()
         self.stdout.write('Listo :)')

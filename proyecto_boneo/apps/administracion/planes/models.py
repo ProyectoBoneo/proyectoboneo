@@ -113,8 +113,8 @@ class InstanciaCursado(models.Model):
     objects = InstanciaCursadoManager()
 
     anio_cursado = models.IntegerField()
-    materia = models.ForeignKey(Materia)
-    division = models.ForeignKey(Division)
+    materia = models.ForeignKey(Materia, related_name='instancias_cursado')
+    division = models.ForeignKey(Division, related_name='instancias_cursado')
     profesor_titular = models.ForeignKey(Profesor, null=True, blank=True)
 
     def __str__(self):

@@ -12,9 +12,9 @@ class Responsable(Persona):
 class Alumno(PersonaLegajo):
     usuario = models.OneToOneField(UsuarioBoneo, related_name='alumno')
     responsable = models.ForeignKey(Responsable, related_name='alumnos', on_delete=models.PROTECT)
-    division = models.ForeignKey(Division)
+    division = models.ForeignKey(Division, related_name='alumnos')
 
 
 class InscripcionAlumno(models.Model):
-    alumno = models.ForeignKey(Alumno)
-    instancia_cursado = models.ForeignKey(InstanciaCursado)
+    alumno = models.ForeignKey(Alumno, related_name='inscripciones')
+    instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='inscripciones')
