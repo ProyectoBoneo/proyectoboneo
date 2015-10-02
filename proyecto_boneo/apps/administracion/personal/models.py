@@ -21,6 +21,9 @@ class Persona(models.Model):
     def descripcion(self):
         return '{} {}'.format(self.nombre, self.apellido)
 
+    def crear_usuario(self, email):
+        self.usuario = UsuarioBoneo.objects.create(username=email, email=email)
+
     def __str__(self):
         return self.descripcion
 
@@ -51,6 +54,3 @@ class PersonaLegajo(Persona):
 
 class Profesor(PersonaLegajo):
     usuario = models.OneToOneField(UsuarioBoneo, related_name='profesor')
-
-
-

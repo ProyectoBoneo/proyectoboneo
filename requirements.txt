@@ -1,8 +1,19 @@
 beautifulsoup4==4.3.2
+decorator==4.0.4
 Django==1.8.1
 django-cors-headers==1.1.0
+django-extensions==1.5.7
 djangorestframework==3.1.0
+ipython==4.0.0
+ipython-genutils==0.1.0
+path.py==8.1.1
+pexpect==3.3
+pickleshare==0.5
 Pillow==2.8.1
 psycopg2==2.6
 reportlab==3.1.44
 requests==2.6.0
+simplegeneric==0.8.1
+six==1.9.0
+traitlets==4.0.0
+-e git://github.com/alvarotuso/gutils.git#egg=gutils
