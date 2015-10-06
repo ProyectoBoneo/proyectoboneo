@@ -1,19 +1,13 @@
 from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView
 from django.core.urlresolvers import reverse_lazy
 
-from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
-
 from . import forms, models
 
 
 class PersonaCreateView(CreateView):
 
     def form_valid(self, form):
-        user_email = form.cleaned_data['email']
-        user = UsuarioBoneo(username=user_email,
-                            email=user_email)
-        user.save()
-        form.instance.usuario = user
+        form.instance.crear_usuario(form.cleaned_data['email'])
         return super(PersonaCreateView, self).form_valid(form)
 
 

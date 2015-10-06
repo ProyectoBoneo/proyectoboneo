@@ -30,7 +30,7 @@ DJANGO_APPS = ('django.contrib.admin',
                'django.contrib.messages',
                'django.contrib.staticfiles',)
 
-THIRD_PARTY_APPS = ()
+THIRD_PARTY_APPS = ('django_extensions', )
 
 PROJECT_APPS = ('gutils',
                 'gutils.django.forms.typeahead',
