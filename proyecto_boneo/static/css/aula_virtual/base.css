@@ -4874,3 +4874,27 @@ select.with_errors {
   font-family: "bumblebee";
   display: inline-block;
 }
+.page-navbar {
+  background-color: #71c575;
+  margin: 0;
+}
+.page-navbar ul {
+  padding: 0;
+  margin: 0 0 0 10px;
+  list-style: none;
+}
+.page-navbar ul li {
+  display: inline-block;
+}
+.page-navbar ul li a {
+  color: white;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 5px 10px 5px 10px;
+}
+.page-navbar ul li:hover,
+.page-navbar ul li:active,
+.page-navbar ul li:focus {
+  text-decoration: none;
+  background-color: #82e387;
+}

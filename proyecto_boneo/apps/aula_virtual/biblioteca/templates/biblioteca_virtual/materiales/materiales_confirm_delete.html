@@ -4,7 +4,11 @@
     <form method="post" action=".">
         {% csrf_token %}
         <p>¿Desea eliminar el material "{{ object }}"?</p>
-        <input class="button" type="submit" value="Confirmar">
-        <a href="{% url 'materiales' %}"><input class="button" type="button" value="Volver"></a>
+        <button type="submit" class="btn btn-danger">
+            <i class="fa fa-trash"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'aula_virtual:materiales' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
     </form>
 {% endblock %}

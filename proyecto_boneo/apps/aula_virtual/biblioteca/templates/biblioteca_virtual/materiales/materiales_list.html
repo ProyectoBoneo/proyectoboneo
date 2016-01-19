@@ -3,19 +3,19 @@
 {% block content %}
     <h3>Materiales</h3>
     <form action="." method="get" class="margin-bottom-2x">
-        <div class="formfields">
-            <div class="inline">
-                <div class="formfield">
+        <div class="form-group">
                     {{ filter_form.descripcion.label_tag }}
                     {{ filter_form.descripcion }}
-                </div>
-            </div>
         </div>
-        <input type="submit" value="Filtrar" class="button"/>
+        <button type="submit" class="btn btn-default">
+            <i class="fa fa-filter"></i> Filtrar
+        </button>
+        <a class="btn btn-default" href="{% url 'aula_virtual:nuevo_material' %}">
+            <i class="fa fa-plus-circle"></i>  Nuevo material
+        </a>
     </form>
-    <a class="button" href="{% url 'nuevo_material' %}">Nuevo material</a>
     {% if object_list %}
-        <table class="datalist">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -31,8 +31,16 @@
                         <td>{{ material.id }}</td>
                         <td>{{ material.descripcion }}</td>
                         <td>{{ material.nombre_archivo }}</td>
-                        <td><a class="button" href="{% url 'editar_material' material.id %}">Editar</a></td>
-                        <td><a class="button delete" href="{% url 'eliminar_material' material.id %}">Eliminar</a></td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'aula_virtual:editar_material' material.id %}">
+                                <i class="fa fa-edit"></i> Editar
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_material' material.id %}">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

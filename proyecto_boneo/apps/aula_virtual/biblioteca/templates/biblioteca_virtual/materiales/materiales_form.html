@@ -4,29 +4,32 @@
     <h3>Material</h3>
     <form method="post" action="." enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="formfields">
-            <div class="formfield">
-                {{ form.descripcion.label_tag }}
-                {{ form.descripcion }}
-                {{ form.descripcion.errors }}
-            </div>
-            <div class="formfield">
-                {{ form.observaciones.label_tag }}
-                {{ form.observaciones }}
-                {{ form.observaciones.errors }}
-            </div>
-            <div class="formfield">
-                {{ form.materia.label_tag }}
-                {{ form.materia }}
-                {{ form.materia.errors }}
-            </div>
-            <div class="formfield">
-                {{ form.archivo.label_tag }}
-                {{ form.archivo }}
-                {{ form.archivo.errors }}
-            </div>
+        <div class="form-group">
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
+            {{ form.descripcion.errors }}
         </div>
-        <input class="button" type="submit" value="Confirmar"/>
-        <a href="{% url 'materiales' %}"><input class="button neutral" type="button" value="Volver"></a>
+        <div class="form-group">
+            {{ form.observaciones.label_tag }}
+            {{ form.observaciones }}
+            {{ form.observaciones.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.materia.label_tag }}
+            {{ form.materia }}
+            {{ form.materia.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.archivo.label_tag }}
+            {{ form.archivo }}
+            {{ form.archivo.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check-circle"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'aula_virtual:materiales' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
     </form>
 {% endblock %}
