@@ -1,3 +1,5 @@
+@import "../utils/utils";
+
 .page-header {
     min-height: @unit*8;
     background-color: #71c575;
@@ -10,5 +12,28 @@
         font-size: 28px;
         font-family: "bumblebee";
         display: inline-block;
+    }
+}
+
+.page-navbar {
+    background-color: #71c575;
+    margin: 0;
+    ul {
+        padding: 0;
+        margin: 0 0 0 10px;
+        list-style: none;
+        li {
+            display: inline-block;
+            a {
+                color: white;
+                font-size: 15px;
+                text-decoration: none;
+                padding: 5px 10px 5px 10px;
+            }
+            &:hover, &:active, &:focus {
+                text-decoration: none;
+                background-color: #82e387;
+            }
+        }
     }
 }

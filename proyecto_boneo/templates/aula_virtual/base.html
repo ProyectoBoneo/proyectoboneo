@@ -25,8 +25,16 @@
 <body>
     <div class="page-header">
         <span class="page-header-title"><i class="fa fa-book fa-2x valign-middle"></i> Proyecto Boneo</span>
+        {% block navbar %}
+            <nav class="page-navbar">
+                <ul>
+                    <li><a href="{% url 'aula_virtual:home_administracion' %}">Administracion</a></li>
+                    <li><a href="{% url 'aula_virtual:materiales' %}">Materiales</a></li>
+                </ul>
+            </nav>
+        {% endblock %}
     </div>
-    <div id="content">
+    <div id="content" class="container">
         {% block content %}
         {%  endblock %}
         {% include 'typeahead/add_model_modal.html' %}
