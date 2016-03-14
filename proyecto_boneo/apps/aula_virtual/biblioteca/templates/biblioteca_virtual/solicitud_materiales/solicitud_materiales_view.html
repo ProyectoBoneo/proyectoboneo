@@ -1,0 +1,17 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Material{% endblock %}
+{% block content %}
+    <h3>Material</h3>
+    <div class="pdf-container">
+        <object data="{{ object.archivo.url }}" type="application/pdf" width="100%" height="100%">
+
+              <p>No posee un plug-in de PDF en este navegador
+              Haga click en el link <a href="{{ object.archivo.url }}"> para descargar el archivo PDF.</a></p>
+
+        </object>
+    </div>
+
+    <a class="btn btn-default" href="{% url 'aula_virtual:materiales_by_materia' object.materia.id  %}">
+        <i class="fa fa-arrow-circle-left"></i>  Volver
+    </a>
+{% endblock %}

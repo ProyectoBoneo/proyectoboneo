@@ -24,3 +24,30 @@ class MaterialFilterForm(BaseFilterForm):
 
     class Meta:
         filters = {'descripcion': 'descripcion__icontains', }
+
+
+class MaterialSearchFilterForm(BaseFilterForm):
+    descripcion = forms.CharField(max_length=100, label='Descripción')
+
+    class Meta:
+        filters = {'descripcion': 'descripcion__icontains', }
+
+
+class SolicitudMaterialForm(BaseModelForm):
+
+    class Meta:
+        model = models.SolicitudMaterial
+        fields = ['descripcion', 'observaciones']
+
+
+class SolicitudMaterialRechazoForm(BaseModelForm):
+
+    class Meta:
+        model = models.SolicitudMaterial
+        fields = ['motivo_rechazo']
+
+class SolicitudMaterialFilterForm(BaseFilterForm):
+    descripcion = forms.CharField(max_length=100, label='Descripción')
+
+    class Meta:
+        filters = {'descripcion': 'descripcion__icontains', }

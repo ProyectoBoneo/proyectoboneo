@@ -1,0 +1,103 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Material{% endblock %}
+{% block content %}
+    <script>
+        var aceptarSolicitud = function(){
+            $("#aceptar-solicitud-panel").show();
+            $("#rechazar-solicitud-panel").hide();
+        };
+        var rechazarSolicitud = function(){
+            $("#aceptar-solicitud-panel").hide();
+            $("#rechazar-solicitud-panel").show();
+        };
+
+        var registrarHandlers = function(){
+            $("#aceptar-solicitud").on("click", aceptarSolicitud);
+            $("#rechazar-solicitud").on("click", rechazarSolicitud);
+        };
+
+        $( document ).ready(function() {
+            $("#aceptar-solicitud-panel").hide();
+            $("#rechazar-solicitud-panel").hide();
+            registrarHandlers();
+        });
+    </script>
+    <h3>Responder Solicitud Material</h3>
+
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Datos de la Solicitud</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Descripcion:</label>
+                    {{ solicitud_material.descripcion }}
+                </div>
+                <div class="form-group">
+                    <label>Observaciones:</label>
+                    {{ solicitud_material.observaciones }}
+                </div>
+            </div>
+        </div>
+    <div id="panel-seleccion">
+            <button type="button" class="btn btn-success" id="aceptar-solicitud">
+                <i  class="fa fa-check-circle"></i> Aceptar Solicitud
+            </button>
+            <button type="button" class="btn btn-danger" id="rechazar-solicitud">
+                <i  class="fa fa-times-circle"></i> Rechazar Solicitud
+            </button>
+    </div>
+
+    <div id="aceptar-solicitud-panel">
+        <form method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.descripcion.label_tag }}
+                {{ form.descripcion }}
+                {{ form.descripcion.errors }}
+             </div>
+            <div class="form-group">
+                {{ form.motivo.label_tag }}
+                {{ form.motivo }}
+                {{ form.motivo.errors }}
+            </div>
+            <div class="form-group">
+                {{ form.materia.label_tag }}
+                {{ form.materia }}
+                {{ form.materia.errors }}
+            </div>
+            <div class="form-group">
+                {{ form.archivo.label_tag }}
+                {{ form.archivo }}
+                {{ form.archivo.errors }}
+            </div>
+
+
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check-circle"></i> Confirmar
+            </button>
+            <a class="btn btn-default" href="{% url 'aula_virtual:ver_solicitudes' %}">
+                <i class="fa fa-arrow-circle-left"></i>  Volver
+            </a>
+        </form>
+    </div>
+
+    <div id="rechazar-solicitud-panel">
+        <form method="post" action="{% url 'aula_virtual:rechazar_solicitud_material_admin' solicitud_material.id  %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ rechazo_solicitud_form.motivo_rechazo.label_tag }}
+                {{ rechazo_solicitud_form.motivo_rechazo }}
+                {{ rechazo_solicitud_form.motivo_rechazo.errors }}
+             </div>
+
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-check-circle"></i> Rechazar
+            </button>
+            <a class="btn btn-default" href="{% url 'aula_virtual:ver_solicitudes' %}">
+                <i class="fa fa-arrow-circle-left"></i>  Volver
+            </a>
+        </form>
+    </div>
+
+{% endblock %}

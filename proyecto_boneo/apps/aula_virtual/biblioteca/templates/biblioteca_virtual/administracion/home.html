@@ -1,5 +1,72 @@
 {% extends 'aula_virtual/base.html' %}
 {% block title %}Biblioteca Virtual{% endblock %}
-{% block content %}
 
+{% block content %}
+        <h3>Materiales</h3>
+        <form action="." method="get" class="margin-bottom-2x">
+            <a href="{% url 'aula_virtual:buscar_material' %}" type="submit" class="btn btn-default">
+                <i class="fa fa-search"></i> Buscar
+            </a>
+            <a href="{% url 'aula_virtual:solicitar_material' %}" type="submit" class="btn btn-default">
+                <i class="fa fa-search"></i> Solicitar Material
+            </a>
+        </form>
+        {% if material_list %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Descripción</th>
+                        <th>Archivo</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for material in material_list %}
+                        <tr>
+                            <td>{{ material.id }}</td>
+                            <td>{{ material.descripcion }}</td>
+                            <td>{{ material.nombre_archivo }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'aula_virtual:ver_material' material.id %}">
+                                <i class="fa fa-eye"></i> Ver
+                            </a>
+                            <a class="btn btn-primary" href="{{ material.archivo.url }}" download="{{ material.descripcion }}">
+                                <i class="fa fa-download"></i> Descargar
+                            </a>
+                        </td>
+                        </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay materiales que coincidan con el criterio de filtrado</p>
+        {% endif %}
+
+        {% if pinned_material_list %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Descripción</th>
+                        <th>Archivo</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for material in pinned_material_list %}
+                        <tr>
+                            <td>{{ material.id }}</td>
+                            <td>{{ material.descripcion }}</td>
+                            <td>{{ material.nombre_archivo }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No tiene materiales favoritos.</p>
+        {% endif %}
 {% endblock %}

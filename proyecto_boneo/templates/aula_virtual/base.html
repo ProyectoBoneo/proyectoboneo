@@ -30,13 +30,46 @@
                 <ul>
                     <li><a href="{% url 'aula_virtual:home_administracion' %}">Administracion</a></li>
                     <li><a href="{% url 'aula_virtual:materiales' %}">Materiales</a></li>
+                    <li><a href="{% url 'aula_virtual:ver_solicitudes' %}">Solicitudes de Material</a></li>
+                    <li><a href="{% url 'aula_virtual:ver_solicitudes_admin' %}">Solicitudes de Material(Admin)</a></li>
                 </ul>
             </nav>
         {% endblock %}
     </div>
     <div id="content" class="container">
-        {% block content %}
-        {%  endblock %}
+
+        <div {% if materia_dict %}id="wrapper"{% endif %}>
+
+            {% block sidebar %}
+                 <!-- Sidebar -->
+                {% if materia_dict %}
+                <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a href="{% url 'aula_virtual:biblioteca_home' %}">
+                            Biblioteca
+                        </a>
+                    </li>
+
+                {% for key, value_list  in materia_dict.items %}
+                    <p>Ano: {{ key }}</p>
+                {% for materia in value_list %}
+                    <li>
+                        <a href="{% url 'aula_virtual:materiales_by_materia' materia.id %}">{{ materia.descripcion }}</a>
+                    </li>
+                {% endfor %}
+                {% endfor %}
+
+                </ul>
+                </div>
+                {% endif %}
+                <!-- /#sidebar-wrapper -->
+            {% endblock %}
+            <div id="page-content-wrapper">
+                {% block content %}
+                {%  endblock %}
+            </div>
+        </div>
         {% include 'typeahead/add_model_modal.html' %}
     </div>
 </body>

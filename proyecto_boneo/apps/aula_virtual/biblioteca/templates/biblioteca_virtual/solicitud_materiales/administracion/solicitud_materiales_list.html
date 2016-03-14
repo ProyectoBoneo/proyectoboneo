@@ -1,0 +1,50 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Solicitudes de Materiales{% endblock %}
+{% block content %}
+    <h3>Solicitudes de Materiales Pendientes</h3>
+    {% if filter_form %}
+        <form action="." method="get" class="margin-bottom-2x">
+            <div class="form-group">
+                        {{ filter_form.descripcion.label_tag }}
+                        {{ filter_form.descripcion }}
+            </div>
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-filter"></i> Filtrar
+            </button>
+        </form>
+    {% endif %}
+
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Descripción</th>
+                    <th>Solicitante</th>
+                    <th>Material</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for solicitud_material in object_list %}
+                    <tr>
+                        <td>{{ solicitud_material.id }}</td>
+                        <td>{{ solicitud_material.descripcion }}</td>
+                        <td>{{ solicitud_material.solicitante }}</td>
+                        <td>{{ solicitud_material.material }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'aula_virtual:responder_solicitud_material_admin' solicitud_material.id %}">
+                                <i class="fa fa-eye"></i> Responder solicitud
+                            </a>
+{#                            <a class="btn btn-primary" href="{% url 'aula_virtual:responder_solicitud_material' solicitud_material.id %}">#}
+{#                                <i class="fa fa-eye"></i> Responder solicitud#}
+{#                            </a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay solicitudes de material disponibles.</p>
+    {% endif %}
+{% endblock %}
