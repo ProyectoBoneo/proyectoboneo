@@ -49,6 +49,9 @@ urlpatterns = [
    url(r'^materiales/administracion/ver-solicitudes/$', login_required(views.SolicitudMaterialesAdminFilteredListView.as_view()),
       name='ver_solicitudes_admin'),
 
+       url(r'^materiales/administracion/ver-solicitudes-pendientes/$', login_required(views.SolicitudMaterialesPendientesAdminFilteredListView.as_view()),
+      name='ver_solicitudes_pendientes_admin'),
+
    url(r'^materiales/administracion/responder-solicitud/(?P<pk>\d+)/$', login_required(views.ResponderSolicitudMaterialView.as_view()),
        name='responder_solicitud_material_admin'),
 

@@ -116,6 +116,7 @@ class ResponderSolicitudMaterialView(View):
             nuevo_material = form.save()
             solicitud_material.material = nuevo_material
             solicitud_material.aceptada = True
+            solicitud_material.pendiente_de_respuesta = False
             solicitud_material.save()
             return redirect(reverse_lazy('aula_virtual:materiales_admin'))
         else:
@@ -133,6 +134,7 @@ class RechazarSolicitudMaterialView(View):
         if rechazo_solicitud_form.is_valid():
             solicitud_material = rechazo_solicitud_form.save(commit=False)
             solicitud_material.aceptada = False
+            solicitud_material.pendiente_de_respuesta = False
             solicitud_material.save()
             return redirect(reverse_lazy('aula_virtual:materiales_admin'))
 
@@ -163,6 +165,17 @@ class SolicitudMaterialesAdminDeleteView(ProtectedDeleteView):
     model = models.SolicitudMaterial
     success_url = reverse_lazy('aula_virtual:biblioteca_home')
     template_name = 'biblioteca_virtual/solicitud_materiales/administracion/solicitud_materiales_confirm_delete.html'
+
+
+class SolicitudMaterialesPendientesAdminFilteredListView(ListView):
+    form_class = forms.SolicitudMaterialFilterForm
+    model = models.SolicitudMaterial
+    template_name = 'biblioteca_virtual/solicitud_materiales/administracion/solicitud_materiales_pendientes_list.html'
+
+    def get_queryset(self):
+        # self._filter_queryset(self.request)
+        # self.usuario = models.UsuarioBoneo.objects.get(pk=self.request.user)
+        return models.SolicitudMaterial.objects.filter(pendiente_de_respuesta=True)
 
 
 class SolicitudMaterialesAdminFilteredListView(FilteredListView):

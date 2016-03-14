@@ -22,6 +22,7 @@
                     <th>Descripción</th>
                     <th>Aceptada</th>
                     <th>Material</th>
+                    <th>Motivo de Rechazo</th>
                     <th></th>
                 </tr>
             </thead>
@@ -30,17 +31,38 @@
                     <tr>
                         <td>{{ solicitud_material.id }}</td>
                         <td>{{ solicitud_material.descripcion }}</td>
-                        <td>{{ solicitud_material.aceptada }}</td>
-                        <td>{{ solicitud_material.material }}</td>
                         <td>
-                            <a class="btn btn-default" href="{% url 'aula_virtual:editar_solicitud_material' solicitud_material.id %}">
-                                <i class="fa fa-edit"></i> Editar
-                            </a>
+                            {% if solicitud_material.aceptada %}
+                                <i class="fa fa-check-circle text-success"></i>
+                            {% elif solicitud_material.aceptada == False and solicitud_material.motivo_rechazo != None %}
+                                <i class="fa fa-times-circle text-danger"></i>
+                            {% else %}
+                                <i class="fa fa-circle"></i>
+                            {% endif %}
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_solicitud_material' solicitud_material.id %}">
-                                <i class="fa fa-trash"></i> Eliminar
-                            </a>
+                            {% if solicitud_material.material != None %}
+                                <a  href="{% url 'aula_virtual:ver_material' solicitud_material.material.id %}">
+                                    {{ solicitud_material.material|default_if_none:"" }}
+                                </a>
+                            {% else %}
+                                    {{ solicitud_material.material|default_if_none:"" }}
+                            {%endif%}
+                        </td>
+                        <td> {{ solicitud_material.motivo_rechazo|default_if_none:""  }} </td>
+                        <td>
+                            {% if solicitud_material.pendiente_de_respuesta %}
+                                <a class="btn btn-default" href="{% url 'aula_virtual:editar_solicitud_material' solicitud_material.id %}">
+                                    <i class="fa fa-edit"></i> Editar
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if solicitud_material.pendiente_de_respuesta %}
+                                <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_solicitud_material' solicitud_material.id %}">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

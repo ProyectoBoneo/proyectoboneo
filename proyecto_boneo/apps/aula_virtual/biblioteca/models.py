@@ -35,6 +35,7 @@ class Material(BaseMaterial):
 class SolicitudMaterial(BaseMaterial):
     motivo_rechazo = models.TextField(null=True, blank=True)
     aceptada = models.BooleanField(default=False)
+    pendiente_de_respuesta = models.BooleanField(default=True)
     solicitante = models.ForeignKey(UsuarioBoneo, related_name='solicitante', default=None)
     material = models.ForeignKey(Material, null=True, blank=True, default=None)
 
