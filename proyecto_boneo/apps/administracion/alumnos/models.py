@@ -14,6 +14,10 @@ class Alumno(PersonaLegajo):
     responsable = models.ForeignKey(Responsable, related_name='alumnos', on_delete=models.PROTECT)
     division = models.ForeignKey(Division, related_name='alumnos')
 
+    def crear_usuario(self, email):
+        super(Alumno, self).crear_usuario(self, email)
+        self.usuario.is_alumno = True
+
 
 class InscripcionAlumno(models.Model):
     alumno = models.ForeignKey(Alumno, related_name='inscripciones')

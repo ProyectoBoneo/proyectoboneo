@@ -54,3 +54,7 @@ class PersonaLegajo(Persona):
 
 class Profesor(PersonaLegajo):
     usuario = models.OneToOneField(UsuarioBoneo, related_name='profesor')
+
+    def crear_usuario(self, email):
+        super(Profesor, self).crear_usuario(self, email)
+        self.usuario.is_profesor = True

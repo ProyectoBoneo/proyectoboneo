@@ -27,6 +27,12 @@ class UsuarioBoneo(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(_('active'), default=True,
                                     help_text=_('Designates whether this user should be treated as '
                                                 'active. Unselect this instead of deleting accounts.'))
+    is_alumno = models.BooleanField(_('alumno'), default=True,
+                                    help_text=_('Designates whether this user should be treated as '
+                                                'alumno.'))
+    is_profesor = models.BooleanField(_('profesor'), default=True,
+                                    help_text=_('Designates whether this user should be treated as '
+                                                'profesor.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = UserManager()
