@@ -1,0 +1,33 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Comunicados{% endblock %}
+{% block content %}
+    <h3>Comunicados</h3>
+    <a class="btn btn-default" href="{% url 'administracion:nuevo_comunicado' %}">
+        <i class="fa fa-plus-circle"></i>  Nuevo comunicado
+    </a>
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Emisor</th>
+                    <th>Destinatarios</th>
+                    <th>Fecha</th>
+                    <th>Mensaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comunicado in object_list %}
+                    <tr>
+                        <td>{{ comunicado.emisor }}</td>
+                        <td>
+                            {% for destinatario in comunicado.destinatarios.all %} {{ destinatario }}<br/>{% endfor %}</td>
+                        <td>{{ comunicado.fecha }}</td>
+                        <td>{{ comunicado.mensaje }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay comunicados que coincidan con el criterio de filtrado</p>
+    {% endif %}
+{% endblock %}
