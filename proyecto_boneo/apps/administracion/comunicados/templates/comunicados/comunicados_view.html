@@ -1,0 +1,26 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Comunicado{% endblock %}
+{% block content %}
+    <h3>Comunicado</h3>
+
+        <p>
+            Fecha: {{ object.fecha }}
+        </p>
+        <p>
+            Emisor: {{ object.emisor }}
+        </p>
+        <p>
+            Destinatarios:
+            {% for destinatario in object.destinatarios.all %}
+                {{ destinatario }}<br/>
+            {% endfor %}
+        </p>
+        <p>
+            Mensaje: {{ object.mensaje }}
+        </p>
+
+        <a class="btn btn-default" href="{% url 'administracion:comunicados' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}
