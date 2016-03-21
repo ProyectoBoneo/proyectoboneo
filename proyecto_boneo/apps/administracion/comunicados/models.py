@@ -18,6 +18,8 @@ class Comunicado(models.Model):
     # grupo_receptor = models.ForeignKey(Grupo, null=True, blank=True)
     # instancia_cursado_receptor = models.ForeignKey(InstanciaCursado, null=True, blank=True)
 
+    def __str__(self):
+        return '{} - {}'.format(self.fecha.date(), self.mensaje[:15] + "...")
 
 # class Destinatario(models.Model):
 #     comunicado = models.ForeignKey(Comunicado, on_delete=models.PROTECT)
