@@ -4905,6 +4905,7 @@ select.with_errors {
  */
 /* Toggle Styles */
 #wrapper {
+  position: relative;
   padding-left: 0;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -4915,13 +4916,16 @@ select.with_errors {
   padding-left: 250px;
 }
 #sidebar-wrapper {
+  top: 0;
+  bottom: 0;
+  position: absolute;
   z-index: 1000;
-  position: fixed;
-  left: 250px;
+  left: 0;
   width: 0;
+  min-height: 400px;
   height: 100%;
-  margin-left: -250px;
   overflow-y: auto;
+  overflow-x: hidden;
   background: #000;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;

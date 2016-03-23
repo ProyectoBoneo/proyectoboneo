@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, TemplateView, DetailView
+from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, \
+    TemplateView, DetailView, ListView, FilteredListView
+from gutils.django.views import View
 from django.core.urlresolvers import reverse_lazy
 
 from . import forms, models
 from proyecto_boneo.apps.administracion.planes.models import Materia
-from django.views.generic import ListView, View
 from collections import defaultdict
 from proyecto_boneo.apps.aula_virtual.biblioteca.forms import MaterialForm, SolicitudMaterialRechazoForm
 
@@ -24,17 +25,30 @@ class MaterialesFilteredListView(FilteredListView):
     model = models.Material
     template_name = 'biblioteca_virtual/materiales/materiales_list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(MaterialesFilteredListView, self).get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
 
 class MaterialesSearchFilteredListView(FilteredListView):
     form_class = forms.MaterialSearchFilterForm
     model = models.Material
     template_name = 'biblioteca_virtual/materiales/materiales_search.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(MaterialesSearchFilteredListView, self).get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
 
 class MaterialesAdminFilteredListView(FilteredListView):
     form_class = forms.MaterialFilterForm
     model = models.Material
     template_name = 'biblioteca_virtual/materiales/administracion/materiales_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(MaterialesAdminFilteredListView, self).get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
 
 
 class MaterialesCreateView(CreateView):
@@ -105,7 +119,8 @@ class ResponderSolicitudMaterialView(View):
         rechazo_solicitud_form = SolicitudMaterialRechazoForm(instance = solicitud_material)
         return render(request, self.template_name, {'solicitud_material': solicitud_material,
                                                     'form':form,
-                                                    'rechazo_solicitud_form': rechazo_solicitud_form
+                                                    'rechazo_solicitud_form': rechazo_solicitud_form,
+                                                    'user': self.request.user
                                                     } )
 
     def post(self, request, *args, **kwargs):
@@ -123,7 +138,8 @@ class ResponderSolicitudMaterialView(View):
             rechazo_solicitud_form = SolicitudMaterialRechazoForm(instance = solicitud_material)
             return render(request, self.template_name, {'solicitud_material': solicitud_material,
                         'form':form,
-                        'rechazo_solicitud_form': rechazo_solicitud_form
+                        'rechazo_solicitud_form': rechazo_solicitud_form,
+                        'user': self.request.user
                         } )
 
 
@@ -183,6 +199,10 @@ class SolicitudMaterialesAdminFilteredListView(FilteredListView):
     model = models.SolicitudMaterial
     template_name = 'biblioteca_virtual/solicitud_materiales/administracion/solicitud_materiales_list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(SolicitudMaterialesAdminFilteredListView, self).get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
 
 class SolicitudMaterialesAlumnoFilteredListView(ListView):
     form_class = forms.SolicitudMaterialFilterForm

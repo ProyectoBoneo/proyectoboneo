@@ -8,7 +8,7 @@
 
     {% include 'utils/common_scripts.html' %}
 
-    <link rel="stylesheet" href="{% static 'css/aula_virtual/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/administracion/base.css' %}">
 
     {% block styles %}
     {% endblock %}
@@ -24,30 +24,17 @@
 </head>
 <body>
     <div class="page-header">
-        <span class="page-header-title"><i class="fa fa-book fa-2x valign-middle"></i> Proyecto Boneo</span>
+        <span class="page-header-title"><i class="fa fa-edit fa-2x valign-middle"></i> Proyecto Boneo </span>
         {% block navbar %}
             <nav class="page-navbar">
                 <ul>
-                    {% if user.is_staff %}
-                        <li><a href="{% url 'aula_virtual:home_administracion' %}">Administracion</a></li>
-                    {% endif %}
-                    {% if user.is_alumno %}
-                        <li><a href="{% url 'aula_virtual:biblioteca_home' %}">Biblioteca</a></li>
-                        <li><a href="{% url 'aula_virtual:ver_solicitudes' %}">Solicitudes de Material</a></li>
-                    {% endif %}
-
-                    {% if user.is_staff or user.is_profesor %}
-
-                        <li><a href="{% url 'aula_virtual:materiales_admin' %}">Materiales</a></li>
-                        <li><a href="{% url 'aula_virtual:ver_solicitudes_pendientes_admin' %}">Solicitudes de Material</a></li>
-                    {% endif %}
-
-
+                    <li><a href="{% url 'aula_virtual:materiales_admin' %}">Biblioteca</a></li>
                 </ul>
             </nav>
         {% endblock %}
     </div>
-    <div id="content" class="fluid-container">
+
+    <div id="content" class="container">
 
         <div {% if materia_dict %}id="wrapper"{% endif %}>
 
@@ -76,10 +63,14 @@
                 {% endif %}
                 <!-- /#sidebar-wrapper -->
             {% endblock %}
-            <div id="page-content-wrapper">
-                {% block content %}
-                {%  endblock %}
-            </div>
+            {% if materia_dict %}
+                <div id="page-content-wrapper">
+            {% endif %}
+                    {% block content %}
+                    {%  endblock %}
+            {% if materia_dict %}
+                </div>
+            {% endif %}
         </div>
         {% include 'typeahead/add_model_modal.html' %}
     </div>

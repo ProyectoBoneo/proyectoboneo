@@ -23,6 +23,9 @@ class Persona(models.Model):
 
     def crear_usuario(self, email):
         self.usuario = UsuarioBoneo.objects.create(username=email, email=email)
+        # TODO:Remove this default pass, probably we want to send an one time link or another approach
+        self.usuario.set_password("pass")
+        self.usuario.save()
 
     def __str__(self):
         return self.descripcion
@@ -56,5 +59,6 @@ class Profesor(PersonaLegajo):
     usuario = models.OneToOneField(UsuarioBoneo, related_name='profesor')
 
     def crear_usuario(self, email):
-        super(Profesor, self).crear_usuario(self, email)
+        super(Profesor, self).crear_usuario(email)
         self.usuario.is_profesor = True
+        self.usuario.save()

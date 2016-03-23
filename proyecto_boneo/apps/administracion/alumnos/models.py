@@ -15,8 +15,9 @@ class Alumno(PersonaLegajo):
     division = models.ForeignKey(Division, related_name='alumnos')
 
     def crear_usuario(self, email):
-        super(Alumno, self).crear_usuario(self, email)
+        super(Alumno, self).crear_usuario(email)
         self.usuario.is_alumno = True
+        self.usuario.save()
 
 
 class InscripcionAlumno(models.Model):

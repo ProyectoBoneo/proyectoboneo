@@ -26,6 +26,8 @@
                     <th>Archivo</th>
                     <th></th>
                     <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +36,16 @@
                         <td>{{ material.id }}</td>
                         <td>{{ material.descripcion }}</td>
                         <td>{{ material.nombre_archivo }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'aula_virtual:ver_material' material.id %}">
+                                <i class="fa fa-eye"></i> Ver
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ material.archivo.url }}" download="{{ material.descripcion }}">
+                                <i class="fa fa-download"></i> Descargar
+                            </a>
+                        </td>
                         <td>
                             <a class="btn btn-default" href="{% url 'aula_virtual:editar_material' material.id %}">
                                 <i class="fa fa-edit"></i> Editar
@@ -44,6 +56,7 @@
                                 <i class="fa fa-trash"></i> Eliminar
                             </a>
                         </td>
+
                     </tr>
                 {% endfor %}
             </tbody>
