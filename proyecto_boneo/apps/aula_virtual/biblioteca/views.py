@@ -75,8 +75,11 @@ class MaterialesDetailView(DetailView):
     model = models.Material
     template_name = 'biblioteca_virtual/materiales/materiales_view.html'
 
-
-# class MaterialesDownloadView(TemplateView):
+    def get_context_data(self, **kwargs):
+            context = super(MaterialesDetailView, self).get_context_data(**kwargs)
+            context['current_materia'] = self.object.materia
+            context['materia_dict'] = get_materias_grouped_by_anio()
+            return context
 
 
 class BibliotecaHomeView(ListView):
@@ -106,6 +109,7 @@ class MaterialesByMateriaFilteredListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MaterialesByMateriaFilteredListView, self).get_context_data(**kwargs)
+        context['current_materia'] = self.materia
         context['materia_dict'] = get_materias_grouped_by_anio()
         return context
 
@@ -210,15 +214,7 @@ class SolicitudMaterialesAlumnoFilteredListView(ListView):
     template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_list.html'
 
     def get_queryset(self):
-        # self._filter_queryset(self.request)
-        print()
-        # self.usuario = models.UsuarioBoneo.objects.get(pk=self.request.user)
         return models.SolicitudMaterial.objects.filter(solicitante=self.request.user)
-
-    def get_context_data(self, **kwargs):
-        context = super(SolicitudMaterialesAlumnoFilteredListView, self).get_context_data(**kwargs)
-        context['materia_dict'] = get_materias_grouped_by_anio()
-        return context
 
 
 class SolicitudMaterialesAlumnoUpdateView(UpdateView):

@@ -4967,7 +4967,7 @@ select.with_errors {
 .sidebar-nav li a {
   display: block;
   text-decoration: none;
-  color: #999999;
+  color: #eee;
 }
 .sidebar-nav li a:hover {
   text-decoration: none;
@@ -4984,7 +4984,7 @@ select.with_errors {
   line-height: 60px;
 }
 .sidebar-nav > .sidebar-brand a {
-  color: #999999;
+  color: #eee;
 }
 .sidebar-nav > .sidebar-brand a:hover {
   color: #fff;
