@@ -2,35 +2,36 @@ from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from . import views
+from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_staff
 
 materias_patterns = [
-   url(r'^materias/$', login_required(views.MateriasFilteredListView.as_view()),
+   url(r'^materias/$', user_is_staff(views.MateriasFilteredListView.as_view()),
        name='materias'),
 
-   url(r'^materias/nuevo/$', login_required(views.MateriasCreateView.as_view()),
+   url(r'^materias/nuevo/$', user_is_staff(views.MateriasCreateView.as_view()),
        name='nueva_materia'),
 
-   url(r'^materias/editar/(?P<pk>\d+)/$', login_required(views.MateriasUpdateView.as_view()),
+   url(r'^materias/editar/(?P<pk>\d+)/$', user_is_staff(views.MateriasUpdateView.as_view()),
        name='editar_materia'),
 
-   url(r'^materias/eliminar/(?P<pk>\d+)/$', login_required(views.MateriasDeleteView.as_view()),
+   url(r'^materias/eliminar/(?P<pk>\d+)/$', user_is_staff(views.MateriasDeleteView.as_view()),
        name='eliminar_materia'),
 
    url(r'^divisiones/profesores_por_materia/$',
-       login_required(views.ConfigurarProfesoresMateriasView.as_view()),
+       user_is_staff(views.ConfigurarProfesoresMateriasView.as_view()),
        name='configurar_profesores_materias'),
 ]
 
 plan_patterns = [
-   url(r'^divisiones/$', login_required(views.DivisionesListView.as_view()),
+   url(r'^divisiones/$', user_is_staff(views.DivisionesListView.as_view()),
        name='divisiones'),
 
    url(r'^divisiones/configurar/$',
-       login_required(views.DivisionesConfigurationView.as_view()),
+       user_is_staff(views.DivisionesConfigurationView.as_view()),
        name='configurar_divisiones'),
 
    url(r'^divisiones/generar_instancias_cursado/$',
-       login_required(views.DivisionesGenerarInstanciasCursadoView.as_view()),
+       user_is_staff(views.DivisionesGenerarInstanciasCursadoView.as_view()),
        name='generar_instancias_cursado'),
 ]
 
