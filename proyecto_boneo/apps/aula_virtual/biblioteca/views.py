@@ -77,8 +77,9 @@ class MaterialesDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
             context = super(MaterialesDetailView, self).get_context_data(**kwargs)
-            context['current_materia'] = self.object.materia
-            context['materia_dict'] = get_materias_grouped_by_anio()
+            if(self.request.user.is_alumno):
+                context['current_materia'] = self.object.materia
+                context['materia_dict'] = get_materias_grouped_by_anio()
             return context
 
 
