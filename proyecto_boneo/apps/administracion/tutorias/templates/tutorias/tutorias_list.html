@@ -1,0 +1,65 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Tutorias{% endblock %}
+{% block content %}
+    <h3>Tutorias</h3>
+
+    <div class="row">
+             <a class="btn btn-default" href="{% url 'administracion:nuevo_tutoria' %}">
+                <i class="fa fa-plus-circle"></i> Nuevo
+             </a>
+    </div>
+    <div class="col-xs-10">
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Año</th>
+                    <th>Profesor</th>
+                    <th>Alumno</th>
+                    {% if activateViewingButtons %}
+                        <th></th>
+                    {% endif %}
+                    {% if activateEditingButtons %}
+                        <th></th>
+                        <th></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for tutoria in object_list %}
+                    <tr>
+                        <td>{{ tutoria.anio}}</td>
+                        <td>{{ tutoria.profesor }}</td>
+{#                        <td>#}
+{#                            {% for destinatario in tutoria.destinatarios.all %} {{ destinatario }}<br/>{% endfor %}#}
+{#                        </td>#}
+                        <td>{{ tutoria.alumno }}</td>
+                        {% if user.is_profesor %}
+                            <td>
+                                <a class="btn btn-default" href="{% url 'administracion:ver_tutoria' tutoria.id %}">
+                                    <i class="fa fa-eye"></i> Ver
+                                </a>
+                            </td>
+                        {% endif %}
+                        {% if user.is_staff %}
+                            <td>
+                                <a class="btn btn-default" href="{% url 'administracion:editar_tutoria' tutoria.id %}">
+                                    <i class="fa fa-edit"></i> Editar
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="{% url 'administracion:eliminar_tutoria' tutoria.id %}">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay tutorias que coincidan con el criterio de filtrado</p>
+    {% endif %}
+    </div>
+
+{% endblock %}

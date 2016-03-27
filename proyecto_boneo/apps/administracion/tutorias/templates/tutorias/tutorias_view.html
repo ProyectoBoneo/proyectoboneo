@@ -1,0 +1,87 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Tutoria{% endblock %}
+{% block content %}
+    <script>
+        var registrarHandlers = function(){
+            $('#encuentrotutoria-open').on('click', function(){
+                $("#add-encuentrotutoria-button").hide();
+                $("#add-encuentrotutoria").show();
+            });
+            $('#encuentrotutoria-cancel').on('click', function(){
+                $("#add-encuentrotutoria-button").show();
+                $("#add-encuentrotutoria").hide();
+            });
+        };
+
+        $( document ).ready(function() {
+            $("#add-encuentrotutoria-button").show();
+            $("#add-encuentrotutoria").hide();
+            registrarHandlers();
+        });
+    </script>
+
+    <h3>Tutoria</h3>
+
+        <p>
+            Año: {{ object.anio }}
+        </p>
+        <p>
+            Profesor: {{ object.profesor }}
+        </p>
+        <p>
+            Alumno:{{ object.alumno }}
+        </p>
+    <div id="add-encuentrotutoria-button">
+        <button type="button" class="btn btn-primary" id="encuentrotutoria-open">
+            <i  class="fa fa-plus-circle"></i> Nuevo encuentro
+        </button>
+    </div>
+    <div id="add-encuentrotutoria" class="">
+        <form method="post" action="">
+             {% csrf_token %}
+
+                <table>
+                    {{ formset }}
+                </table>
+                <button type="submit" class="btn btn-success" id="">
+                    <i  class="fa fa-save"></i> Guardar encuentro
+                </button>
+                <button type="button" class="btn btn-danger" id="encuentrotutoria-cancel">
+                    <i  class="fa fa-times-circle"></i> Cancelar
+                </button>
+
+        </form>
+    </div>
+
+    <form method="post" action="">
+
+        <table class="table">
+            <thead>
+                <th width="20%">Fecha</th>
+                <th>Resumen</th>
+            </thead>
+            <tbody>
+                {% for encuentrotutoria in object.encuentrotutoria_set.all %}
+                    <tr>
+                        <td>{{ encuentrotutoria.fecha }}</td>
+                        <td>{{ encuentrotutoria.resumen }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'administracion:editar_encuentrotutoria' encuentrotutoria.id %}">
+                                <i class="fa fa-edit"></i> Editar
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="{% url 'administracion:eliminar_encuentrotutoria' encuentrotutoria.id %}">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+
+        <a class="btn btn-default" href="{% url 'administracion:tutorias' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+{% endblock %}

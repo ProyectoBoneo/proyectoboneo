@@ -1,0 +1,20 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Encuentro Tutoria{% endblock %}
+{% block content %}
+    <h3>Encuentro Tutoria</h3>
+
+        <p>
+            Fecha: {{ object.fecha }}
+        </p>
+        <p>
+            Tutoria: {{ object.tutoria }}
+        </p>
+        <p>
+            Resumen:{{ object.resumen }}
+        </p>
+
+        <a class="btn btn-default" href="{% url 'administracion:encuentrotutorias' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

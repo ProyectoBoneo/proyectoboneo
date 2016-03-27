@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^personal/', include('proyecto_boneo.apps.administracion.personal.urls')),
     url(r'^planes/', include('proyecto_boneo.apps.administracion.planes.urls')),
     url(r'^comunicados/', include('proyecto_boneo.apps.administracion.comunicados.urls')),
+    url(r'^tutorias/', include('proyecto_boneo.apps.administracion.tutorias.urls')),
 ]

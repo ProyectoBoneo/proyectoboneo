@@ -1,0 +1,63 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Encuentro Tutoria{% endblock %}
+{% block content %}
+    <h3>Encuentro tutoria</h3>
+
+    <div class="row">
+         <a class="btn btn-default" href="{% url 'administracion:nuevo_encuentrotutoria' %}">
+            <i class="fa fa-plus-circle"></i> Nuevo
+         </a>
+    </div>
+
+    <div class="col-xs-10">
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tutoria</th>
+{#                    <th>Destinatarios</th>#}
+                    <th style="width:50%;">Resumen</th>
+                    {% if activateViewingButtons %}
+                        <th></th>
+                    {% endif %}
+                    {% if activateEditingButtons %}
+                        <th></th>
+                        <th></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for encuentrotutoria in object_list %}
+                    <tr>
+                        <td>{{ encuentrotutoria.fecha|date:"SHORT_DATE_FORMAT"}}</td>
+                        <td>{{ encuentrotutoria.tutoria }}</td>
+{#                        <td>#}
+{#                            {% for destinatario in encuentrotutoria.destinatarios.all %} {{ destinatario }}<br/>{% endfor %}#}
+{#                        </td>#}
+                        <td>{{ encuentrotutoria.resumen }}</td>
+                            <td>
+                                <a class="btn btn-default" href="{% url 'administracion:ver_encuentrotutoria' encuentrotutoria.id %}">
+                                    <i class="fa fa-eye"></i> Ver
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-default" href="{% url 'administracion:editar_encuentrotutoria' encuentrotutoria.id %}">
+                                    <i class="fa fa-edit"></i> Editar
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="{% url 'administracion:eliminar_encuentrotutoria' encuentrotutoria.id %}">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </a>
+                            </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay encuentro tutorias que coincidan con el criterio de filtrado</p>
+    {% endif %}
+    </div>
+    </div>
+{% endblock %}

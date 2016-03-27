@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from . import views
+from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_not_alumno, user_is_alumno
 
 comunicados_patterns = [
    url(r'^$', login_required(views.ComunicadoListView.as_view()),
