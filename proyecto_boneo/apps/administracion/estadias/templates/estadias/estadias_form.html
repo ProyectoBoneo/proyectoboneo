@@ -1,0 +1,36 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Estadia{% endblock %}
+{% block content %}
+    <h3>Estadia</h3>
+
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.usuario.label_tag }}
+            {{ form.usuario }}
+            {{ form.usuario.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.alumno.label_tag }}
+            {{ form.alumno }}
+            {{ form.alumno.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.fecha_inicio.label_tag }}
+            {{ form.fecha_inicio }}
+            {{ form.fecha_inicio.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.fecha_fin.label_tag }}
+            {{ form.fecha_fin }}
+            {{ form.fecha_fin.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check-circle"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:estadias' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

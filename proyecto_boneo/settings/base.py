@@ -41,6 +41,7 @@ PROJECT_APPS = ('gutils',
                 'proyecto_boneo.apps.administracion.planes',
                 'proyecto_boneo.apps.administracion.usuarios',
                 'proyecto_boneo.apps.administracion.tutorias',
+                'proyecto_boneo.apps.administracion.estadias',
                 'proyecto_boneo.apps.aula_virtual.biblioteca',
                 'proyecto_boneo.apps.aula_virtual.clases'
                 )
