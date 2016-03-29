@@ -18,6 +18,9 @@ textarea.with_errors {
 select.with_errors {
   outline: red solid 1px;
 }
+.hidden {
+  display: none;
+}
 .margin-top-1x {
   margin-top: 10px;
 }

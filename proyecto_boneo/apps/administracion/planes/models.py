@@ -119,3 +119,16 @@ class InstanciaCursado(models.Model):
 
     def __str__(self):
         return '{} - {} - {}'.format(self.materia.descripcion, self.division, self.anio_cursado)
+
+
+# TODO:Revisar modelo para ver la parte de toma de asistencia
+class Horario(models.Model):
+    instancia_cursado = models.ForeignKey(InstanciaCursado)
+    dia = models.IntegerField()
+    hora = models.TimeField()
+
+
+class DiasNoHabiles(models.Model):
+    anio_cursado = models.IntegerField()
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
