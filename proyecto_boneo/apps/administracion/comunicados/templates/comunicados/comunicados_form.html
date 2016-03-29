@@ -1,0 +1,48 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Comunicado{% endblock %}
+{% block content %}
+    <h3>Comunicado</h3>
+    <script>
+
+        $( document ).ready(function() {
+            $('#grp-destinatarios').removeClass('hidden');
+            var options = {
+                  selectableHeader: "<div class='bg-default'><div class='col-sm-12'><b>Destinatarios</b></div></div>",
+                  selectionHeader: "<div class='bg-default'><div class='col-sm-12'><b>Destinatarios Seleccionados</b></div><div>"
+            };
+            $('#id_destinatarios').multiSelect(options);
+
+        });
+    </script>
+    <form method="post" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.emisor.label_tag }}
+            {{ form.emisor }}
+            {{ form.emisor.errors }}
+        </div>
+        <div id="grp-destinatarios" class="form-group hidden">
+{#            {{ form.destinatarios.label_tag }}#}
+            {{ form.destinatarios }}
+            {{ form.destinatarios.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.mensaje.label_tag }}
+            {{ form.mensaje }}
+            {{ form.mensaje.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.fecha.label_tag }}
+            {{ form.fecha }}
+            {{ form.fecha.errors }}
+        </div>
+
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check-circle"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:comunicados' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

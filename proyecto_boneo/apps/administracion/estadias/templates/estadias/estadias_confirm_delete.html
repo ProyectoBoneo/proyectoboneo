@@ -1,13 +1,13 @@
-{% extends 'aula_virtual/base.html' %}
-{% block title %}Eliminar material{% endblock %}
+{% extends 'administracion/base.html' %}
+{% block title %}Eliminar estadias{% endblock %}
 {% block content %}
-    <form method="post" action=".">
+    <form method="post" action="">
         {% csrf_token %}
-        <p>¿Desea eliminar el material "{{ object }}"?</p>
+        <p>¿Desea eliminar la estadia "{{ object }}"?</p>
         <button type="submit" class="btn btn-danger">
             <i class="fa fa-trash"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'aula_virtual:materiales' %}">
+        <a class="btn btn-default" href="{% url 'administracion:estadias' %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>

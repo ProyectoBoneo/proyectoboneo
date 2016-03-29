@@ -1,0 +1,14 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Eliminar siolicitud de material{% endblock %}
+{% block content %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        <p>¿Desea eliminar la solicitud de material "{{ object }}"?</p>
+        <button type="submit" class="btn btn-danger">
+            <i class="fa fa-trash"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'aula_virtual:ver_solicitudes' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

@@ -37,10 +37,13 @@ PROJECT_APPS = ('gutils',
                 'gutils.django.apps.utils',
                 'proyecto_boneo.apps.administracion.alumnos',
                 'proyecto_boneo.apps.administracion.personal',
+                'proyecto_boneo.apps.administracion.comunicados',
                 'proyecto_boneo.apps.administracion.planes',
                 'proyecto_boneo.apps.administracion.usuarios',
+                'proyecto_boneo.apps.administracion.tutorias',
+                'proyecto_boneo.apps.administracion.estadias',
                 'proyecto_boneo.apps.aula_virtual.biblioteca',
-                'proyecto_boneo.apps.aula_virtual.clases',
+                'proyecto_boneo.apps.aula_virtual.clases'
                 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS

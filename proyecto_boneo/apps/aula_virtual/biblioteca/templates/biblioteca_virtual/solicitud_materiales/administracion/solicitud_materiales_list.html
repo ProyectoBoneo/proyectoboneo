@@ -1,0 +1,62 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Solicitudes de Materiales{% endblock %}
+{% block content %}
+    <h3>Solicitudes de Materiales</h3>
+    {% if filter_form %}
+        <form action="." method="get" class="margin-bottom-2x">
+            <div class="form-group">
+                        {{ filter_form.descripcion.label_tag }}
+                        {{ filter_form.descripcion }}
+            </div>
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-filter"></i> Filtrar
+            </button>
+        </form>
+    {% endif %}
+
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Descripción</th>
+                    <th>Solicitante</th>
+                    <th>Material</th>
+                    <th>Aceptada</th>
+                    <th>Motivo de rechazo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for solicitud_material in object_list %}
+                    <tr>
+                        <td>{{ solicitud_material.id }}</td>
+                        <td>{{ solicitud_material.descripcion }}</td>
+                        <td>{{ solicitud_material.solicitante }}</td>
+                        <td>
+                            {% if solicitud_material.material != None %}
+                                <a  href="{% url 'aula_virtual:ver_material' solicitud_material.material.id %}">
+                                    {{ solicitud_material.material|default_if_none:"" }}
+                                </a>
+                            {% else %}
+                                    {{ solicitud_material.material|default_if_none:"" }}
+                            {%endif%}
+                        </td>
+                        <td>
+                            {% if solicitud_material.aceptada %}
+                                <i class="fa fa-check-circle text-success"></i>
+                            {% elif solicitud_material.aceptada == False and solicitud_material.motivo_rechazo != None %}
+                                <i class="fa fa-times-circle text-danger"></i>
+                            {% else %}
+                                <i class="fa fa-circle"></i>
+                            {% endif %}
+                        </td>
+                        <td> {{ solicitud_material.motivo_rechazo|default_if_none:"" }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay solicitudes de material disponibles.</p>
+    {% endif %}
+{% endblock %}

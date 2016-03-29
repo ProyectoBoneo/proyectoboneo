@@ -1,0 +1,24 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Estadia{% endblock %}
+{% block content %}
+
+    <h3>Estadia</h3>
+
+        <p>
+            Usuario: {{ object.usuario }}
+        </p>
+        <p>
+            Alumno: {{ object.alumno }}
+        </p>
+        <p>
+            Fecha inicio:{{ object.fecha_inicio }}
+        </p>
+        <p>
+            Fecha fin:{{ object.fecha_fin }}
+        </p>
+
+
+        <a class="btn btn-default" href="{% url 'administracion:estadias' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+{% endblock %}

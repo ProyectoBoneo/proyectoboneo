@@ -2,44 +2,44 @@ from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 
 from . import views
-
+from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_staff
 
 urlpatterns = patterns('',
                        #region alumnos
-                       url(r'^$', login_required(views.AlumnosFilteredListView.as_view()),
+                       url(r'^$', user_is_staff(views.AlumnosFilteredListView.as_view()),
                            name='alumnos'),
 
-                       url(r'^nuevo/$', login_required(views.AlumnosCreateView.as_view()),
+                       url(r'^nuevo/$', user_is_staff(views.AlumnosCreateView.as_view()),
                            name='nuevo_alumno'),
 
                        url(r'^(?P<pk>\d+)/editar/$',
-                           login_required(views.AlumnosUpdateView.as_view()),
+                           user_is_staff(views.AlumnosUpdateView.as_view()),
                            name='editar_alumno'),
 
                        url(r'^(?P<pk>\d+)/eliminar/$',
-                           login_required(views.AlumnosDeleteView.as_view()),
+                           user_is_staff(views.AlumnosDeleteView.as_view()),
                            name='eliminar_alumno'),
 
                        url(r'^(?P<pk>\d+)/inscripciones/$',
-                           login_required(views.AlumnosInscripcionesView.as_view()),
+                           user_is_staff(views.AlumnosInscripcionesView.as_view()),
                            name='inscripciones_alumno'),
                        #endregion
 
                        #region responsables
                        url(r'^responsables/$',
-                           login_required(views.ResponsablesFilteredListView.as_view()),
+                           user_is_staff(views.ResponsablesFilteredListView.as_view()),
                            name='responsables'),
 
                        url(r'^responsables/nuevo/$',
-                           login_required(views.ResponsablesCreateView.as_view()),
+                           user_is_staff(views.ResponsablesCreateView.as_view()),
                            name='nuevo_responsable'),
 
                        url(r'^responsables/(?P<pk>\d+)/editar/$',
-                           login_required(views.ResponsablesUpdateView.as_view()),
+                           user_is_staff(views.ResponsablesUpdateView.as_view()),
                            name='editar_responsable'),
 
                        url(r'^responsables/(?P<pk>\d+)/eliminar/$',
-                           login_required(views.ResponsablesDeleteView.as_view()),
+                           user_is_staff(views.ResponsablesDeleteView.as_view()),
                            name='eliminar_responsable'),
                        #endregion
                        )

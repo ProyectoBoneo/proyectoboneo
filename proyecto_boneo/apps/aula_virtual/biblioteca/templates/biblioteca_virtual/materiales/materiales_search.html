@@ -1,0 +1,52 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Materiales{% endblock %}
+{% block content %}
+    <h3>Materiales</h3>
+    {% if filter_form %}
+        <form action="." method="get" class="margin-bottom-2x">
+            <div class="form-group">
+                        {{ filter_form.descripcion.label_tag }}
+                        {{ filter_form.descripcion }}
+            </div>
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-filter"></i> Filtrar
+            </button>
+            <a href="{% url 'aula_virtual:biblioteca_home' %}" type="submit" class="btn btn-default">
+                <i class="fa fa-arrow-left"></i> Volver
+            </a>
+        </form>
+    {% endif %}
+
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Descripción</th>
+                    <th>Observaciones</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for material in object_list %}
+                    <tr>
+                        <td>{{ material.id }}</td>
+                        <td>{{ material.descripcion }}</td>
+                        <td>{{ material.observaciones }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'aula_virtual:ver_material' material.id %}">
+                                <i class="fa fa-eye"></i> Ver
+                            </a>
+                            <a class="btn btn-primary" href="{{ material.archivo.url }}" download="{{ material.descripcion }}">
+                                <i class="fa fa-download"></i> Descargar
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay materiales disponibles.</p>
+    {% endif %}
+{% endblock %}

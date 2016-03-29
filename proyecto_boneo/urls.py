@@ -1,4 +1,6 @@
 from django.conf.urls import include, url
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from gutils.django.forms.typeahead.views import TypeaheadAddModelView, TypeaheadView
@@ -30,4 +32,7 @@ project_patterns = [
     url(r'aula_virtual/', include('proyecto_boneo.apps.aula_virtual.urls', namespace='aula_virtual'))
 ]
 
-urlpatterns = auth_patterns + typeahead_patterns + project_patterns
+media_patterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+urlpatterns = auth_patterns + typeahead_patterns + project_patterns + media_patterns
