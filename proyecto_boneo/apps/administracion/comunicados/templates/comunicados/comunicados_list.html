@@ -33,6 +33,7 @@
             <thead>
                 <tr>
                     <th>Fecha</th>
+                    <th>Asunto</th>
                     <th>Emisor</th>
 {#                    <th>Destinatarios</th>#}
                     <th style="width:50%;">Mensaje</th>
@@ -49,11 +50,13 @@
                 {% for comunicado in object_list %}
                     <tr>
                         <td>{{ comunicado.fecha|date:"SHORT_DATE_FORMAT"}}</td>
+                        <td>{{ comunicado.asunto }}</td>
                         <td>{{ comunicado.emisor }}</td>
 {#                        <td>#}
 {#                            {% for destinatario in comunicado.destinatarios.all %} {{ destinatario }}<br/>{% endfor %}#}
 {#                        </td>#}
                         <td>{{ comunicado.mensaje }}</td>
+
                         {% if activateViewingButtons %}
                             <td>
                                 <a class="btn btn-default" href="{% url 'administracion:ver_comunicado' comunicado.id %}">

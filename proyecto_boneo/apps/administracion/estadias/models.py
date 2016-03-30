@@ -14,3 +14,6 @@ class Estadia(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.usuario, self.alumno)
+
+# TODO: Tener un cupo configurado y que no deje mas estadias del cupo maximo
+# TODO: Falta avisar al responsable o personal administrativo que falta poco para que termine la estadia

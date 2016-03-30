@@ -41,8 +41,13 @@ class SolicitudMaterial(BaseMaterial):
 
     def __str__(self):
         return self.descripcion
+# TODO: Ver las solicitudes que puedan aceptarse sin subir el material. Hacer una vista de
+# solicitudes aceptadas sin material
+
 
 # class MaterialAlumno(models.Model):
 #     usuario = models.ForeignKey(UsuarioBoneo, related_name='materialpersonas')
 #     material = models.ForeignKey(Material, related_name='materialpersonas')
 #     marked_as_pinned = models.BooleanField()
+
+# //TODO:Desplegar por ano en la barra lateral de la biblioteca
