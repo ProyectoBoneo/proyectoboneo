@@ -30,6 +30,7 @@
                 <ul>
                     {% if user.is_staff %}
                         <li><a href="{% url 'aula_virtual:home_administracion' %}">Administracion</a></li>
+                        <li><a href="{% url 'aula_virtual:clases_virtuales' %}">Clases Virtuales</a></li>
                     {% endif %}
                     {% if user.is_alumno %}
                         <li><a href="{% url 'aula_virtual:biblioteca_home' %}">Biblioteca</a></li>

@@ -30,6 +30,7 @@ class MaterialesFilteredListView(FilteredListView):
         context['user'] = self.request.user
         return context
 
+
 class MaterialesSearchFilteredListView(FilteredListView):
     form_class = forms.MaterialSearchFilterForm
     model = models.Material
@@ -39,6 +40,7 @@ class MaterialesSearchFilteredListView(FilteredListView):
         context = super(MaterialesSearchFilteredListView, self).get_context_data(**kwargs)
         context['user'] = self.request.user
         return context
+
 
 class MaterialesAdminFilteredListView(FilteredListView):
     form_class = forms.MaterialFilterForm
@@ -208,6 +210,7 @@ class SolicitudMaterialesAdminFilteredListView(FilteredListView):
         context = super(SolicitudMaterialesAdminFilteredListView, self).get_context_data(**kwargs)
         context['user'] = self.request.user
         return context
+
 
 class SolicitudMaterialesAlumnoFilteredListView(ListView):
     form_class = forms.SolicitudMaterialFilterForm

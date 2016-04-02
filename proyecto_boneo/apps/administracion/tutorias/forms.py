@@ -12,7 +12,6 @@ class TutoriaForm(BaseModelForm):
         model = models.Tutoria
         exclude = []
         labels = {}
-        # widgets = {'destinatarios': forms.CheckboxSelectMultiple}
 
 
 class EncuentroTutoriaForm(BaseModelForm):
@@ -21,7 +20,6 @@ class EncuentroTutoriaForm(BaseModelForm):
         model = models.EncuentroTutoria
         exclude = []
         labels = {}
-        # widgets = {'destinatarios': forms.CheckboxSelectMultiple}
 
 
 class EncuentroTutoriaForTutoriaForm(BaseModelForm):
@@ -30,4 +28,3 @@ class EncuentroTutoriaForTutoriaForm(BaseModelForm):
         model = models.EncuentroTutoria
         exclude = ['tutoria']
         labels = {}
-        # widgets = {'destinatarios': forms.CheckboxSelectMultiple}

@@ -1,0 +1,46 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Clases virtuales{% endblock %}
+{% block content %}
+    <h3>Clase Virtual</h3>
+
+        <p>
+            Nombre: {{ object.nombre }}
+        </p>
+        <p>
+            Materia: {{ object.materia }}
+        </p>
+        <p>
+            Descripcion:{{ object.descripcion }}
+        </p>
+
+    <a class="btn btn-success" href="{% url 'aula_virtual:nuevo_ejercicio' object.id %}">
+        <i class="fa fa-plus-circle"></i>  Nuevo ejercicio
+    </a>
+
+    <table class="table">
+        <thead>
+            <th>Titulo</th>
+        </thead>
+        <tbody>
+            {% for ejercicio in object.ejercicios.all %}
+                <tr>
+                    <td>{{ ejercicio.titulo }}</td>
+                    <td>
+                        <a class="btn btn-default" href="{% url 'aula_virtual:editar_ejercicio' ejercicio.id %}">
+                            <i class="fa fa-edit"></i> Editar
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_ejercicio' ejercicio.id %}">
+                            <i class="fa fa-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
+        <i class="fa fa-arrow-circle-left"></i>  Volver
+    </a>
+{% endblock %}

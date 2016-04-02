@@ -1,0 +1,31 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Clase Virtual{% endblock %}
+{% block content %}
+    <h3>Clase Virtual</h3>
+
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
+            {{ form.nombre.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.materia.label_tag }}
+            {{ form.materia }}
+            {{ form.materia.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
+            {{ form.descripcion.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-plus-circle"></i> Guardar e ir a ejercicios
+        </button>
+        <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}
