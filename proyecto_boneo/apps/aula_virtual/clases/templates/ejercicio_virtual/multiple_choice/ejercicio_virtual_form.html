@@ -10,16 +10,6 @@
             {{ form.pregunta }}
             {{ form.pregunta.errors }}
         </div>
-        <div class="form-group">
-            {{ form.ayuda.label_tag }}
-            {{ form.ayuda }}
-            {{ form.ayuda.errors }}
-        </div>
-        <div class="form-group">
-            {{ form.explicacion.label_tag }}
-            {{ form.explicacion }}
-            {{ form.explicacion.errors }}
-        </div>
         <fieldset>
             <legend>Opcion</legend>
             {{ opcion_formset.management_form }}
@@ -36,6 +26,17 @@
                 </div>
             {% endfor %}
         </fieldset>
+        <div class="form-group">
+            {{ form.ayuda.label_tag }}
+            {{ form.ayuda }}
+            {{ form.ayuda.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.explicacion.label_tag }}
+            {{ form.explicacion }}
+            {{ form.explicacion.errors }}
+        </div>
+
         <button type="submit" class="btn btn-success">
             <i class="fa fa-plus-circle"></i> Guardar
         </button>
