@@ -1,6 +1,51 @@
 {% extends 'aula_virtual/base.html' %}
 {% block title %}Clases virtuales{% endblock %}
 {% block content %}
+    <script>
+        const creationUrls = {
+            'texto':'{% url 'aula_virtual:nuevo_ejercicio_texto' object.id %}',
+            'multiple_choice':'{% url 'aula_virtual:nuevo_ejercicio_multiple_choice' object.id %}'
+        };
+        var calculateEjercicioCreationUrl = function(ejercicio_key){
+            if(creationUrls.hasOwnProperty(ejercicio_key)){
+                return creationUrls[ejercicio_key];
+            }
+            else{
+                return '';
+            }
+        };
+
+        var setEjercicioCreationButton = function($button,newHref){
+            if(newHref){
+                $button.attr('href', newHref);
+            }
+        };
+
+        $(document).ready(function(){
+            var $tipoEjercicioSelect = $("#id_tipo_ejercicio");
+            var $tipoEjercicioCrearBtn = $("#btn_crear_tipo_ejercicio");
+
+            const defaultTipoKey = $tipoEjercicioSelect.val();
+
+            setEjercicioCreationButton(
+                    $tipoEjercicioCrearBtn,
+                    calculateEjercicioCreationUrl(defaultTipoKey)
+            );
+
+            $tipoEjercicioSelect.on('change', function() {
+              var newUrl = calculateEjercicioCreationUrl(this.value);
+                if(newUrl != null && newUrl != ''){
+                    $tipoEjercicioCrearBtn.attr('disabled', false);
+                    setEjercicioCreationButton($tipoEjercicioCrearBtn,newUrl);
+                }
+                else{
+                    $tipoEjercicioCrearBtn.attr('disabled', true);
+                }
+
+            });
+        });
+    </script>
+
     <h3>Clase Virtual</h3>
 
         <p>
@@ -12,19 +57,38 @@
         <p>
             Descripcion:{{ object.descripcion }}
         </p>
+    <div class="row">
+        <div class="col-sm-8">
+                <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
 
-    <a class="btn btn-success" href="{% url 'aula_virtual:nuevo_ejercicio' object.id %}">
-        <i class="fa fa-plus-circle"></i>  Nuevo ejercicio
-    </a>
+            {{ tipo_ejercicio_form.tipo_ejercicio.label_tag }}
+            <div class="input-group">
+                {{ tipo_ejercicio_form.tipo_ejercicio }}
+                {{ tipo_ejercicio_form.tipo_ejercicio.errors }}
+                <div class="input-group-btn">
+                    <a class="btn btn-success" id="btn_crear_tipo_ejercicio" href="#">
+                        <i class="fa fa-plus-circle"></i>
+                    </a>
+                </div>
+            </div>
+    </form>
+        </div>
+    </div>
+
+
 
     <table class="table">
         <thead>
-            <th>Titulo</th>
+            <th>Ejercicio</th>
         </thead>
         <tbody>
             {% for ejercicio in object.ejercicios.all %}
                 <tr>
-                    <td>{{ ejercicio.titulo }}</td>
+                    <td>
+                        {{ ejercicio.ejerciciovirtualtexto }}
+                        {{ ejercicio.ejerciciovirtualmultiplechoice }}
+                    </td>
                     <td>
                         <a class="btn btn-default" href="{% url 'aula_virtual:editar_ejercicio' ejercicio.id %}">
                             <i class="fa fa-edit"></i> Editar

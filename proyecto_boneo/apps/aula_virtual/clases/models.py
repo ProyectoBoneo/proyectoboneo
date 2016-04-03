@@ -12,23 +12,25 @@ class ClaseVirtual(models.Model):
     descripcion = models.CharField(max_length=100)
 
 class EjercicioVirtual(models.Model):
-    titulo = models.CharField(max_length=30)
     clase_virtual = models.ForeignKey(ClaseVirtual, related_name='ejercicios')
+    orden_prioridad = models.IntegerField(null=True, blank=True)
 
-    def __str__(self):
-        return '{}'.format(self.titulo)
 
 class EjercicioVirtualTexto(EjercicioVirtual):
     ayuda = models.TextField(null=True, blank=True)
     consigna = models.CharField(max_length=100)
-    orden_prioridad = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return '{}'.format(self.consigna)
 
 
 class EjercicioVirtualMultipleChoice(EjercicioVirtual):
     ayuda = models.TextField(null=True, blank=True)
     pregunta = models.CharField(max_length=100)
     explicacion = models.TextField(null=True, blank=True)
-    orden_prioridad = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return '{}'.format(self.pregunta)
 
 
 class OpcionEjercicioMultipleChoice(models.Model):

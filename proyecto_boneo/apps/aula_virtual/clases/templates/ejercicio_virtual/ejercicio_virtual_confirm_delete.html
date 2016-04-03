@@ -3,7 +3,8 @@
 {% block content %}
     <form method="post" action="">
         {% csrf_token %}
-        <p>¿Desea eliminar el ejercicio virtual "{{ object }}"?</p>
+        <p>¿Desea eliminar el ejercicio virtual "{{ ejercicio.ejerciciovirtualtexto }}
+                        {{ ejercicio.ejerciciovirtualmultiplechoice }}"?</p>
         <button type="submit" class="btn btn-danger">
             <i class="fa fa-trash"></i> Confirmar
         </button>

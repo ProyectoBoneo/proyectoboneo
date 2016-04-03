@@ -12,6 +12,7 @@ class CreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateView, self).get_context_data(**kwargs)
         context['user'] = self.request.user
+        context['kwargs'] = self.kwargs
         return context
 
 

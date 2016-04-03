@@ -69,7 +69,7 @@ class ComunicadoDetailView(DetailView):
 
     def form_valid(self, form):
         form.instance.emisor = self.request.user
-        return super(ComunicadoCreateView, self).form_valid(form)
+        return super(ComunicadoDetailView, self).form_valid(form)
 
 
 class ComunicadoUpdateView(UpdateView):
