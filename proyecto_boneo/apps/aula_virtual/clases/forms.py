@@ -70,3 +70,15 @@ class TipoEjercicioForm(BaseForm):
     )
 
 
+class RespuestaEjercicioVirtualTextoForm(BaseModelForm):
+    class Meta:
+        model = models.RespuestaEjercicioVirtualTexto
+        fields=['texto']
+        labels = {}
+
+
+class RespuestaEjercicioVirtualMultipleChoiceForm(BaseModelForm):
+    class Meta:
+        model = models.RespuestaEjercicioVirtualMultipleChoice
+        fields=['opcion_seleccionada']
+        labels = {}

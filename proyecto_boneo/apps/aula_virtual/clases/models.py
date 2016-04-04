@@ -10,10 +10,26 @@ class ClaseVirtual(models.Model):
     materia = models.ForeignKey(Materia, related_name='clases_virtuales')
     nombre = models.CharField(max_length=30, default="Clase")
     descripcion = models.CharField(max_length=100)
+    # primer_ejercicio = models.ForeignKey(EjercicioVirtual, null=True, blank=True)
+
 
 class EjercicioVirtual(models.Model):
     clase_virtual = models.ForeignKey(ClaseVirtual, related_name='ejercicios')
     orden_prioridad = models.IntegerField(null=True, blank=True)
+    # ejercicio_siguiente = models.ForeignKey('self', null=True, blank=True, related_name='ejercicio_anterior')
+
+    def is_ejercicio_virtual_multiple_choice(self):
+        return hasattr(self,'ejerciciovirtualmultiplechoice')
+
+    def is_ejercicio_virtual_texto(self):
+        return hasattr(self,'ejerciciovirtualtexto')
+
+    def ejercicio_instance(self):
+        if (self.is_ejercicio_virtual_multiple_choice()):
+            return self.ejerciciovirtualmultiplechoice
+        elif(self.is_ejercicio_virtual_texto()):
+            return self.ejerciciovirtualtexto
+        return
 
 
 class EjercicioVirtualTexto(EjercicioVirtual):

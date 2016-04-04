@@ -20,8 +20,13 @@ clases_virtuales_patterns = [
        name='editar_clase_virtual'),
 
    url(r'^eliminar/(?P<pk>\d+)/$', user_is_profesor(views.ClaseVirtualDeleteView.as_view()),
-       name='eliminar_clase_virtual')
+       name='eliminar_clase_virtual'),
 
+   url(r'^ingresar/(?P<pk>\d+)/$', login_required(views.ClaseVirtualIngresarDetailView.as_view()),
+        name='ingresar_clase_virtual'),
+
+   url(r'^resolver/(?P<pk>\d+)/$', login_required(views.ClaseVirtualResolverEjercicioView.as_view()),
+        name='resolver_ejercicio')
 ]
 
 ejercicios_patterns = [

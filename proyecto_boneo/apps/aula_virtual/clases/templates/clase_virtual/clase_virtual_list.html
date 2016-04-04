@@ -32,6 +32,11 @@
                         <td>{{ clase_virtual.materia }}</td>
                         <td>{{ clase_virtual.descripcion }}</td>
                             <td>
+                                <a class="btn btn-default" href="{% url 'aula_virtual:ingresar_clase_virtual' clase_virtual.id %}">
+                                    <i class="fa fa-eye"></i> Ingresar
+                                </a>
+                            </td>
+                            <td>
                                 <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' clase_virtual.id %}">
                                     <i class="fa fa-eye"></i> Ver
                                 </a>
