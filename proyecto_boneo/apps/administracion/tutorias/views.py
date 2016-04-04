@@ -1,22 +1,20 @@
 from . import forms, models
 
-# Create your views here.
-import datetime
+
 from django.core.urlresolvers import reverse_lazy
-from django.forms import formset_factory, model_to_dict
-from django.shortcuts import render, redirect
+from django.forms import formset_factory
+from django.shortcuts import render
 from gutils.django.views import View
 from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 from proyecto_boneo.apps.administracion.personal.models import Profesor
-from proyecto_boneo.apps.administracion.tutorias.forms import TutoriaForm, EncuentroTutoriaForm, \
-    EncuentroTutoriaForTutoriaForm
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import ListView, CreateView, DetailView, UpdateView, \
-    ProtectedDeleteView
+from proyecto_boneo.apps.administracion.tutorias.forms import EncuentroTutoriaForTutoriaForm
+from gutils.django.views import ListView, CreateView, DetailView, UpdateView, ProtectedDeleteView
 
 
 class TutoriasListView(ListView):
     model = models.Tutoria
     template_name = 'tutorias/tutorias_list.html'
+
 
 class TutoriasAlumnoListView(ListView):
     model = models.Tutoria
@@ -44,9 +42,6 @@ class TutoriaCreateView(CreateView):
 
 
 class TutoriaDetailView(View):
-    # model = models.Tutoria
-    # # success_url = reverse_lazy('administracion:tutorias')
-    # form_class = forms.TutoriaForm
     template_name = 'tutorias/tutorias_view.html'
 
     def get(self, request, *args, **kwargs):
@@ -54,7 +49,7 @@ class TutoriaDetailView(View):
         EncuentroTutoriaFormSet = formset_factory(EncuentroTutoriaForTutoriaForm)
         formset = EncuentroTutoriaFormSet()
         return render(request, self.template_name, {'object': tutoria,
-                                                    'formset':formset,
+                                                    'formset': formset,
                                                     'user': self.request.user
                                                     } )
 
@@ -62,13 +57,9 @@ class TutoriaDetailView(View):
         EncuentroTutoriaFormSet = formset_factory(EncuentroTutoriaForTutoriaForm)
         formset = EncuentroTutoriaFormSet(request.POST, request.FILES)
         tutoria = models.Tutoria.objects.get(pk=self.kwargs['pk'])
-        # check whether it's valid:
         if formset.is_valid():
             for form in formset:
                 if form.is_valid():
-                    # if form.cleaned_data.get('DELETE') and form.instance.pk:
-                    #     form.instance.delete()
-                    # else:
                     instance = form.save(commit=False)
                     instance.tutoria = tutoria
                     instance.save()
@@ -78,17 +69,6 @@ class TutoriaDetailView(View):
                             'formset':formset,
                             'user': self.request.user
                 })
-
-        # if formset.is_valid():
-        #     nueva_tutoria = formset.save()
-
-        # else:
-        #     rechazo_solicitud_form = SolicitudMaterialRechazoForm(instance = solicitud_material)
-        #     return render(request, self.template_name, {'solicitud_material': solicitud_material,
-        #                 'form':form,
-        #                 'rechazo_solicitud_form': rechazo_solicitud_form,
-        #                 'user': self.request.user
-        #                 } )
 
 
 class TutoriaUpdateView(UpdateView):
@@ -118,7 +98,6 @@ class EncuentroTutoriaCreateView(CreateView):
 
 class EncuentroTutoriaDetailView(DetailView):
     model = models.EncuentroTutoria
-    # success_url = reverse_lazy('administracion:encuentrotutorias')
     form_class = forms.EncuentroTutoriaForm
     template_name = 'encuentrotutorias/encuentrotutorias_view.html'
 

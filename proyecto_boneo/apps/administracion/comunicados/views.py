@@ -1,19 +1,9 @@
-from django.shortcuts import get_object_or_404
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView
+from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, ListView, DetailView
 from django.core.urlresolvers import reverse_lazy
 
 from . import forms, models
-from django.views.generic import TemplateView
 
-
-# class MaterialesFilteredListView(FilteredListView):
-#     form_class = forms.MaterialFilterForm
-#     model = models.Material
-#     template_name = 'biblioteca_virtual/materiales/materiales_list.html'
-#
-#
 from proyecto_boneo.apps.administracion.comunicados.models import Comunicado
-from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
 
 
 class ComunicadoListView(ListView):
@@ -63,7 +53,6 @@ class ComunicadoCreateView(CreateView):
 
 class ComunicadoDetailView(DetailView):
     model = models.Comunicado
-    # success_url = reverse_lazy('administracion:comunicados')
     form_class = forms.ComunicadoForm
     template_name = 'comunicados/comunicados_view.html'
 
