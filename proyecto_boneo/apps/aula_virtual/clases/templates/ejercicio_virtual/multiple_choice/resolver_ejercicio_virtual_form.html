@@ -3,10 +3,28 @@
 {% block content %}
     <h3>Ejercicio Virtual</h3>
     <p>{{ ejercicio.pregunta }}</p>
+
     <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="ejercicioId" value="{{ ejercicio.id }}"/>
         <input type="hidden" name="tipoPregunta" value="{{ tipoPregunta }}"/>
+
+         <div class="row">
+            <div class="col-xs-12">
+              <div class="btn-group btn-group-vertical" data-toggle="buttons">
+                 {% for opcion in ejercicio.opciones.all %}
+                     <label class="btn">
+                       <input type="radio" name='opcion_seleccionada'
+                              value="{{ opcion.id }}">
+                         <i class="fa fa-circle-o fa-2x"></i>
+                         <i class="fa fa-check-circle-o fa-2x"></i>
+                         <span>{{ opcion.texto }}</span>
+                     </label>
+                 {% endfor %}
+              </div>
+            </div>
+          </div>
+
         <button type="submit" class="btn btn-success">
             <i class="fa fa-check"></i> Confirmar respuesta
         </button>

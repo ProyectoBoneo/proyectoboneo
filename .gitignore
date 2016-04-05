@@ -2,6 +2,7 @@ __pycache__/
 
 .idea/
 *.pyc
+.pdf
 
 proyecto_boneo/settings/environment_overrides/active.py
 proyecto_boneo/settings/local.py

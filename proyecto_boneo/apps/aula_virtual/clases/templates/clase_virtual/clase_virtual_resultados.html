@@ -1,0 +1,29 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Clases virtuales{% endblock %}
+{% block content %}
+    <script>
+
+    </script>
+
+    <h3>Clase Virtual</h3>
+
+        <p>
+            Nombre: {{ clase_virtual.nombre }}
+        </p>
+        <p>
+            Materia: {{ clase_virtual.materia }}
+        </p>
+        <p>
+            Descripcion:{{ clase_virtual.descripcion }}
+        </p>
+
+    {% for  respuesta in respuestas%}
+        Ejercicio: {{ respuesta.respuesta_instance.ejercicio }}
+        Resultado: {{ respuesta.es_correcta }}
+{#       <p> {% ejercicio_resuelto.ejercicio_instance.respuestas %} </p>#}
+    {% endfor %}
+
+    <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
+        <i class="fa fa-arrow-circle-left"></i>  Volver
+    </a>
+{% endblock %}

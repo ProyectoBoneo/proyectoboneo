@@ -5,18 +5,16 @@ from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 
 
 class ClaseVirtual(models.Model):
-    #  TODO: Agregar criterios de evaluación y puntaje por ejercicio
+    # TODO: Agregar criterios de evaluación y puntaje por ejercicio
     # TODO: Pertenece a un profesor quien la administra o puede ser editada por cualquier profesor
     materia = models.ForeignKey(Materia, related_name='clases_virtuales')
     nombre = models.CharField(max_length=30, default="Clase")
     descripcion = models.CharField(max_length=100)
-    # primer_ejercicio = models.ForeignKey(EjercicioVirtual, null=True, blank=True)
 
 
 class EjercicioVirtual(models.Model):
     clase_virtual = models.ForeignKey(ClaseVirtual, related_name='ejercicios')
     orden_prioridad = models.IntegerField(null=True, blank=True)
-    # ejercicio_siguiente = models.ForeignKey('self', null=True, blank=True, related_name='ejercicio_anterior')
 
     def is_ejercicio_virtual_multiple_choice(self):
         return hasattr(self,'ejerciciovirtualmultiplechoice')
@@ -57,7 +55,21 @@ class OpcionEjercicioMultipleChoice(models.Model):
 
 class RespuestaEjercicioVirtual(models.Model):
     alumno = models.ForeignKey(Alumno, related_name='+')
+    es_correcta = models.NullBooleanField(null=True,default=None)
+    clase_virtual = models.ForeignKey(ClaseVirtual, related_name='+')
 
+    def is_respuesta_virtual_multiple_choice(self):
+        return hasattr(self,'respuestaejerciciovirtualmultiplechoice')
+
+    def is_respuesta_virtual_texto(self):
+        return hasattr(self,'respuestaejerciciovirtualtexto')
+
+    def respuesta_instance(self):
+        if (self.is_respuesta_virtual_multiple_choice()):
+            return self.respuestaejerciciovirtualmultiplechoice
+        elif(self.is_respuesta_virtual_texto()):
+            return self.respuestaejerciciovirtualtexto
+        return
 
 class RespuestaEjercicioVirtualTexto(RespuestaEjercicioVirtual):
     texto = models.TextField()

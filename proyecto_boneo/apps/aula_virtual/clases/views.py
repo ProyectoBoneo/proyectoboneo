@@ -1,14 +1,11 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect
 
 from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView
 from gutils.django.views import View
 from django.core.urlresolvers import reverse_lazy
 
 from . import forms, models
-from django.views.generic import TemplateView
 from proyecto_boneo.apps.aula_virtual.clases.forms import TipoEjercicioForm, OpcionEjercicioVirtualFormSet, \
     RespuestaEjercicioVirtualMultipleChoiceForm, RespuestaEjercicioVirtualTextoForm
 
@@ -45,23 +42,25 @@ class ClaseVirtualIngresarDetailView(DetailView):
     template_name = 'clase_virtual/clase_virtual_ingresar.html'
 
 
-# class ClaseVirtualComenzarView(DetailView):
-#     def get(self, request, *args, **kwargs):
-#         clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk'])
-#             # .prefetch_related('ejercicios__respuestas')
-#         primer_ejercicio = clase_virtual.first().ejercicios.first()
-#         lista_ejercicios = list(clase_virtual.first().ejercicios.all())
-#
-#         print(lista_ejercicios.index(primer_ejercicio))
-#         for ejercicio in lista_ejercicios:
-#             if(hasattr(ejercicio,'ejerciciovirtualmultiplechoice')):
-#                 print(ejercicio.ejerciciovirtualmultiplechoice.respuestas)
-#             elif(hasattr(ejercicio,'ejerciciovirtualtexto')):
-#                 print(ejercicio.ejerciciovirtualtexto.respuestas)
-#         return;
+class ClaseVirtualResultadosView(View):
+    template_name = 'clase_virtual/clase_virtual_resultados.html'
+
+    def get(self, request, *args, **kwargs):
+        clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk']).first()
+        try:
+            alumno = self.request.user.alumno
+        except :
+            alumno = models.Alumno.objects.first()
+        respuestas = models.RespuestaEjercicioVirtual.objects.filter(clase_virtual=clase_virtual)\
+            .filter(alumno=alumno)
+        return render(request, self.template_name, {
+                            'clase_virtual':clase_virtual,
+                            'respuestas': respuestas
+                            })
+
+
 
 class ClaseVirtualResolverEjercicioView(View):
-
      def post(self, request, *args, **kwargs):
         clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk'])
         ejercicio_a_resolver = None
@@ -69,6 +68,7 @@ class ClaseVirtualResolverEjercicioView(View):
         template_to_render = None
         ejercicio_to_render = None
         tipoPreguntaToRender = None
+        es_correcta = None
         if('ejercicioId' in request.POST and 'tipoPregunta' in request.POST):
             form = None
             ejercicio_resuelto = None
@@ -77,17 +77,21 @@ class ClaseVirtualResolverEjercicioView(View):
                 ejercicio_resuelto = models.EjercicioVirtualTexto.objects.filter(id=request.POST['ejercicioId'])
                 template_to_render = 'ejercicio_virtual/texto/resolver_ejercicio_virtual_form.html'
                 tipoPreguntaToRender = 'texto'
+                es_correcta = None
             elif(request.POST['tipoPregunta'] == 'multiple_choice'):
                 template_to_render = 'ejercicio_virtual/multiple_choice/resolver_ejercicio_virtual_form.html'
                 tipoPreguntaToRender = 'multiple_choice'
                 form = RespuestaEjercicioVirtualMultipleChoiceForm(request.POST, request.FILES)
                 ejercicio_resuelto = models.EjercicioVirtualMultipleChoice.objects.filter(id=request.POST['ejercicioId'])
+                es_correcta = form.instance.opcion_seleccionada.opcion_correcta
             if form.is_valid():
                 try:
                     form.instance.alumno = self.request.user.alumno
                 except :
                     form.instance.alumno = models.Alumno.objects.first()
                 form.instance.ejercicio = ejercicio_resuelto.first()
+                form.instance.clase_virtual = clase_virtual.first()
+                form.instance.es_correcta = es_correcta
                 nueva_respuesta = form.save()
                 id_list = list(clase_virtual.first().ejercicios.values_list('id', flat=True))
                 try:
@@ -101,10 +105,12 @@ class ClaseVirtualResolverEjercicioView(View):
                                             'ejercicio': ejercicio_resuelto.first(),
                                             'tipoPregunta': tipoPreguntaToRender,
                                             'user': self.request.user
-                                            } )
+                                            })
         else:
             ejercicio_a_resolver = clase_virtual.first().ejercicios.first()
-        if(ejercicio_a_resolver.is_ejercicio_virtual_multiple_choice()):
+        if(ejercicio_a_resolver == None):
+            return redirect('aula_virtual:resultados_clase_virtual', pk=clase_virtual.first().id)
+        elif(ejercicio_a_resolver.is_ejercicio_virtual_multiple_choice()):
             form_to_render = RespuestaEjercicioVirtualMultipleChoiceForm()
             template_to_render = 'ejercicio_virtual/multiple_choice/resolver_ejercicio_virtual_form.html'
             ejercicio_to_render = ejercicio_a_resolver.ejercicio_instance()
@@ -122,7 +128,6 @@ class ClaseVirtualResolverEjercicioView(View):
                                             } )
 
 
-
 class ClaseVirtualUpdateView(UpdateView):
     model = models.ClaseVirtual
     form_class = forms.ClaseVirtualForm
@@ -134,7 +139,7 @@ class ClaseVirtualUpdateView(UpdateView):
 
 class ClaseVirtualDeleteView(ProtectedDeleteView):
     model = models.ClaseVirtual
-    success_url = reverse_lazy('aula_virtual:clase_virtual')
+    success_url = reverse_lazy('aula_virtual:clases_virtuales')
     template_name = 'clase_virtual/clase_virtual_confirm_delete.html'
 
 
@@ -171,19 +176,10 @@ class EjercicioVirtualMultipleChoiceCreateView(CreateView):
     form_class = forms.EjercicioVirtualMultipleChoiceForm
     template_name = 'ejercicio_virtual/multiple_choice/ejercicio_virtual_form.html'
 
-    # def form_valid(self, form):
-    #     clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['claseid'])
-    #     form.instance.clase_virtual = clase_virtual
-    #     return super(EjercicioVirtualMultipleChoiceCreateView, self).form_valid(form)
-
     def get_success_url(self):
         return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.clase_virtual.id})
 
     def get(self, request, *args, **kwargs):
-        """
-        Handles GET requests and instantiates blank versions of the form
-        and its inline formsets.
-        """
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -193,11 +189,6 @@ class EjercicioVirtualMultipleChoiceCreateView(CreateView):
                                   opcion_formset=opcion_formset))
 
     def post(self, request, *args, **kwargs):
-        """
-        Handles POST requests, instantiating a form instance and its inline
-        formsets with the passed POST variables and then checking them for
-        validity.
-        """
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -208,11 +199,6 @@ class EjercicioVirtualMultipleChoiceCreateView(CreateView):
             return self.form_invalid(form, opcion_formset)
 
     def form_valid(self, form, opcion_formset):
-        """
-        Called if all forms are valid. Creates a Recipe instance along with
-        associated Ingredients and Instructions and then redirects to a
-        success page.
-        """
         clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['claseid'])
         form.instance.clase_virtual = clase_virtual
         self.object = form.save()
@@ -222,10 +208,6 @@ class EjercicioVirtualMultipleChoiceCreateView(CreateView):
         # return super(EjercicioVirtualMultipleChoiceCreateView, self).form_valid(form)
 
     def form_invalid(self, form, opcion_formset):
-        """
-        Called if a form is invalid. Re-renders the context data with the
-        data-filled forms and errors.
-        """
         return self.render_to_response(
             self.get_context_data(form=form,
                                   opcion_formset=opcion_formset))

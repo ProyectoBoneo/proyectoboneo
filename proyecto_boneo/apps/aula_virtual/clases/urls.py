@@ -26,7 +26,10 @@ clases_virtuales_patterns = [
         name='ingresar_clase_virtual'),
 
    url(r'^resolver/(?P<pk>\d+)/$', login_required(views.ClaseVirtualResolverEjercicioView.as_view()),
-        name='resolver_ejercicio')
+        name='resolver_ejercicio'),
+
+    url(r'^resultados/(?P<pk>\d+)/$', login_required(views.ClaseVirtualResultadosView.as_view()),
+        name='resultados_clase_virtual')
 ]
 
 ejercicios_patterns = [
