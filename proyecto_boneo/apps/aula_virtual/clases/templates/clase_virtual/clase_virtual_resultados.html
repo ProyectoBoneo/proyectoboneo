@@ -20,7 +20,6 @@
     {% for  respuesta in respuestas%}
         Ejercicio: {{ respuesta.respuesta_instance.ejercicio }}
         Resultado: {{ respuesta.es_correcta }}
-{#       <p> {% ejercicio_resuelto.ejercicio_instance.respuestas %} </p>#}
     {% endfor %}
 
     <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
