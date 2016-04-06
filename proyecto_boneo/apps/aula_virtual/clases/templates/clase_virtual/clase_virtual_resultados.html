@@ -6,7 +6,6 @@
     </script>
 
     <h3>Clase Virtual</h3>
-
         <p>
             Nombre: {{ clase_virtual.nombre }}
         </p>
@@ -16,11 +15,108 @@
         <p>
             Descripcion:{{ clase_virtual.descripcion }}
         </p>
+    <ul class="list-group">
+    {% for  respuesta in respuestas %}
+        <li class="list-group-item borderless">
+            <div class="row list-group-item-header">
+              <div class="col-xs-12">
+                     <h4 class="list-group-item-heading text-success">{{ respuesta.respuesta_instance.ejercicio }}
+                      <small class="pull-right">
+                        {% if respuesta.es_correcta == None %}
+                            <h4 class="list-group-item-heading text-default text-right">No corregida </h4>
+                        {% elif respuesta.es_correcta %}
+                            <h4 class="list-group-item-heading text-success text-right">Correcta <i class="fa fa-check-circle"></i></h4>
+                        {% elif not respuesta.es_correcta %}
+                            <h4 class="list-group-item-heading text-danger text-right">Incorrecta <i class="fa fa-times-circle"></i></h4>
+                        {% else %}
+                            <h4 class="list-group-item-heading text-default text-right">No corregida</h4>
+                        {% endif %}
+                    </small></h4>
+              </div>
+          </div>
 
-    {% for  respuesta in respuestas%}
-        Ejercicio: {{ respuesta.respuesta_instance.ejercicio }}
-        Resultado: {{ respuesta.es_correcta }}
+                    {%  if respuesta.is_respuesta_virtual_multiple_choice  %}
+                        <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2">
+                             <ul class="list-group">
+                                 <a class="list-group-item borderless list-group-item-divider">
+                                     <h6 class="list-group-item-heading "><strong>Opciones disponibles</strong></h6>
+                                 </a>
+
+                                 {% for opcion in respuesta.respuesta_instance.ejercicio.opciones.all  %}
+                                    {% if opcion.opcion_correcta and respuesta.respuesta_instance.opcion_seleccionada == opcion %}
+                                        <a class="list-group-item borderless list-group-item-success">
+                                            <span class="pull-right label label-success">Selecciono la respuesta correcta!</span>
+                                            {{ opcion.texto }}
+                                        </a>
+                                    {% elif opcion.opcion_correcta == True %}
+                                        <a class="list-group-item borderless list-group-item-success">
+                                            <span class="pull-right label label-success">Esta era la respuesta correcta</span>
+                                            {{ opcion.texto }}
+                                        </a>
+                                    {% elif respuesta.respuesta_instance.opcion_seleccionada == opcion %}
+                                        <a class="list-group-item borderless list-group-item-danger">
+                                            <span class="pull-right label label-danger">Esta respuesta es incorrecta.</span>
+                                            {{ opcion.texto }}
+                                        </a>
+                                    {% else %}
+                                        <a class="list-group-item borderless">
+                                            {{ opcion.texto }}
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                      </div>
+                    {% elif respuesta.is_respuesta_virtual_texto  %}
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+
+                                <ul class="list-group">
+                                    <li class="list-group-item-divider list-group-item">
+                                      <h6 class="list-group-item-heading"><strong>Mi respuesta</strong></h6>
+                                    </li>
+                                    <li class="list-group-item borderless">
+
+                                      <p class="list-group-item-text">
+                                          {{ respuesta.respuesta_instance.texto }}
+                                      </p>
+                                    </li>
+                                  </ul>
+                            </div>
+                        </div>
+
+
+                    {% endif %}
+{#        <div class="panel#}
+{#        {% if respuesta.es_correcta == None %}#}
+{#                panel-default">#}
+{#        {% elif respuesta.es_correcta %}#}
+{#                panel-success">#}
+{#        {% elif not respuesta.es_correcta %}>#}
+{#                panel-danger">#}
+{#        {% else %}#}
+{#                bg-default">#}
+{#        {% endif %}#}
+          <!-- Default panel contents -->
+{#          <div class="panel-heading">#}
+
+{#          </div>#}
+
+          <!-- Table -->
+{#          <table class="table">#}
+{#          <thead>#}
+{##}
+{#          </thead>#}
+{#          <tbody>#}
+{##}
+{#          </tbody>#}
+{#          </table>#}
+{#        </div>#}
+        </li>
     {% endfor %}
+    </ul>
 
     <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
         <i class="fa fa-arrow-circle-left"></i>  Volver
