@@ -15,5 +15,8 @@ urlpatterns = [
 
    url(r'^ver/(?P<pk>\d+)/$', login_required(views.ComunicadoDetailView.as_view()),
        name='ver_comunicado'),
+
+   url(r'^pendientes/$', login_required(views.ComunicadoPendientes.as_view()),
+       name='comunicados_pendientes'),
 ]
 

@@ -1,8 +1,9 @@
 import datetime
+import json
 
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import redirect, render
-from gutils.django.views import CreateView, ListView, DetailView
+from django.shortcuts import redirect, render, HttpResponse
+from gutils.django.views import CreateView, ListView, DetailView, View
 
 from proyecto_boneo.apps.aula_virtual.comunicados.models import Comunicado, DestinatarioComunicado
 from . import forms, models
@@ -14,7 +15,7 @@ class ComunicadoRecibidoListView(ListView):
     template_name = 'comunicados/comunicados_list.html'
 
     def get_queryset(self):
-        return Comunicado.objects.filter(destinatarios__id=self.request.user.id)
+        return Comunicado.objects.filter(destinatarios__id=self.request.user.id).order_by('-fecha')
 
     def get_context_data(self, **kwargs):
         context = super(ComunicadoRecibidoListView, self).get_context_data(**kwargs)
@@ -28,7 +29,7 @@ class ComunicadoEnviadoListView(ListView):
     template_name = 'comunicados/comunicados_list.html'
 
     def get_queryset(self):
-        return Comunicado.objects.filter(emisor=self.request.user)
+        return Comunicado.objects.filter(emisor=self.request.user).order_by('-fecha')
 
     def get_context_data(self, **kwargs):
         context = super(ComunicadoEnviadoListView, self).get_context_data(**kwargs)
@@ -73,3 +74,13 @@ class ComunicadoDetailView(DetailView):
         except DestinatarioComunicado.DoesNotExist:
             pass
         return comunicado
+
+
+class ComunicadoPendientes(View):
+
+    def get(self, request, *args, **kwargs):
+        comunicados_no_leidos = DestinatarioComunicado.objects.filter(destinatario=request.user,
+                                                                      fecha_leido=None).count()
+        return HttpResponse(json.dumps({'comunicados_no_leidos': comunicados_no_leidos}),
+                            content_type='application/json',
+                            status=200)
