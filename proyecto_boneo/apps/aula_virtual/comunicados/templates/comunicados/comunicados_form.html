@@ -1,4 +1,4 @@
-{% extends 'administracion/base.html' %}
+{% extends 'utils/base.html' %}
 {% block title %}Comunicado{% endblock %}
 {% block content %}
     <h3>Comunicado</h3>
@@ -14,7 +14,7 @@
 
         });
     </script>
-    <form method="post" action="." enctype="multipart/form-data">
+    <form method="post" action="">
         {% csrf_token %}
         <div class="form-group">
             {{ form.emisor.label_tag }}
@@ -27,7 +27,6 @@
             {{ form.asunto.errors }}
         </div>
         <div id="grp-destinatarios" class="form-group hidden">
-{#            {{ form.destinatarios.label_tag }}#}
             {{ form.destinatarios }}
             {{ form.destinatarios.errors }}
         </div>
@@ -46,7 +45,7 @@
         <button type="submit" class="btn btn-success">
             <i class="fa fa-check-circle"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'administracion:comunicados' %}">
+        <a class="btn btn-default" href="{% url 'aula_virtual:comunicados_recibidos' %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>
