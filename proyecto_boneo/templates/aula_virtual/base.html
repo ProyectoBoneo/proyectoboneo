@@ -37,7 +37,6 @@
                     {% endif %}
 
                     {% if user.is_staff or user.is_profesor %}
-
                         <li><a href="{% url 'aula_virtual:materiales_admin' %}">Materiales</a></li>
                         <li><a href="{% url 'aula_virtual:ver_solicitudes_pendientes_admin' %}">Solicitudes de Material</a></li>
                     {% endif %}

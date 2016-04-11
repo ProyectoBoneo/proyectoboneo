@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{%  block title %}Proyecto Boneo{%  endblock %}</title>
+    <title>{% block title %}Proyecto Boneo{%  endblock %}</title>
 
     {% include 'utils/common_styles.html' %}
 
@@ -24,9 +24,9 @@
 </head>
 <body>
     <div class="page-header">
-        <span class="page-header-title">Proyecto Boneo</span>
+        <span class="page-header-title"><a href="{% url 'home' %}">Proyecto Boneo</a></span>
     </div>
-    <div id="content">
+    <div id="content" class="container">
         {% block content %}
         {%  endblock %}
     </div>

@@ -1,0 +1,46 @@
+{% extends 'utils/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <h3>{{ title }}</h3>
+
+    <div class="btn-toolbar" role="group">
+         <a class="btn btn-primary" href="{% url 'aula_virtual:nuevo_comunicado' %}">
+            <i class="fa fa-plus-circle"></i> Nuevo
+         </a>
+         <a class="btn btn-default" href="{% url 'aula_virtual:comunicados_recibidos' %}">
+            <i class="fa fa-arrow-circle-left"></i> Recibidos
+         </a>
+         <a class="btn btn-default" href="{% url 'aula_virtual:comunicados_enviados' %}">
+            <i class="fa fa-arrow-circle-right"></i> Enviados
+         </a>
+    </div>
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Asunto</th>
+                    <th>Emisor</th>
+                    <th style="width:50%;">Mensaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comunicado in object_list %}
+                    <tr>
+                        <td>{{ comunicado.fecha }}</td>
+                        <td>{{ comunicado.asunto }}</td>
+                        <td>{{ comunicado.emisor }}</td>
+                        <td>{{ comunicado.mensaje }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'aula_virtual:ver_comunicado' comunicado.id %}">
+                                <i class="fa fa-eye"></i> Ver
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No se encontraron comunicados</p>
+    {% endif %}
+{% endblock %}

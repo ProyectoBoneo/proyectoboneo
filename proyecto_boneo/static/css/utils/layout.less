@@ -104,3 +104,35 @@
 .valign-bottom {
     vertical-align: bottom;
 }
+
+.comunicados-link {
+    float: right;
+    font-size: 35px;
+    color: white;
+    padding: 25px;
+
+    a {
+        position: relative;
+        text-decoration: none;
+        color: white;
+
+        &:hover, &:active, &:focus, &:visited {
+            text-decoration: none;
+            color: white;
+        }
+
+        .notification-comunicados {
+            position:absolute;
+            top: -6px;
+            right:-6px;
+            padding:1px 2px 1px 2px;
+            background-color:red;
+            color:white;
+            font-weight:bold;
+            font-size: 15px;
+
+            border-radius:30px;
+            box-shadow:1px 1px 1px gray;
+        }
+    }
+}

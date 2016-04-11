@@ -1,0 +1,24 @@
+{% extends 'utils/base.html' %}
+{% block title %}Comunicado{% endblock %}
+{% block content %}
+    <h3>Comunicado</h3>
+    <h4>Fecha</h4>
+    <div>{{ object.fecha }}</div>
+    <h4>Asunto</h4>
+    <div>{{ object.asunto }}</div>
+    <h4>Emisor</h4>
+    <div>{{ object.emisor }}</div>
+    {% if request.user == object.emisor and object.destinatarios.all %}
+    <h4>Destinatarios</h4>
+    <ul>
+        {% for destinatario in object.destinatarios.all %}
+            <li>{{ destinatario }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h4>Mensaje</h4>
+    <div>{{ object.mensaje }}</div>
+    <a class="btn btn-default" href="{% url 'aula_virtual:comunicados_recibidos' %}">
+        <i class="fa fa-arrow-circle-left"></i>  Volver
+    </a>
+{% endblock %}
