@@ -303,7 +303,6 @@ class EjercicioVirtualMultipleChoiceUpdateView(UpdateView):
 
     def form_valid(self, form, opcion_formset):
         self.object = form.save()
-        # opcion_formset.instance = self.object
         opcion_formset.save()
         return HttpResponseRedirect(self.get_success_url())
 
