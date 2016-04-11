@@ -40,8 +40,14 @@
         <button type="submit" class="btn btn-success">
             <i class="fa fa-plus-circle"></i> Guardar
         </button>
-        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' kwargs.claseid %}">
+        {% if object %}
+        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' object.clase_virtual.id %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
+        {% else %}
+        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' kwargs.clase_id %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+        {% endif %}
     </form>
 {% endblock %}

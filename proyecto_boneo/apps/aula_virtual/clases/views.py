@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse_lazy
 from . import forms, models
 from proyecto_boneo.apps.aula_virtual.clases.forms import TipoEjercicioForm, OpcionEjercicioVirtualFormSet, \
     RespuestaEjercicioVirtualMultipleChoiceForm, RespuestaEjercicioVirtualTextoForm, \
-    CorregirRespuestaEjercicioVirtualFormSet
+    CorregirRespuestaEjercicioVirtualFormSet, OpcionEjercicioVirtualUpdateFormSet
 
 
 class ClaseVirtualListView(ListView):
@@ -200,7 +200,7 @@ class EjercicioVirtualCreateView(CreateView):
     template_name = 'ejercicio_virtual/ejercicio_virtual_form.html'
 
     def form_valid(self, form):
-        clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['claseid'])
+        clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['clase_id'])
         form.instance.clase_virtual = clase_virtual
         return super(EjercicioVirtualCreateView, self).form_valid(form)
 
@@ -214,9 +214,18 @@ class EjercicioVirtualTextoCreateView(CreateView):
     template_name = 'ejercicio_virtual/texto/ejercicio_virtual_form.html'
 
     def form_valid(self, form):
-        clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['claseid'])
+        clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['clase_id'])
         form.instance.clase_virtual = clase_virtual
         return super(EjercicioVirtualTextoCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.clase_virtual.id})
+
+
+class EjercicioVirtualTextoUpdateView(UpdateView):
+    model = models.EjercicioVirtualTexto
+    form_class=forms.EjercicioVirtualTextoForm
+    template_name = 'ejercicio_virtual/texto/ejercicio_virtual_form.html'
 
     def get_success_url(self):
         return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.clase_virtual.id})
@@ -250,18 +259,59 @@ class EjercicioVirtualMultipleChoiceCreateView(CreateView):
             return self.form_invalid(form, opcion_formset)
 
     def form_valid(self, form, opcion_formset):
-        clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['claseid'])
+        clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['clase_id'])
         form.instance.clase_virtual = clase_virtual
         self.object = form.save()
         opcion_formset.instance = self.object
         opcion_formset.save()
         return HttpResponseRedirect(self.get_success_url())
-        # return super(EjercicioVirtualMultipleChoiceCreateView, self).form_valid(form)
 
     def form_invalid(self, form, opcion_formset):
         return self.render_to_response(
             self.get_context_data(form=form,
                                   opcion_formset=opcion_formset))
+
+
+class EjercicioVirtualMultipleChoiceUpdateView(UpdateView):
+    model = models.EjercicioVirtualMultipleChoice
+    form_class = forms.EjercicioVirtualMultipleChoiceForm
+    template_name = 'ejercicio_virtual/multiple_choice/ejercicio_virtual_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.clase_virtual.id})
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.model.objects.filter(pk= self.kwargs['pk']).first()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        opcion_formset = OpcionEjercicioVirtualUpdateFormSet(instance=self.object)
+        return self.render_to_response(
+            self.get_context_data(form=form,
+                                  opcion_formset=opcion_formset))
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.model.objects.filter(pk= self.kwargs['pk']).first()
+        clase_virtual = models.ClaseVirtual.objects.get(pk= self.object.clase_virtual.id)
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        form.instance.clase_virtual = clase_virtual
+        opcion_formset = OpcionEjercicioVirtualFormSet(self.request.POST, instance = self.object)
+        if (form.is_valid() and opcion_formset.is_valid()):
+            return self.form_valid(form, opcion_formset)
+        else:
+            return self.form_invalid(form, opcion_formset)
+
+    def form_valid(self, form, opcion_formset):
+        self.object = form.save()
+        # opcion_formset.instance = self.object
+        opcion_formset.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, opcion_formset):
+        return self.render_to_response(
+            self.get_context_data(form=form,
+                                  opcion_formset=opcion_formset))
+
 
 class EjercicioVirtualUpdateView(UpdateView):
     model = models.EjercicioVirtual

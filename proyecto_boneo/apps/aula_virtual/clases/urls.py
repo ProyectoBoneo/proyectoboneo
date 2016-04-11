@@ -45,14 +45,17 @@ ejercicios_patterns = [
    # url(r'^(?P<claseid>\d+)/ejercicio/nuevo/$', user_is_profesor(views.EjercicioVirtualCreateView.as_view()),
    #     name='nuevo_ejercicio'),
 
-   url(r'^(?P<claseid>\d+)/ejercicio_texto/nuevo/$', user_is_profesor(views.EjercicioVirtualTextoCreateView.as_view()),
+   url(r'^(?P<clase_id>\d+)/ejercicio_texto/nuevo/$', user_is_profesor(views.EjercicioVirtualTextoCreateView.as_view()),
        name='nuevo_ejercicio_texto'),
 
-   url(r'^(?P<claseid>\d+)/ejercicio_multiple_choice/nuevo/$', user_is_profesor(views.EjercicioVirtualMultipleChoiceCreateView.as_view()),
+   url(r'^(?P<clase_id>\d+)/ejercicio_multiple_choice/nuevo/$', user_is_profesor(views.EjercicioVirtualMultipleChoiceCreateView.as_view()),
        name='nuevo_ejercicio_multiple_choice'),
 
-   url(r'^ejercicio/editar/(?P<pk>\d+)/$', user_is_profesor(views.EjercicioVirtualUpdateView.as_view()),
-       name='editar_ejercicio'),
+   url(r'^ejercicio_texto/editar/(?P<pk>\d+)/$', user_is_profesor(views.EjercicioVirtualTextoUpdateView.as_view()),
+       name='editar_ejercicio_texto'),
+
+   url(r'^ejercicio_multiple_choice/editar/(?P<pk>\d+)/$', user_is_profesor(views.EjercicioVirtualMultipleChoiceUpdateView.as_view()),
+       name='editar_ejercicio_multiple_choice'),
 
    url(r'^ejercicio/eliminar/(?P<pk>\d+)/$', user_is_profesor(views.EjercicioVirtualDeleteView.as_view()),
        name='eliminar_ejercicio')

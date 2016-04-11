@@ -3,12 +3,12 @@
 {% block content %}
     <form method="post" action="">
         {% csrf_token %}
-        <p>¿Desea eliminar el ejercicio virtual "{{ ejercicio.ejerciciovirtualtexto }}
-                        {{ ejercicio.ejerciciovirtualmultiplechoice }}"?</p>
+        <p>¿Desea eliminar el ejercicio virtual "{{ object.ejerciciovirtualtexto }}
+                        {{ object.ejerciciovirtualmultiplechoice }}"?</p>
         <button type="submit" class="btn btn-danger">
             <i class="fa fa-trash"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
+        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' object.clase_virtual.id %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>

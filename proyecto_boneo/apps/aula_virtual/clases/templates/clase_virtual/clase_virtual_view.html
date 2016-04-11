@@ -90,9 +90,15 @@
                         {{ ejercicio.ejerciciovirtualmultiplechoice }}
                     </td>
                     <td>
-                        <a class="btn btn-default" href="{% url 'aula_virtual:editar_ejercicio' ejercicio.id %}">
+                        <a class="btn btn-default"
+                        {% if ejercicio.ejerciciovirtualtexto %}
+                               href="{% url 'aula_virtual:editar_ejercicio_texto' ejercicio.id %}">
+                        {% elif ejercicio.ejerciciovirtualmultiplechoice%}
+                               href="{% url 'aula_virtual:editar_ejercicio_multiple_choice' ejercicio.id %}">
+                        {% endif %}
                             <i class="fa fa-edit"></i> Editar
                         </a>
+
                     </td>
                     <td>
                         <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_ejercicio' ejercicio.id %}">

@@ -47,6 +47,8 @@ class OpcionEjercicioMultipleChoiceForm(BaseModelForm):
 
 OpcionEjercicioVirtualFormSet = inlineformset_factory(EjercicioVirtualMultipleChoice, OpcionEjercicioMultipleChoice,
                                                       form=OpcionEjercicioMultipleChoiceForm)
+OpcionEjercicioVirtualUpdateFormSet = inlineformset_factory(EjercicioVirtualMultipleChoice, OpcionEjercicioMultipleChoice,
+                                                      form=OpcionEjercicioMultipleChoiceForm, extra=0)
 
 
 class ClaseVirtualFilterForm(BaseFilterForm):
