@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, modelformset_factory
 
 from gutils.django.forms import BaseModelForm, BaseFilterForm, BaseForm
 
@@ -82,3 +82,15 @@ class RespuestaEjercicioVirtualMultipleChoiceForm(BaseModelForm):
         model = models.RespuestaEjercicioVirtualMultipleChoice
         fields=['opcion_seleccionada']
         labels = {}
+
+
+class RespuestaEjercicioVirtualCorreccionForm(BaseModelForm):
+    class Meta:
+        model = models.RespuestaEjercicioVirtual
+        fields=['es_correcta', 'id']
+        labels = {}
+        widgets = {'id': forms.HiddenInput()}
+
+CorregirRespuestaEjercicioVirtualFormSet = modelformset_factory(models.RespuestaEjercicioVirtual,
+                                                                form=RespuestaEjercicioVirtualCorreccionForm,
+                                                                extra=0)

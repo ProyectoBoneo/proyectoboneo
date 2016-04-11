@@ -54,9 +54,9 @@ class OpcionEjercicioMultipleChoice(models.Model):
 
 
 class RespuestaEjercicioVirtual(models.Model):
-    alumno = models.ForeignKey(Alumno, related_name='+')
+    alumno = models.ForeignKey(Alumno, related_name='respuestas')
     es_correcta = models.NullBooleanField(null=True,default=None)
-    clase_virtual = models.ForeignKey(ClaseVirtual, related_name='+')
+    clase_virtual = models.ForeignKey(ClaseVirtual, related_name='respuestas')
 
     def is_respuesta_virtual_multiple_choice(self):
         return hasattr(self,'respuestaejerciciovirtualmultiplechoice')
@@ -70,6 +70,7 @@ class RespuestaEjercicioVirtual(models.Model):
         elif(self.is_respuesta_virtual_texto()):
             return self.respuestaejerciciovirtualtexto
         return
+
 
 class RespuestaEjercicioVirtualTexto(RespuestaEjercicioVirtual):
     texto = models.TextField()

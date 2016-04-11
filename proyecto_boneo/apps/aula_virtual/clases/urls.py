@@ -28,9 +28,18 @@ clases_virtuales_patterns = [
    url(r'^resolver/(?P<pk>\d+)/$', login_required(views.ClaseVirtualResolverEjercicioView.as_view()),
         name='resolver_ejercicio'),
 
+    url(r'^corregir-resultados/(?P<pk>\d+)/$',
+        login_required(views.ClaseVirtualCorreccionListView.as_view()),
+        name='corregir_resultados_clase_virtual'),
+
+    url(r'^corregir-resultados/(?P<pk>\d+)/alumno/(?P<alumno_pk>\d+)/$',
+        login_required(views.ClaseVirtualCorreccionResultadosView.as_view()),
+        name='corregir_resultados_clase_virtual'),
+
     url(r'^resultados/(?P<pk>\d+)/$', login_required(views.ClaseVirtualResultadosView.as_view()),
         name='resultados_clase_virtual')
 ]
+
 
 ejercicios_patterns = [
    # url(r'^(?P<claseid>\d+)/ejercicio/nuevo/$', user_is_profesor(views.EjercicioVirtualCreateView.as_view()),
