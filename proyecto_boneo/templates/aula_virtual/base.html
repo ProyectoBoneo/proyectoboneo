@@ -28,17 +28,14 @@
         {% block navbar %}
             <nav class="page-navbar">
                 <ul>
-                    {% if user.is_staff %}
-                        <li><a href="{% url 'aula_virtual:home_administracion' %}">Administracion</a></li>
-                        <li><a href="{% url 'aula_virtual:clases_virtuales' %}">Clases Virtuales</a></li>
-                    {% endif %}
+                        <li><a href="{% url 'aula_virtual:home_administracion' %}">Aula Virtual</a></li>
+{#                        <li><a href="{% url 'aula_virtual:clases_virtuales' %}">Clases Virtuales</a></li>#}
                     {% if user.is_alumno %}
                         <li><a href="{% url 'aula_virtual:biblioteca_home' %}">Biblioteca</a></li>
                         <li><a href="{% url 'aula_virtual:ver_solicitudes' %}">Solicitudes de Material</a></li>
                     {% endif %}
 
                     {% if user.is_staff or user.is_profesor %}
-
                         <li><a href="{% url 'aula_virtual:materiales_admin' %}">Materiales</a></li>
                         <li><a href="{% url 'aula_virtual:ver_solicitudes_pendientes_admin' %}">Solicitudes de Material</a></li>
                     {% endif %}

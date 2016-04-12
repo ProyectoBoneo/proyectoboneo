@@ -7,7 +7,7 @@ from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_not_a
     user_is_profesor, user_is_not_profesor
 
 clases_virtuales_patterns = [
-   url(r'^$', user_is_profesor(views.ClaseVirtualListView.as_view()),
+   url(r'^$', login_required(views.ClaseVirtualListView.as_view()),
        name='clases_virtuales'),
 
    url(r'^nuevo/$', user_is_profesor(views.ClaseVirtualCreateView.as_view()),

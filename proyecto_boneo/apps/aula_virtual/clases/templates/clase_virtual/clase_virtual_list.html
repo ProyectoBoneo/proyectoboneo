@@ -1,4 +1,4 @@
-{% extends 'aula_virtual/base.html' %}
+{% extends 'clase_virtual/base.html' %}
 {% block title %}Clases Virtuales{% endblock %}
 {% block content %}
     <h3>Clases Virtuales</h3>
@@ -31,31 +31,37 @@
                         <td>{{ clase_virtual.nombre}}</td>
                         <td>{{ clase_virtual.materia }}</td>
                         <td>{{ clase_virtual.descripcion }}</td>
-                            <td>
-                                <a class="btn btn-default" href="{% url 'aula_virtual:ingresar_clase_virtual' clase_virtual.id %}">
-                                    <i class="fa fa-eye"></i> Ingresar
-                                </a>
-                            </td>
-                            <td>
-                                <a class="btn btn-default" href="{% url 'aula_virtual:resultados_clase_virtual' clase_virtual.id %}">
-                                    <i class="fa fa-eye"></i> Resultados
-                                </a>
-                            </td>
-                            <td>
-                                <a class="btn btn-default" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id %}">
-                                    <i class="fa fa-eye"></i> Corregir
-                                </a>
-                            </td>
-                            <td>
-                                <a class="btn btn-default" href="{% url 'aula_virtual:editar_clase_virtual' clase_virtual.id %}">
-                                    <i class="fa fa-edit"></i> Editar
-                                </a>
-                            </td>
-                            <td>
-                                <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_clase_virtual' clase_virtual.id %}">
-                                    <i class="fa fa-trash"></i> Eliminar
-                                </a>
-                            </td>
+
+                            {% if user.is_alumno %}
+                                <td>
+                                    <a class="btn btn-default" href="{% url 'aula_virtual:ingresar_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-eye"></i> Ingresar
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-default" href="{% url 'aula_virtual:resultados_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-eye"></i> Resultados
+                                    </a>
+                                </td>
+                            {% endif %}
+                            {% if user.is_profesor %}
+                                <td>
+                                    <a class="btn btn-default" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-eye"></i> Corregir
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-default" href="{% url 'aula_virtual:editar_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-trash"></i> Eliminar
+                                    </a>
+                                </td>
+                            {% endif %}
+
                     </tr>
                 {% endfor %}
             </tbody>
