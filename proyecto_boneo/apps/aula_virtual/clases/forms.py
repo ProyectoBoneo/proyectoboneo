@@ -8,11 +8,17 @@ from proyecto_boneo.apps.aula_virtual.clases.models import EjercicioVirtualMulti
 
 
 class ClaseVirtualForm(BaseModelForm):
+    def __init__(self, *args, **kwargs):
+        profesor = kwargs.pop('profesor', None) # pop the 'user' from kwargs dictionary
+        super(ClaseVirtualForm, self).__init__(*args, **kwargs)
+        self.fields['materia'].queryset = models.Materia.objects.filter\
+        (instancias_cursado__profesor_titular = profesor).distinct()
 
     class Meta:
         model = models.ClaseVirtual
         exclude = []
         labels = {}
+        widgets = {}
 
 
 class EjercicioVirtualForm(BaseModelForm):

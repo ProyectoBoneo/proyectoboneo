@@ -1,6 +1,7 @@
 from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from proyecto_boneo.apps.administracion.personal.models import Profesor
 
 from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView
 from gutils.django.views import View
@@ -25,6 +26,11 @@ class ClaseVirtualCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.id})
+
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(ClaseVirtualCreateView, self).get_form_kwargs(**kwargs)
+        kwargs['profesor'] = self.request.user.profesor
+        return kwargs
 
 
 class ClaseVirtualDetailView(DetailView):
@@ -186,6 +192,11 @@ class ClaseVirtualUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.id})
+
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(ClaseVirtualUpdateView, self).get_form_kwargs(**kwargs)
+        kwargs['profesor'] = self.request.user.profesor
+        return kwargs
 
 
 class ClaseVirtualDeleteView(ProtectedDeleteView):
