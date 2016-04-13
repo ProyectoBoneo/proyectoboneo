@@ -120,9 +120,17 @@ class ClaseVirtualCorreccionResultadosView(View):
         return;
 
 
+def obtener_siguiente_ejercicio_a_resolver(clase_virtual):
+    ejercicios = clase_virtual.ejercicios.all()
+    for ejercicio in ejercicios:
+        if not ejercicio.ejercicio_instance().respuestas.all().exists():
+            return ejercicio
+    return None
+
+
 class ClaseVirtualResolverEjercicioView(View):
      def post(self, request, *args, **kwargs):
-        clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk'])
+        clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk']).first()
         ejercicio_a_resolver = None
         form_to_render = None
         template_to_render = None
@@ -134,7 +142,7 @@ class ClaseVirtualResolverEjercicioView(View):
             ejercicio_resuelto = None
             if(request.POST['tipoPregunta'] == 'texto'):
                 form = RespuestaEjercicioVirtualTextoForm(request.POST, request.FILES)
-                ejercicio_resuelto = models.EjercicioVirtualTexto.objects.filter(id=request.POST['ejercicioId'])
+                ejercicio_resuelto = models.EjercicioVirtualTexto.objects.filter(id=request.POST['ejercicioId']).first()
                 template_to_render = 'ejercicio_virtual/texto/resolver_ejercicio_virtual_form.html'
                 tipoPreguntaToRender = 'texto'
                 es_correcta = None
@@ -142,31 +150,27 @@ class ClaseVirtualResolverEjercicioView(View):
                 template_to_render = 'ejercicio_virtual/multiple_choice/resolver_ejercicio_virtual_form.html'
                 tipoPreguntaToRender = 'multiple_choice'
                 form = RespuestaEjercicioVirtualMultipleChoiceForm(request.POST, request.FILES)
-                ejercicio_resuelto = models.EjercicioVirtualMultipleChoice.objects.filter(id=request.POST['ejercicioId'])
+                ejercicio_resuelto = models.EjercicioVirtualMultipleChoice.objects.filter(id=request.POST['ejercicioId']).first()
                 es_correcta = form.instance.opcion_seleccionada.opcion_correcta
             if form.is_valid():
                 form.instance.alumno = self.request.user.alumno
-                form.instance.ejercicio = ejercicio_resuelto.first()
-                form.instance.clase_virtual = clase_virtual.first()
+                form.instance.ejercicio = ejercicio_resuelto
+                form.instance.clase_virtual = clase_virtual
                 form.instance.es_correcta = es_correcta
                 nueva_respuesta = form.save()
-                id_list = list(clase_virtual.first().ejercicios.values_list('id', flat=True))
-                try:
-                    next_id = id_list[id_list.index(ejercicio_resuelto.first().ejerciciovirtual_ptr_id) + 1]
-                    ejercicio_a_resolver = models.EjercicioVirtual.objects.get(id=next_id)
-                except IndexError:
-                    pass
+                obtener_siguiente_ejercicio_a_resolver(clase_virtual)
+                ejercicio_a_resolver = obtener_siguiente_ejercicio_a_resolver(clase_virtual)
             else:
                 return render(request, template_to_render, {
                                             'form':form_to_render,
-                                            'ejercicio': ejercicio_resuelto.first(),
+                                            'ejercicio': ejercicio_resuelto,
                                             'tipoPregunta': tipoPreguntaToRender,
                                             'user': self.request.user
                                             })
         else:
-            ejercicio_a_resolver = clase_virtual.first().ejercicios.first()
+            ejercicio_a_resolver = obtener_siguiente_ejercicio_a_resolver(clase_virtual)
         if(ejercicio_a_resolver == None):
-            return redirect('aula_virtual:resultados_clase_virtual', pk=clase_virtual.first().id)
+            return redirect('aula_virtual:resultados_clase_virtual', pk=clase_virtual.id)
         elif(ejercicio_a_resolver.is_ejercicio_virtual_multiple_choice()):
             form_to_render = RespuestaEjercicioVirtualMultipleChoiceForm()
             template_to_render = 'ejercicio_virtual/multiple_choice/resolver_ejercicio_virtual_form.html'

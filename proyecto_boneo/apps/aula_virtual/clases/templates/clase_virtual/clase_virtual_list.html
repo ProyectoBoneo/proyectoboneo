@@ -2,12 +2,16 @@
 {% block title %}Clases Virtuales{% endblock %}
 {% block content %}
     <h3>Clases Virtuales</h3>
+    {% if user.is_profesor %}
+        <div class="row">
+            <div class="col-xs-12">
+                 <a class="btn btn-success" href="{% url 'aula_virtual:nueva_clase_virtual' %}">
+                    <i class="fa fa-plus-circle"></i> Nuevo
+                 </a>
+            </div>
+        </div>
+    {% endif %}
 
-    <div class="row">
-             <a class="btn btn-default" href="{% url 'aula_virtual:nueva_clase_virtual' %}">
-                <i class="fa fa-plus-circle"></i> Nuevo
-             </a>
-    </div>
     <div class="col-xs-10">
     {% if object_list %}
         <table class="table">
@@ -35,19 +39,19 @@
                             {% if user.is_alumno %}
                                 <td>
                                     <a class="btn btn-default" href="{% url 'aula_virtual:ingresar_clase_virtual' clase_virtual.id %}">
-                                        <i class="fa fa-eye"></i> Ingresar
+                                        <i class="fa fa-pencil-square-o"></i> Resolver
                                     </a>
                                 </td>
                                 <td>
                                     <a class="btn btn-default" href="{% url 'aula_virtual:resultados_clase_virtual' clase_virtual.id %}">
-                                        <i class="fa fa-eye"></i> Resultados
+                                        <i class="fa fa-bar-chart"></i> Resultados
                                     </a>
                                 </td>
                             {% endif %}
                             {% if user.is_profesor %}
                                 <td>
                                     <a class="btn btn-default" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id %}">
-                                        <i class="fa fa-eye"></i> Corregir
+                                        <i class="fa fa-pencil"></i> Corregir
                                     </a>
                                 </td>
                                 <td>
