@@ -4886,6 +4886,36 @@ select.with_errors {
 .valign-bottom {
   vertical-align: bottom;
 }
+.comunicados-link {
+  float: right;
+  font-size: 35px;
+  color: white;
+  padding: 25px;
+}
+.comunicados-link a {
+  position: relative;
+  text-decoration: none;
+  color: white;
+}
+.comunicados-link a:hover,
+.comunicados-link a:active,
+.comunicados-link a:focus,
+.comunicados-link a:visited {
+  text-decoration: none;
+  color: white;
+}
+.comunicados-link a .notification-comunicados {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  padding: 1px 2px 1px 2px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 30px;
+  box-shadow: 1px 1px 1px gray;
+}
 @font-face {
   font-family: "bumblebee";
   src: url("/static/fonts/bumble_bees.ttf");
@@ -4964,11 +4994,19 @@ div[data-toggle="buttons"] label.active {
   background-color: cornflowerblue;
   margin: 0;
 }
-.page-header .page-header-title {
+.page-header .page-header-title a {
   padding-top: 20px;
   padding-left: 20px;
   color: white;
   font-size: 28px;
+  text-decoration: none;
   font-family: "bumblebee";
   display: inline-block;
+}
+.page-header .page-header-title a:active,
+.page-header .page-header-title a:focus,
+.page-header .page-header-title a:visited,
+.page-header .page-header-title a:hover {
+  color: white;
+  text-decoration: none;
 }

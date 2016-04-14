@@ -1,13 +1,13 @@
-{% extends 'administracion/base.html' %}
+{% extends 'utils/base.html' %}
 {% block title %}Eliminar comunicado{% endblock %}
 {% block content %}
-    <form method="post" action=".">
+    <form method="post" action="">
         {% csrf_token %}
         <p>¿Desea eliminar el comunicado "{{ object }}"?</p>
         <button type="submit" class="btn btn-danger">
             <i class="fa fa-trash"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'administracion:comunicados' %}">
+        <a class="btn btn-default" href="{% url 'aula_virtual:comunicados' %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>

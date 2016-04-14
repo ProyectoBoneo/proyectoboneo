@@ -1,16 +1,7 @@
 from . import forms, models
 
-# Create your views here.
-import datetime
 from django.core.urlresolvers import reverse_lazy
-from django.forms import formset_factory, model_to_dict
-from django.shortcuts import render, redirect
-from gutils.django.views import View
-from proyecto_boneo.apps.administracion.alumnos.models import Alumno
-from proyecto_boneo.apps.administracion.personal.models import Profesor
-from proyecto_boneo.apps.administracion.estadias.forms import EstadiaForm
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import ListView, CreateView, DetailView, UpdateView, \
-    ProtectedDeleteView
+from gutils.django.views import ListView, CreateView, DetailView, UpdateView, ProtectedDeleteView
 
 
 class EstadiasListView(ListView):

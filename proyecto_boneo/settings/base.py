@@ -37,13 +37,13 @@ PROJECT_APPS = ('gutils',
                 'gutils.django.apps.utils',
                 'proyecto_boneo.apps.administracion.alumnos',
                 'proyecto_boneo.apps.administracion.personal',
-                'proyecto_boneo.apps.administracion.comunicados',
                 'proyecto_boneo.apps.administracion.planes',
                 'proyecto_boneo.apps.administracion.usuarios',
                 'proyecto_boneo.apps.administracion.tutorias',
                 'proyecto_boneo.apps.administracion.estadias',
                 'proyecto_boneo.apps.aula_virtual.biblioteca',
-                'proyecto_boneo.apps.aula_virtual.clases'
+                'proyecto_boneo.apps.aula_virtual.clases',
+                'proyecto_boneo.apps.aula_virtual.comunicados',
                 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -85,7 +85,19 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), ]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
     },
 ]
 
@@ -111,10 +123,6 @@ MEDIA_URL = '/media/'
 LOGIN_URL = '/login/'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
-)
 
 AUTH_USER_MODEL = 'usuarios.UsuarioBoneo'
 

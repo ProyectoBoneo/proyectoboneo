@@ -5,14 +5,21 @@
     background-color: cornflowerblue;
     margin: 0;
 
-    .page-header-title {
+    .page-header-title a {
         padding-top: @unit*2;
         padding-left: @unit*2;
         color: white;
         font-size: 28px;
+        text-decoration: none;
         font-family: "bumblebee";
         display: inline-block;
+
+        &:active, &:focus, &:visited, &:hover {
+            color: white;
+            text-decoration: none;
+        }
     }
 }
 
 
+ 
