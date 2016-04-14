@@ -1,0 +1,15 @@
+{% extends 'clase_virtual/base.html' %}
+{% block title %}Proyecto boneo{% endblock %}
+{% block content %}
+<div class="container width-64x margin-top-20x">
+    <div class="inline-group">
+        <a class="btn btn-lg btn-default width-30x" href="{% url 'aula_virtual:biblioteca_home' %}">
+            <i class="fa fa-book"></i> Biblioteca
+        </a>
+
+        <a class="btn btn-lg btn-default width-30x" href="{% url 'aula_virtual:clases_virtuales' %}">
+            <i class="fa fa-edit"></i> Clases Virtuales
+        </a>
+    </div>
+</div>
+{% endblock %}

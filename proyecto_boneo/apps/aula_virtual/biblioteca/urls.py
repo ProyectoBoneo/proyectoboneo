@@ -2,7 +2,8 @@ from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from . import views
-from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_not_alumno, user_is_alumno
+from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_not_alumno, user_is_alumno, \
+    user_is_profesor_or_staff
 
 urlpatterns = [
     url(r'^materiales/$', user_is_alumno(views.MaterialesFilteredListView.as_view()),
@@ -22,13 +23,13 @@ urlpatterns = [
    url(r'^administracion/materiales/editar/(?P<pk>\d+)/$', user_is_not_alumno(views.MaterialesUpdateView.as_view()),
        name='editar_material'),
 
-   url(r'^administracion/materiales/eliminar/(?P<pk>\d+)/$', user_is_not_alumno(views.MaterialesDeleteView.as_view()),
+   url(r'^administracion/materiales/eliminar/(?P<pk>\d+)/$', user_is_profesor_or_staff(views.MaterialesDeleteView.as_view()),
        name='eliminar_material'),
 
-   url(r'^administracion/materiales/ver/(?P<pk>\d+)/$', user_is_not_alumno(views.MaterialesDetailView.as_view()),
+   url(r'^administracion/materiales/ver/(?P<pk>\d+)/$', login_required(views.MaterialesDetailView.as_view()),
        name='ver_material'),
 
-   url(r'^administracion/materiales/buscar/$', user_is_not_alumno(views.MaterialesSearchFilteredListView.as_view()),
+   url(r'^administracion/materiales/buscar/$', login_required(views.MaterialesSearchFilteredListView.as_view()),
        name='buscar_material'),
 
    # url(r'^administracion/materiales/descargar/(?P<pk>\d+)/$', login_required(views.MaterialesDownloadView.as_view()),

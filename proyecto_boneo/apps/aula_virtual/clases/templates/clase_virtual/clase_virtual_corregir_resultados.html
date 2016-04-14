@@ -1,0 +1,128 @@
+{% extends 'clase_virtual/base.html' %}
+{% block title %}Clases virtuales{% endblock %}
+{% block content %}
+    <script>
+
+    </script>
+
+
+    <h3>Clase Virtual</h3>
+        <p>
+            Nombre: {{ clase_virtual.nombre }}
+        </p>
+        <p>
+            Materia: {{ clase_virtual.materia }}
+        </p>
+        <p>
+            Descripcion:{{ clase_virtual.descripcion }}
+        </p>
+
+    <form method="post" class="form-horizontal" action="">
+        {{ formset.management_form }}
+        {% csrf_token %}
+        <ul class="list-group">
+                {% for form in formset %}
+                    {{ form.id }}
+                    <div class="col-sm-6">
+                        <li class="list-group-item borderless">
+                        <div class="row list-group-item-header">
+                          <div class="col-xs-12">
+                                 <h4 class="list-group-item-heading text-default">{{ form.instance.respuesta_instance.ejercicio }}
+                                  <small class="pull-right">
+                                    {% if form.instance.es_correcta == None %}
+                                        <h4 class="list-group-item-heading text-default text-right">No corregida </h4>
+                                    {% elif form.instance.es_correcta %}
+                                        <h4 class="list-group-item-heading text-success text-right">Correcta <i class="fa fa-check-circle"></i></h4>
+                                    {% elif not form.instance.es_correcta %}
+                                        <h4 class="list-group-item-heading text-danger text-right">Incorrecta <i class="fa fa-times-circle"></i></h4>
+                                    {% else %}
+                                        <h4 class="list-group-item-heading text-default text-right">No corregida</h4>
+                                    {% endif %}
+                                </small></h4>
+                          </div>
+                      </div>
+
+                       {%  if form.instance.is_respuesta_virtual_multiple_choice  %}
+                           <div class="row">
+                            <div class="col-sm-12">
+                                 <ul class="list-group">
+                                     <li class="list-group-item borderless list-group-item-divider">
+                                         <h6 class="list-group-item-heading "><strong>Opciones disponibles</strong></h6>
+                                     </li>
+
+                                     {% for opcion in form.instance.respuesta_instance.ejercicio.opciones.all  %}
+                                        {% if opcion.opcion_correcta and form.instance.respuesta_instance.opcion_seleccionada == opcion %}
+                                            <li class="list-group-item borderless list-group-item-success">
+                                                <span class="pull-right label label-success">Selecciono la respuesta correcta!</span>
+                                                {{ opcion.texto }}
+                                            </li>
+                                        {% elif opcion.opcion_correcta == True %}
+                                            <li class="list-group-item borderless list-group-item-success">
+                                                <span class="pull-right label label-success">Esta era la respuesta correcta</span>
+                                                {{ opcion.texto }}
+                                            </li>
+                                        {% elif form.instance.respuesta_instance.opcion_seleccionada == opcion %}
+                                            <li class="list-group-item borderless list-group-item-danger">
+                                                <span class="pull-right label label-danger">Esta respuesta es incorrecta.</span>
+                                                {{ opcion.texto }}
+                                            </li>
+                                        {% else %}
+                                            <li class="list-group-item borderless">
+                                                {{ opcion.texto }}
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                          </div>
+                       {% elif form.instance.is_respuesta_virtual_texto  %}
+                           <div class="row">
+                                <div class="col-sm-12">
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item-divider list-group-item">
+                                          <h6 class="list-group-item-heading"><strong>Respuesta</strong></h6>
+                                        </li>
+                                        <li class="list-group-item borderless">
+
+                                          <p class="list-group-item-text">
+                                              {{ form.instance.respuesta_instance.texto }}
+                                          </p>
+                                        </li>
+                                  </ul>
+                                </div>
+                            </div>
+                       {% endif %}
+                    {% if form.instance.is_respuesta_virtual_texto %}
+                        <div class="row">
+                            <div class="col-xs-6 col-xs-offset-6">
+                              {{ form.es_correcta.label_tag }}
+                              {{ form.es_correcta }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div style="display:none;">
+                            {{ form.es_correcta }}
+                        </div>
+                    {% endif %}
+                    </li>
+                    </div>
+                    {% if forloop.counter|divisibleby:2 %}
+                         <div class="clearfix"></div>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+        <div class="clearfix"></div>
+        <div class="col-xs-6 col-sm-4">
+            <a class="btn btn-default" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id %}">
+                <i class="fa fa-arrow-circle-left"></i>  Volver
+            </a>
+        </div>
+        <div class="col-xs-6 col-sm-offset-4 col-sm-4">
+            <button class="btn btn-success pull-right" type="submit">
+                <i class="fa fa-save"></i>  Guardar Correciones
+            </button>
+        </div>
+    </form>
+{% endblock %}

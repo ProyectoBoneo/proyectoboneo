@@ -1,0 +1,19 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Resolver Ejercicio Virtual{% endblock %}
+{% block content %}
+    <h3>Ejercicio Virtual</h3>
+
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="ejercicioId" value="{{ ejercicio.id }}"/>
+        <input type="hidden" name="tipoPregunta" value="{{ tipoPregunta }}"/>
+        <div class="form-group">
+            {{ form.titulo }}
+            {{ form.titulo.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check"></i> Confirmar respuesta
+        </button>
+    </form>
+{% endblock %}

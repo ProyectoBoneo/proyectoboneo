@@ -1,0 +1,78 @@
+{% extends 'clase_virtual/base.html' %}
+{% block title %}Clases Virtuales{% endblock %}
+{% block content %}
+    <h3>Clases Virtuales</h3>
+    {% if user.is_profesor %}
+        <div class="row">
+            <div class="col-xs-12">
+                 <a class="btn btn-success" href="{% url 'aula_virtual:nueva_clase_virtual' %}">
+                    <i class="fa fa-plus-circle"></i> Nuevo
+                 </a>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="col-xs-10">
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Materia</th>
+                    <th>Descripcion</th>
+                    {% if activateViewingButtons %}
+                        <th></th>
+                    {% endif %}
+                    {% if activateEditingButtons %}
+                        <th></th>
+                        <th></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for clase_virtual in object_list %}
+                    <tr>
+                        <td>{{ clase_virtual.nombre}}</td>
+                        <td>{{ clase_virtual.materia }}</td>
+                        <td>{{ clase_virtual.descripcion }}</td>
+
+                            {% if user.is_alumno %}
+                                <td>
+                                    <a class="btn btn-default" href="{% url 'aula_virtual:ingresar_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-pencil-square-o"></i> Resolver
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-default" href="{% url 'aula_virtual:resultados_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-bar-chart"></i> Resultados
+                                    </a>
+                                </td>
+                            {% endif %}
+                            {% if user.is_profesor %}
+                                <td>
+                                    <a class="btn btn-default" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-pencil"></i> Corregir
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-default" href="{% url 'aula_virtual:editar_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-trash"></i> Eliminar
+                                    </a>
+                                </td>
+                            {% endif %}
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay clases virtuales que coincidan con el criterio de filtrado</p>
+    {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Eliminar ejercicio virtual{% endblock %}
+{% block content %}
+    <form method="post" action="">
+        {% csrf_token %}
+        <p>¿Desea eliminar el ejercicio virtual "{{ object.ejerciciovirtualtexto }}
+                        {{ object.ejerciciovirtualmultiplechoice }}"?</p>
+        <button type="submit" class="btn btn-danger">
+            <i class="fa fa-trash"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' object.clase_virtual.id %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

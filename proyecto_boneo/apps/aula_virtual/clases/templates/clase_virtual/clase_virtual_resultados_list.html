@@ -1,0 +1,68 @@
+{% extends 'clase_virtual/base.html' %}
+{% block title %}Clases virtuales{% endblock %}
+{% block content %}
+    <script>
+    </script>
+
+    <h3>Clase Virtual</h3>
+        <p>
+            Nombre: {{ clase_virtual.nombre }}
+        </p>
+        <p>
+            Materia: {{ clase_virtual.materia }}
+        </p>
+        <p>
+            Descripcion:{{ clase_virtual.descripcion }}
+        </p>
+
+
+    <table class="table">
+        <thead>
+            <th>Alumno</th>
+            <th>Correctas/Total</th>
+        </thead>
+        <tbody>
+            {% for alumno in alumnos %}
+                <tr>
+                    <td>
+                        {{ alumno }}
+                    </td>
+                    <td>
+                            {% for respuesta in respuestas_correctas %}
+                                {% if alumno.id == respuesta.alumno %}
+                                    {{ respuesta.num_correctas }}
+                                {% endif %}
+                            {% endfor %}
+                            {% for respuesta in respuestas_realizadas %}
+                                {% if alumno.id == respuesta.alumno %}
+                                    / {{ respuesta.num_respuestas }}
+                                {% endif %}
+                            {% endfor %}
+
+{#                        {% for respuesta in respuestas_realizadas %}#}
+{#                            {% if alumno.id == respuesta.alumno %}#}
+{#                                {{ respuesta.num_respuestas }}#}
+{#                            {% endif %}#}
+{#                        {% endfor %}#}
+{#                       {{ alumno.num_correctas}} #}
+                    </td>
+                    <td>
+                        {% for respuesta in respuestas_realizadas %}
+                            {% if alumno.id == respuesta.alumno %}
+                                <a class="btn btn-default btn-sm" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id  alumno.id %}">
+                                     <i class="fa fa-edit"></i> Corregir
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
+        <i class="fa fa-arrow-circle-left"></i>  Volver
+    </a>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'clase_virtual/base.html' %}
+{% block title %}Clases virtuales{% endblock %}
+{% block content %}
+    <script>
+
+    </script>
+
+    <h3>Clase Virtual</h3>
+
+        <p>
+            Nombre: {{ object.nombre }}
+        </p>
+        <p>
+            Materia: {{ object.materia }}
+        </p>
+        <p>
+            Descripcion:{{ object.descripcion }}
+        </p>
+
+    <form action="{% url 'aula_virtual:resolver_ejercicio' object.id %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-success" type="submit">
+            <i class="fa fa-arrow-circle-left"></i>  Comenzar clase virtual
+        </button>
+    </form>
+
+    <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
+        <i class="fa fa-arrow-circle-left"></i>  Volver
+    </a>
+{% endblock %}

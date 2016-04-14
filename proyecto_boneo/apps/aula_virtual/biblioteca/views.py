@@ -23,10 +23,12 @@ class MaterialesFilteredListView(FilteredListView):
     template_name = 'biblioteca_virtual/materiales/materiales_list.html'
 
 
+
 class MaterialesSearchFilteredListView(FilteredListView):
     form_class = forms.MaterialSearchFilterForm
     model = models.Material
     template_name = 'biblioteca_virtual/materiales/materiales_search.html'
+
 
 
 class MaterialesAdminFilteredListView(FilteredListView):

@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DiasNoHabiles',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('anio_cursado', models.IntegerField()),
                 ('fecha_inicio', models.DateField()),
                 ('fecha_fin', models.DateField()),
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Horario',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('dia', models.IntegerField()),
                 ('hora', models.TimeField()),
                 ('instancia_cursado', models.ForeignKey(to='planes.InstanciaCursado')),

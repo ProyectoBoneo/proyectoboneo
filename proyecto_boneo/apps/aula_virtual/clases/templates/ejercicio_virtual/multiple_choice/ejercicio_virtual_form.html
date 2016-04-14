@@ -1,0 +1,53 @@
+{% extends 'aula_virtual/base.html' %}
+{% block title %}Ejercicio Virtual{% endblock %}
+{% block content %}
+    <h3>Ejercicio Virtual</h3>
+{#    TODO:Agregar  y quitar opciones por Javascript#}
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.pregunta.label_tag }}
+            {{ form.pregunta }}
+            {{ form.pregunta.errors }}
+        </div>
+        <fieldset>
+            <legend>Opcion</legend>
+            {{ opcion_formset.management_form }}
+            {{ opcion_formset.non_form_errors }}
+            {% for opcion_form in opcion_formset %}
+                {{ opcion_form.id }}
+                <div class="inline {{ opcion_form.prefix }}">
+                    {{ opcion_form.texto.errors }}
+                    {{ opcion_form.texto.label_tag }}
+                    {{ opcion_form.texto }}
+                    {{ opcion_form.opcion_correcta.errors }}
+                    {{ opcion_form.opcion_correcta.label_tag }}
+                    {{ opcion_form.opcion_correcta }}
+                </div>
+            {% endfor %}
+        </fieldset>
+        <div class="form-group">
+            {{ form.ayuda.label_tag }}
+            {{ form.ayuda }}
+            {{ form.ayuda.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.explicacion.label_tag }}
+            {{ form.explicacion }}
+            {{ form.explicacion.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-plus-circle"></i> Guardar
+        </button>
+        {% if object %}
+        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' object.clase_virtual.id %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+        {% else %}
+        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' kwargs.clase_id %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+        {% endif %}
+    </form>
+{% endblock %}
