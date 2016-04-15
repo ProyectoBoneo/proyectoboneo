@@ -2,6 +2,8 @@ import string
 import datetime
 
 from django.db import models
+from django.db.models import ForeignKey
+from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 
 from proyecto_boneo.apps.administracion.personal.models import Profesor
 
@@ -124,11 +126,24 @@ class InstanciaCursado(models.Model):
 # TODO:Revisar modelo para ver la parte de toma de asistencia
 class Horario(models.Model):
     instancia_cursado = models.ForeignKey(InstanciaCursado)
-    dia = models.IntegerField()
-    hora = models.TimeField()
+    dia_semana = models.IntegerField()
+    hora_inicio = models.TimeField()
+    hora_fin = models.TimeField()
 
 
 class DiasNoHabiles(models.Model):
     anio_cursado = models.IntegerField()
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
+
+
+class ClaseReal(models.Model):
+    horario = models.ForeignKey(Horario, related_name='clases')
+    semana_ano = models.IntegerField()
+    instancia_cursado = models,ForeignKey(InstanciaCursado,
+                                          related_name='+')
+
+
+class Asistencia(models.Model):
+        alumno = models.ForeignKey(Alumno, related_name='asistencia')
+        claseReal = models.ForeignKey(ClaseReal, related_name='asistentes')
