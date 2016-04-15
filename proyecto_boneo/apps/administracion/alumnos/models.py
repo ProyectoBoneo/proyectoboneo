@@ -1,7 +1,7 @@
 from django.db import models
 
 from proyecto_boneo.apps.administracion.personal.models import Persona, PersonaLegajo
-from proyecto_boneo.apps.administracion.planes.models import InstanciaCursado, Division
+from proyecto_boneo.apps.administracion.planes.models import InstanciaCursado, Division, ClaseReal
 from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
 
 
@@ -23,3 +23,7 @@ class Alumno(PersonaLegajo):
 class InscripcionAlumno(models.Model):
     alumno = models.ForeignKey(Alumno, related_name='inscripciones')
     instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='inscripciones')
+
+class Asistencia(models.Model):
+        alumno = models.ForeignKey(Alumno, related_name='asistencias')
+        claseReal = models.ForeignKey(ClaseReal, related_name='asistentes')

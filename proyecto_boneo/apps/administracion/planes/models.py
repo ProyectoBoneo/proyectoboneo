@@ -3,7 +3,6 @@ import datetime
 
 from django.db import models
 from django.db.models import ForeignKey
-from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 
 from proyecto_boneo.apps.administracion.personal.models import Profesor
 
@@ -141,9 +140,4 @@ class ClaseReal(models.Model):
     horario = models.ForeignKey(Horario, related_name='clases')
     semana_ano = models.IntegerField()
     instancia_cursado = models,ForeignKey(InstanciaCursado,
-                                          related_name='+')
-
-
-class Asistencia(models.Model):
-        alumno = models.ForeignKey(Alumno, related_name='asistencia')
-        claseReal = models.ForeignKey(ClaseReal, related_name='asistentes')
+                                          related_name='clases')
