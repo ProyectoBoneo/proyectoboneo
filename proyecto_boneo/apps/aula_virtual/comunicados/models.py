@@ -3,6 +3,7 @@ from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
 
 
 class Comunicado(models.Model):
+    asunto = models.CharField(max_length=150)
     mensaje = models.TextField()
     fecha = models.DateTimeField(auto_now_add=True)
     fecha_leido = models.DateTimeField(null=True, blank=True)

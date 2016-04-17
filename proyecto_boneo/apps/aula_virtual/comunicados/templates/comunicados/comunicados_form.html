@@ -17,11 +17,6 @@
     <form method="post" action="">
         {% csrf_token %}
         <div class="form-group">
-            {{ form.emisor.label_tag }}
-            {{ form.emisor }}
-            {{ form.emisor.errors }}
-        </div>
-        <div class="form-group">
             {{ form.asunto.label_tag }}
             {{ form.asunto }}
             {{ form.asunto.errors }}
@@ -40,7 +35,6 @@
             {{ form.fecha }}
             {{ form.fecha.errors }}
         </div>
-
 
         <button type="submit" class="btn btn-success">
             <i class="fa fa-check-circle"></i> Confirmar

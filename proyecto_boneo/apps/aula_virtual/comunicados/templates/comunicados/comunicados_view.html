@@ -10,15 +10,20 @@
     <div>{{ object.emisor }}</div>
     {% if request.user == object.emisor and object.destinatarios.all %}
     <h4>Destinatarios</h4>
-    <ul>
+    <div></div>
         {% for destinatario in object.destinatarios.all %}
-            <li>{{ destinatario }}</li>
+            {% if forloop.last %}
+                {{ destinatario }}
+            {% else %}
+                {{ destinatario }},
+            {% endif %}
         {% endfor %}
-    </ul>
     {% endif %}
     <h4>Mensaje</h4>
     <div>{{ object.mensaje }}</div>
-    <a class="btn btn-default" href="{% url 'aula_virtual:comunicados_recibidos' %}">
-        <i class="fa fa-arrow-circle-left"></i>  Volver
-    </a>
+    <div class="btn-toolbar margin-top-2x">
+        <a class="btn btn-default" href="{% url 'aula_virtual:comunicados_recibidos' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </div>
 {% endblock %}
