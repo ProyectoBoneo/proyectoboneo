@@ -26,7 +26,7 @@
             </thead>
             <tbody>
                 {% for comunicado in object_list %}
-                    <tr>
+                    {% if comunicado.no_leido %}<tr class="comunicado-no-leido">{% else %}<tr>{% endif %}
                         <td>{{ comunicado.fecha }}</td>
                         <td>{{ comunicado.asunto }}</td>
                         <td>{{ comunicado.emisor }}</td>

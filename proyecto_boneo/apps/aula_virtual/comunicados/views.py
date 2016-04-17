@@ -10,7 +10,6 @@ from . import forms, models
 
 
 class ComunicadoRecibidoListView(ListView):
-    form_class = forms.ComunicadoFilterForm
     model = models.Comunicado
     template_name = 'comunicados/comunicados_list.html'
 
@@ -19,12 +18,14 @@ class ComunicadoRecibidoListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ComunicadoRecibidoListView, self).get_context_data(**kwargs)
+        for comunicado in context['object_list']:
+            comunicado.no_leido = comunicado.destinatariocomunicado_set.filter(destinatario=self.request.user,
+                                                                               fecha_leido=None).exists()
         context['title'] = 'Comunicados recibidos'
         return context
 
 
 class ComunicadoEnviadoListView(ListView):
-    form_class = forms.ComunicadoFilterForm
     model = models.Comunicado
     template_name = 'comunicados/comunicados_list.html'
 
@@ -33,6 +34,8 @@ class ComunicadoEnviadoListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ComunicadoEnviadoListView, self).get_context_data(**kwargs)
+        for comunicado in context['object_list']:
+            comunicado.no_leido = False
         context['title'] = 'Comunicados enviados'
         return context
 
@@ -45,7 +48,8 @@ class ComunicadoCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.emisor = self.request.user
-        comunicado = Comunicado(emisor=self.request.user, mensaje=form.cleaned_data['mensaje'])
+        comunicado = Comunicado(emisor=self.request.user, mensaje=form.cleaned_data['mensaje'],
+                                asunto=form.cleaned_data['asunto'])
         comunicado.save()
         for destinatario in form.cleaned_data['destinatarios']:
             DestinatarioComunicado.objects.create(destinatario=destinatario,

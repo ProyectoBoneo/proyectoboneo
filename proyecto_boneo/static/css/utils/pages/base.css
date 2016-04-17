@@ -4860,6 +4860,9 @@ select.with_errors {
 .valign-bottom {
   vertical-align: bottom;
 }
+.comunicado-no-leido {
+  font-weight: bold;
+}
 .comunicados-link {
   float: right;
   font-size: 35px;
