@@ -4997,13 +4997,20 @@ div[data-toggle="buttons"] label.active {
   background-color: #71c575;
   margin: 0;
 }
-.page-header .page-header-title {
+.page-header .page-header-title a {
   padding-top: 20px;
   padding-left: 20px;
   color: white;
   font-size: 28px;
   font-family: "bumblebee";
   display: inline-block;
+}
+.page-header .page-header-title a:active,
+.page-header .page-header-title a:focus,
+.page-header .page-header-title a:visited,
+.page-header .page-header-title a:hover {
+  color: white;
+  text-decoration: none;
 }
 .page-navbar {
   background-color: #71c575;
