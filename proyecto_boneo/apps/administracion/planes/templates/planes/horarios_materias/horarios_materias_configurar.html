@@ -2,18 +2,20 @@
 {% block title %}Horarios de materias{% endblock %}
 {% block content %}
     <script>
-        {% for dia_semana in dias_semana%}
-            $(document).ready(function(){
+        $(document).ready(function(){
+            {% for dia_semana in dias_semana%}
+                    $('#id_{{ dia_semana.dia_id }}-__prefix__-dia_semana').val("{{ dia_semana.dia_id }}").change();
+                    //find the select with an id that matched the input name attr and the option within it with the same value.
+                    $("select[id='id_{{ dia_semana.dia_id }}-__prefix__-dia_semana'] option[value='{{ dia_semana.dia_id }}']").attr('selected', 'selected');
+
                 $('#agregar-{{ dia_semana.dia_id }}').click(function() {
-                    debugger;
                     var form_idx = $('#id_{{ dia_semana.dia_id }}-TOTAL_FORMS').val();
+
                     $('#formset-{{ dia_semana.dia_id }}').append($('#empty_form-{{ dia_semana.dia_id }}').html().replace(/__prefix__/g, form_idx));
                     $('#id_{{ dia_semana.dia_id }}-TOTAL_FORMS').val(parseInt(form_idx) + 1);
                 });
-            });
-
-        {% endfor %}
-
+            {% endfor %}
+        });
     </script>
     <form method="post" action=".">
         {% csrf_token %}
@@ -54,6 +56,12 @@
                                 <div class="hidden form-group">
                                     {{ form.dia_semana }}
                                 </div>
+                                <div class="hidden form-group hidden">
+                                    {{ form.id }}
+                                </div>
+                                <div class="form-group ">
+                                    Eliminar Horario: {{ form.DELETE }}
+                                </div>
                             {% endfor %}
                         </div>
 
@@ -68,8 +76,14 @@
                                 <div class="form-group">
                                     {{ dia_semana.formset.empty_form.hora_fin }}
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group hidden">
                                     {{ dia_semana.formset.empty_form.dia_semana }}
+                                </div>
+                                <div class="form-group hidden">
+                                    {{ dia_semana.formset.empty_form.id }}
+                                </div>
+                                <div class="form-group ">
+                                    Eliminar Horario: {{ dia_semana.formset.empty_form.DELETE }}
                                 </div>
                     </div>
                     </td>
@@ -104,6 +118,12 @@
                                 <div class="hidden form-group hidden">
                                     {{ form.dia_semana }}
                                 </div>
+                                <div class="hidden form-group hidden">
+                                    {{ form.id }}
+                                </div>
+                                <div class="form-group ">
+                                    Eliminar Horario: {{ form.DELETE }}
+                                </div>
                             {% endfor %}
                         </div>
 
@@ -120,6 +140,12 @@
                                 </div>
                                 <div class="form-group hidden">
                                     {{ dia_semana.formset.empty_form.dia_semana }}
+                                </div>
+                                <div class="form-group hidden">
+                                    {{ dia_semana.formset.empty_form.id }}
+                                </div>
+                                <div class="form-group ">
+                                    Eliminar Horario: {{ dia_semana.formset.empty_form.DELETE }}
                                 </div>
                     </div>
                     </td>

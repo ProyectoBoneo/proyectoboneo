@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect
 from gutils.django.views import View
 from .. import forms, models
+from proyecto_boneo.apps.administracion.planes.forms import ConfigurarHorariosMateriasForm
 from proyecto_boneo.apps.administracion.planes.models import Horario
 
 DIAS_SEMANA_CHOICES = [(1,"Lunes"), (2,"Martes"), (3,"Miercoles"), (4,"Jueves"),
@@ -26,7 +27,7 @@ class ConfigurarHorariosDivisionView(View):
                     for horario in horarios_existentes.all():
                         initial.append({
                             'dia_semana': horario.dia_semana,
-                            'materia:': horario.instancia_cursado.materia,
+                            'materia': horario.instancia_cursado.materia.pk,
                             'id': horario.id,
                             'hora_inicio': horario.hora_inicio,
                             'hora_fin': horario.hora_fin
@@ -36,15 +37,12 @@ class ConfigurarHorariosDivisionView(View):
                                }]
                 formset = forms.ConfigurarMateriasHorariosFormset(initial=initial,
                                                                     prefix=prefix)
-                dias_semana.append({'dia_id':dia_semana_id,
-                                    'dia_descripcion': dia_semana[1],
-                                    'formset': formset})
             else:
                 formset = forms.ConfigurarMateriasHorariosFormset(request.POST,
                                                                     prefix=prefix)
-                dias_semana.append({'dia_id':dia_semana_id,
-                                    'dia_descripcion': dia_semana[1],
-                                    'formset': formset})
+            dias_semana.append({'dia_id':dia_semana_id,
+                                'dia_descripcion': dia_semana[1],
+                                'formset': formset})
 
         context = {'dias_semana': dias_semana}
         return context
@@ -66,25 +64,36 @@ class ConfigurarHorariosDivisionView(View):
             for form in dia_semana['formset']:
                 if not form.is_valid():
                     valido= False
-            # if not dia_semana['formset'].is_valid():
-            #     valido = False
         return valido
 
     def save_formsets(self, context):
         for dia_semana in context['dias_semana']:
             formset = dia_semana['formset']
+            for formToDelete in formset.deleted_forms:
+                if('hora_inicio' in formToDelete.cleaned_data
+                and 'hora_fin' in formToDelete.cleaned_data
+                and formToDelete.cleaned_data['hora_inicio'] != None
+                and formToDelete.cleaned_data['hora_fin'] != None
+                and formToDelete.cleaned_data['id'] != None):
+                    horario = Horario.objects.get(id=formToDelete.cleaned_data['id'])
+                    horario.delete()
             for form in formset:
-                if(form.cleaned_data['id']):
-                    horario = Horario.objects.get(id=form.cleaned_data['id'])
-                else:
-                    horario = Horario()
-                instancia_cursado = models.InstanciaCursado.objects.año_actual().filter(division__pk=self.kwargs['pk'],
-                                                                    materia=form.cleaned_data['materia']).first()
-                horario.instancia_cursado = instancia_cursado
-                horario.hora_inicio = form.cleaned_data['hora_inicio']
-                horario.hora_fin = form.cleaned_data['hora_fin']
-                horario.dia_semana = form.cleaned_data['dia_semana']
-                horario.save()
+                if('hora_inicio' in form.cleaned_data
+                and 'hora_fin' in form.cleaned_data
+                and form.cleaned_data['hora_inicio'] is not None
+                and form.cleaned_data['hora_fin'] is not None
+                and form.cleaned_data['DELETE'] != True):
+                    if(form.cleaned_data['id']):
+                        horario = Horario.objects.get(id=form.cleaned_data['id'])
+                    else:
+                        horario = Horario()
+                    instancia_cursado = models.InstanciaCursado.objects.año_actual().filter(division__pk=self.kwargs['pk'],
+                                                                        materia=form.cleaned_data['materia']).first()
+                    horario.instancia_cursado = instancia_cursado
+                    horario.hora_inicio = form.cleaned_data['hora_inicio']
+                    horario.hora_fin = form.cleaned_data['hora_fin']
+                    horario.dia_semana = form.cleaned_data['dia_semana']
+                    horario.save()
 
     def post(self, request, *args, **kwargs):
         if models.InstanciaCursado.objects.necesario_generar():

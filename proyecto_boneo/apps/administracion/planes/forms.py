@@ -81,5 +81,6 @@ class ConfigurarHorariosMateriasForm(BaseFormsetForm):
         super(ConfigurarHorariosMateriasForm, self).__init__(*args, **kwargs)
         self.fields['id'].widget.attrs['hidden'] = 'hidden'
 
+
 ConfigurarMateriasHorariosFormset = formset_factory(ConfigurarHorariosMateriasForm,
                                                       can_delete=True, extra=0)
