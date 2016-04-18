@@ -1,0 +1,132 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Horarios de materias{% endblock %}
+{% block content %}
+    <script>
+        {% for dia_semana in dias_semana%}
+            $(document).ready(function(){
+                $('#agregar-{{ dia_semana.dia_id }}').click(function() {
+                    debugger;
+                    var form_idx = $('#id_{{ dia_semana.dia_id }}-TOTAL_FORMS').val();
+                    $('#formset-{{ dia_semana.dia_id }}').append($('#empty_form-{{ dia_semana.dia_id }}').html().replace(/__prefix__/g, form_idx));
+                    $('#id_{{ dia_semana.dia_id }}-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+                });
+            });
+
+        {% endfor %}
+
+    </script>
+    <form method="post" action=".">
+        {% csrf_token %}
+        <h2>Horarios por materia</h2>
+        <h3>Division: {{ division }}</h3>
+        <div>
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check-circle"></i> Confirmar
+            </button>
+            <a class="btn btn-default" href="{% url 'administracion:divisiones' %}">
+                <i class="fa fa-arrow-circle-left"></i>  Volver
+            </a>
+        </div>
+
+        <table class="table">
+            <thead>
+                {% for dia_semana in dias_semana|slice:"0:3" %}
+                    <th>{{ dia_semana.dia_descripcion }}</th>
+                {% endfor %}
+            </thead>
+            <tbody>
+
+                <tr>
+                    {% for dia_semana in dias_semana|slice:"0:3" %}
+                    <td>
+                        {{ dia_semana.formset.management_form }}
+                        <div id="formset-{{ dia_semana.dia_id }}">
+                            {% for form in dia_semana.formset %}
+                                <div class="form-group">
+                                    {{ form.materia }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.hora_inicio }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.hora_fin }}
+                                </div>
+                                <div class="hidden form-group">
+                                    {{ form.dia_semana }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    <input type="button" class="btn btn-success" value="Agregar Horario" id="agregar-{{ dia_semana.dia_id }}">
+                        <div id="empty_form-{{ dia_semana.dia_id }}" style="display:none">
+                                <div class="form-group">
+                                    {{ dia_semana.formset.empty_form.materia }}
+                                </div>
+                                <div class="form-group">
+                                    {{ dia_semana.formset.empty_form.hora_inicio }}
+                                </div>
+                                <div class="form-group">
+                                    {{ dia_semana.formset.empty_form.hora_fin }}
+                                </div>
+                                <div class="form-group">
+                                    {{ dia_semana.formset.empty_form.dia_semana }}
+                                </div>
+                    </div>
+                    </td>
+                    {% endfor %}
+
+                </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <thead>
+                {% for dia_semana in dias_semana|slice:"3:6" %}
+                    <th>{{ dia_semana.dia_descripcion }}</th>
+                {% endfor %}
+            </thead>
+            <tbody>
+
+                <tr>
+                    {% for dia_semana in dias_semana|slice:"3:6" %}
+                    <td>
+                        {{ dia_semana.formset.management_form }}
+                        <div id="formset-{{ dia_semana.dia_id }}">
+                            {% for form in dia_semana.formset %}
+                                <div class="form-group">
+                                    {{ form.materia }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.hora_inicio }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.hora_fin }}
+                                </div>
+                                <div class="hidden form-group hidden">
+                                    {{ form.dia_semana }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    <input type="button" class="btn btn-success" value="Agregar Horario" id="agregar-{{ dia_semana.dia_id }}">
+                    <div id="empty_form-{{ dia_semana.dia_id }}" style="display:none">
+                                <div class="form-group">
+                                    {{ dia_semana.formset.empty_form.materia }}
+                                </div>
+                                <div class="form-group">
+                                    {{ dia_semana.formset.empty_form.hora_inicio }}
+                                </div>
+                                <div class="form-group">
+                                    {{ dia_semana.formset.empty_form.hora_fin }}
+                                </div>
+                                <div class="form-group hidden">
+                                    {{ dia_semana.formset.empty_form.dia_semana }}
+                                </div>
+                    </div>
+                    </td>
+                    {% endfor %}
+
+                </tr>
+            </tbody>
+        </table>
+    </form>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Instancias cursado{% endblock %}
+{% block content %}
+        <h3>Necesario generar instancias</h3>
+        <p>Es necesario generar las instancias de cursado del año actual para configurar los horarios de las asignaturas</p>
+        <a href="{% url 'administracion:divisiones' %}"><input class="btn btn-default" type="button" value="Volver"></a>
+{% endblock %}
