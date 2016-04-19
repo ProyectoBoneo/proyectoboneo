@@ -1,12 +1,14 @@
 from django import forms
+from django.forms import formset_factory
 from django.forms.models import modelformset_factory
-from gutils.django.forms import BaseFilterForm, BaseFormsetModelForm
+from gutils.django.forms import BaseFilterForm, BaseFormsetModelForm, BaseForm, BaseFormsetForm
 from gutils.django.forms.typeahead.widgets import TypeaheadDropDownAddModelWidget
 
 from proyecto_boneo.apps.administracion.personal.forms import PersonaForm
-from proyecto_boneo.apps.administracion.alumnos.models import InscripcionAlumno
+from proyecto_boneo.apps.administracion.alumnos.models import InscripcionAlumno, Alumno
 
 from . import models
+from proyecto_boneo.apps.administracion.planes.models import InstanciaCursado, Horario
 
 
 class ResponsableForm(PersonaForm):
@@ -55,3 +57,15 @@ InscripcionesFormset = modelformset_factory(InscripcionAlumno,
                                             form=InscripcionForm,
                                             can_delete=True,
                                             extra=1)
+
+
+class AsistenciaForm(BaseFormsetForm):
+
+    alumno_id = forms.IntegerField()
+    horario_id =forms.IntegerField()
+    fecha = forms.DateTimeField()
+    asistio = forms.BooleanField()
+
+
+AsistenciaFormset = formset_factory(AsistenciaForm,
+                                can_delete=False, extra=0)

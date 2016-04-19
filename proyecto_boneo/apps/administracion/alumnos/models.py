@@ -24,6 +24,8 @@ class InscripcionAlumno(models.Model):
     alumno = models.ForeignKey(Alumno, related_name='inscripciones')
     instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='inscripciones')
 
+
 class Asistencia(models.Model):
         alumno = models.ForeignKey(Alumno, related_name='asistencias')
         claseReal = models.ForeignKey(ClaseReal, related_name='asistentes')
+        asistio = models.BooleanField(default=False)

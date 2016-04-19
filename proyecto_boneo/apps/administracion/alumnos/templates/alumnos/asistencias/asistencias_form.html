@@ -1,0 +1,56 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Horarios de materias{% endblock %}
+{% block content %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        <h2>Planilla de asistencia</h2>
+        <h3>Horario: {{ division }}</h3>
+        <div>
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check-circle"></i> Confirmar
+            </button>
+            <a class="btn btn-default" href="{% url 'administracion:divisiones' %}">
+                <i class="fa fa-arrow-circle-left"></i>  Volver
+            </a>
+        </div>
+
+        <table class="table">
+            <thead>
+                    <th>Alumno</th>
+                    <th class="hidden">Horario</th>
+                    <th class="hidden">Fecha</th>
+                    <th>Asistio</th>
+            </thead>
+            <tbody>
+                {% for alumno in alumno_list %}
+                <tr>
+                    <td>
+                        {{alumno.alumno}}
+                        {%  for form in alumno.formset %}
+                            <span class="hidden">
+                                {{ form.alumno_id }}
+                            </span>
+                        {% endfor %}
+                    </td>
+                    <td class="hidden">
+                        {%  for form in alumno.formset %}
+                            {{ form.horario_id }}
+                        {% endfor %}
+                    </td>
+                    <td class="hidden">
+                        {%  for form in alumno.formset %}
+                            {{ form.fecha }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {{ alumno.formset.management_form }}
+                        {%  for form in alumno.formset %}
+                            {{ form.asistio }}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+{% endblock %}
