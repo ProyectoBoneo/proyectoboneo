@@ -124,8 +124,8 @@ class InstanciaCursado(models.Model):
 
 class HorarioManager(models.Manager):
     def get_dias_semana_choices(self):
-        return [(1,"Lunes"), (2,"Martes"), (3,"Miercoles"), (4,"Jueves"), (5,"Viernes"),
-                (6,"Sabado"), (7, "Domingo")]
+        return [(0,"Lunes"), (1,"Martes"), (2,"Miercoles"), (3,"Jueves"), (4,"Viernes"),
+                (5,"Sabado"), (6, "Domingo")]
 
 
 class Horario(models.Model):

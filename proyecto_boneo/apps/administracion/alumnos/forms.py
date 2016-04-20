@@ -60,11 +60,9 @@ InscripcionesFormset = modelformset_factory(InscripcionAlumno,
 
 
 class AsistenciaForm(BaseFormsetForm):
-
+    id = forms.IntegerField(required=False)
     alumno_id = forms.IntegerField()
-    horario_id =forms.IntegerField()
-    fecha = forms.DateTimeField()
-    asistio = forms.BooleanField()
+    asistio = forms.BooleanField(initial=False, required=False)
 
 
 AsistenciaFormset = formset_factory(AsistenciaForm,

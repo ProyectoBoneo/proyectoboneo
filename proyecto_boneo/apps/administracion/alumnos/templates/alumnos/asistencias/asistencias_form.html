@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Horarios de materias{% endblock %}
 {% block content %}
-    <form method="post" action=".">
+    <form method="post" action="">
         {% csrf_token %}
         <h2>Planilla de asistencia</h2>
         <h3>Horario: {{ division }}</h3>
@@ -24,6 +24,14 @@
             <tbody>
                 {% for alumno in alumno_list %}
                 <tr>
+                    <td>
+                        {{alumno.alumno}}
+                        {%  for form in alumno.formset %}
+                            <span class="hidden">
+                                {{ form.id }}
+                            </span>
+                        {% endfor %}
+                    </td>
                     <td>
                         {{alumno.alumno}}
                         {%  for form in alumno.formset %}

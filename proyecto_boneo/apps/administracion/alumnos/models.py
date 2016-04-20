@@ -27,5 +27,5 @@ class InscripcionAlumno(models.Model):
 
 class Asistencia(models.Model):
         alumno = models.ForeignKey(Alumno, related_name='asistencias')
-        claseReal = models.ForeignKey(ClaseReal, related_name='asistentes')
+        clase_real = models.ForeignKey(ClaseReal, related_name='asistentes')
         asistio = models.BooleanField(default=False)
