@@ -96,7 +96,7 @@ class ResponsablesDeleteView(ProtectedDeleteView):
 class AsistenciaView(View):
     template_name = 'alumnos/asistencias/asistencias_form.html'
     success_url = reverse_lazy('administracion:divisiones')
-    fechaAIngresar = date.today()-timedelta(days=1)
+    fechaAIngresar = date.today()
 
     def get_context_data(self, request):
         horario = Horario.objects.filter(pk=self.kwargs['pk']).first()
@@ -110,7 +110,7 @@ class AsistenciaView(View):
         else:
             clase_real = None
         # TODO: Si no existen inscripciones indicar que no puede tomarse asistencia
-        if clase_real != None and request.method == 'GET':
+        if clase_real != None and clase_real.asistentes.exists() and request.method == 'GET':
             asistencia_list = models.Asistencia.objects.filter(clase_real=clase_real).all()
             for asistencia in asistencia_list :
                 prefix = str(asistencia.alumno.id)
