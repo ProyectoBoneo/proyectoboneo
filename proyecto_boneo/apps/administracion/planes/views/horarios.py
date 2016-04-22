@@ -1,5 +1,7 @@
+from datetime import datetime
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
 from gutils.django.views import View
 from .. import forms, models
 from proyecto_boneo.apps.administracion.planes.forms import ConfigurarHorariosMateriasForm
@@ -106,3 +108,14 @@ class ConfigurarHorariosDivisionView(View):
             else:
                 return render(request, self.template_name, context)
 
+
+class HorarioPorFechaView(ListView):
+    template_name = 'planes/horarios/horarios_por_fecha.html'
+
+    def get_queryset(self):
+        year = int(self.kwargs['year'])
+        month = int(self.kwargs['month'])
+        day = int(self.kwargs['day'])
+        dt = datetime(year=year, month=month, day=day)
+        dia_semana = dt.weekday()
+        return models.Horario.objects.filter(dia_semana=dia_semana)

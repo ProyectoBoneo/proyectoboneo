@@ -23,7 +23,11 @@ materias_patterns = [
 
    url(r'^divisiones/(?P<pk>\d+)/horarios_por_materia/$',
        user_is_staff(views.ConfigurarHorariosDivisionView.as_view()),
-       name='configurar_horarios_materias')
+       name='configurar_horarios_materias'),
+
+   url(r'^horarios/(?P<day>[0-9]+)/(?P<month>[0-9]+)/(?P<year>[0-9]{4})/$',
+       views.HorarioPorFechaView.as_view(),
+       name="horario_por_fecha")
 ]
 
 plan_patterns = [
