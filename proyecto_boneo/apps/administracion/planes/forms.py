@@ -84,3 +84,7 @@ class ConfigurarHorariosMateriasForm(BaseFormsetForm):
 
 ConfigurarMateriasHorariosFormset = formset_factory(ConfigurarHorariosMateriasForm,
                                                       can_delete=True, extra=0)
+
+
+class HorarioFechaForm(BaseForm):
+    fecha = forms.DateField(required=True)

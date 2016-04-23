@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from . import views
-from proyecto_boneo.apps.administracion.planes.views.horarios import HorarioPorFechaView
+from proyecto_boneo.apps.administracion.planes.views.horarios import HorarioPorFechaView, HorarioIrAFechaView
 from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_staff
 
 materias_patterns = [
@@ -28,7 +28,11 @@ materias_patterns = [
 
    url(r'^horarios/(?P<day>[0-9]+)/(?P<month>[0-9]+)/(?P<year>[0-9]{4})/$',
        HorarioPorFechaView.as_view(),
-       name="horario_por_fecha")
+       name="horario_por_fecha"),
+
+   url(r'^horarios/ir_a_fecha/$',
+       HorarioIrAFechaView.as_view(),
+       name="ir_a_fecha")
 ]
 
 plan_patterns = [

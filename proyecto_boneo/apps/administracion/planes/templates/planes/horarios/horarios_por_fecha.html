@@ -2,6 +2,11 @@
 {% block title %}Horarios de materias{% endblock %}
 {% block content %}
     <h1>{{ day }}</h1>
+    <form method="post" action="{% url 'administracion:ir_a_fecha' %}">
+        {% csrf_token %}
+        {{ fecha_form.fecha }}
+        <button type="submit" class="btn btn-success"> Ir a Fecha</button>
+    </form>
 
     <ul>
         {% for horario in object_list %}

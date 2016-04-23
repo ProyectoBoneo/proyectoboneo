@@ -1,10 +1,11 @@
 from datetime import datetime
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from gutils.django.views import View
 from .. import forms, models
-from proyecto_boneo.apps.administracion.planes.forms import ConfigurarHorariosMateriasForm
+from proyecto_boneo.apps.administracion.planes.forms import ConfigurarHorariosMateriasForm, HorarioFechaForm
 from proyecto_boneo.apps.administracion.planes.models import Horario
 
 DIAS_SEMANA_CHOICES = [(1,"Lunes"), (2,"Martes"), (3,"Miercoles"), (4,"Jueves"),
@@ -113,9 +114,29 @@ class HorarioPorFechaView(ListView):
     template_name = 'planes/horarios/horarios_por_fecha.html'
 
     def get_queryset(self):
+        dia_semana = self.get_fecha().weekday()
+        return models.Horario.objects.filter(dia_semana=dia_semana)
+
+    def get_context_data(self, **kwargs):
+        context = super(HorarioPorFechaView, self).get_context_data(**kwargs)
+        initial = {'fecha': self.get_fecha()}
+        fecha_form = HorarioFechaForm(initial = initial)
+        context['fecha_form'] = fecha_form
+        return context
+
+    def get_fecha(self):
         year = int(self.kwargs['year'])
         month = int(self.kwargs['month'])
         day = int(self.kwargs['day'])
         dt = datetime(year=year, month=month, day=day)
-        dia_semana = dt.weekday()
-        return models.Horario.objects.filter(dia_semana=dia_semana)
+        return dt
+
+
+class HorarioIrAFechaView(View):
+    def post(self, request):
+        form = HorarioFechaForm(self.request.POST)
+        if form.is_valid():
+            fecha = form.cleaned_data['fecha']
+            url = reverse_lazy('administracion:horario_por_fecha',
+                kwargs={'day': fecha.day, 'month': fecha.month, 'year': fecha.year})
+            return HttpResponseRedirect(url)
