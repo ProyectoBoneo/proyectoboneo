@@ -42,4 +42,10 @@ urlpatterns = patterns('',
                            user_is_staff(views.ResponsablesDeleteView.as_view()),
                            name='eliminar_responsable'),
                        #endregion
+
+                       #region asistencia
+                       url(r'asistencia/(?P<pk>\d+)/(?P<day>[0-9]+)/(?P<month>[0-9]+)/(?P<year>[0-9]{4})/',
+                           views.AsistenciaView.as_view(),
+                           name='asistencia')
+                       #endregion
                        )

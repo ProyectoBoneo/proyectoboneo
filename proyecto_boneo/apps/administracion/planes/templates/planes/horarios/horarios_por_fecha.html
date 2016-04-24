@@ -1,0 +1,44 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Horarios de materias{% endblock %}
+{% block content %}
+    <h1>{{ day }}</h1>
+    <form method="post" action="{% url 'administracion:ir_a_fecha' %}">
+        {% csrf_token %}
+        <div class="col-sm-10">
+            {{ fecha_form.fecha }}
+        </div>
+        <div class="col-sm-2">
+            <button type="submit" class="btn btn-success"> Ir a Fecha</button>
+        </div>
+
+    </form>
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Instancia Cursado</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for horario in object_list %}
+                    <tr>
+                        <td>{{ horario.instancia_cursado}}</td>
+                        <td> {{ horario.hora_inicio }}</td>
+                        <td> {{ horario.hora_fin }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'administracion:asistencia' horario.id fecha_form.fecha.value.day fecha_form.fecha.value.month fecha_form.fecha.value.year %}">
+                                <i class="fa fa-edit"></i> Asistencia
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay horarios designados en esta fecha</p>
+    {% endif %}
+{% endblock %}

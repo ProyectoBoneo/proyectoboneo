@@ -2,6 +2,7 @@ import string
 import datetime
 
 from django.db import models
+from django.db.models import ForeignKey
 
 from proyecto_boneo.apps.administracion.personal.models import Profesor
 
@@ -121,14 +122,31 @@ class InstanciaCursado(models.Model):
         return '{} - {} - {}'.format(self.materia.descripcion, self.division, self.anio_cursado)
 
 
-# TODO:Revisar modelo para ver la parte de toma de asistencia
+class HorarioManager(models.Manager):
+    def get_dias_semana_choices(self):
+        return [(0,"Lunes"), (1,"Martes"), (2,"Miercoles"), (3,"Jueves"), (4,"Viernes"),
+                (5,"Sabado"), (6, "Domingo")]
+
+
 class Horario(models.Model):
-    instancia_cursado = models.ForeignKey(InstanciaCursado)
-    dia = models.IntegerField()
-    hora = models.TimeField()
+    objects = HorarioManager()
+
+    instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='horarios')
+    dia_semana = models.IntegerField()
+    hora_inicio = models.TimeField()
+    hora_fin = models.TimeField()
 
 
 class DiasNoHabiles(models.Model):
     anio_cursado = models.IntegerField()
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
+
+
+class ClaseReal(models.Model):
+    horario = models.ForeignKey(Horario, related_name='clases')
+    fecha = models.DateTimeField()
+    hora_inicio = models.TimeField()
+    hora_fin = models.TimeField()
+    instancia_cursado = models,ForeignKey(InstanciaCursado,
+                                          related_name='clases')
