@@ -32,7 +32,11 @@ materias_patterns = [
 
    url(r'^horarios/ir_a_fecha/$',
        HorarioIrAFechaView.as_view(),
-       name="ir_a_fecha")
+       name="ir_a_fecha"),
+
+   url(r'^horarios/hoy/$',
+       HorarioPorFechaView.as_view(),
+       name="horario_hoy"),
 ]
 
 plan_patterns = [

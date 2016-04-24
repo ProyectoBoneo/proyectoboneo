@@ -95,10 +95,17 @@ class ResponsablesDeleteView(ProtectedDeleteView):
 #region Asistencia
 class AsistenciaView(View):
     template_name = 'alumnos/asistencias/asistencias_form.html'
-    success_url = reverse_lazy('administracion:divisiones')
-    fechaAIngresar = date.today()
+    fechaAIngresar = None
+
+    def get_fecha(self):
+        year = int(self.kwargs['year'])
+        month = int(self.kwargs['month'])
+        day = int(self.kwargs['day'])
+        dt = datetime(year=year, month=month, day=day)
+        return dt
 
     def get_context_data(self, request):
+        self.fechaAIngresar = self.get_fecha()
         horario = Horario.objects.filter(pk=self.kwargs['pk']).first()
         if horario.dia_semana != self.fechaAIngresar.weekday():
             return {}
@@ -109,7 +116,6 @@ class AsistenciaView(View):
             clase_real = clase_real_query.first()
         else:
             clase_real = None
-        # TODO: Si no existen inscripciones indicar que no puede tomarse asistencia
         if clase_real != None and clase_real.asistentes.exists() and request.method == 'GET':
             asistencia_list = models.Asistencia.objects.filter(clase_real=clase_real).all()
             for asistencia in asistencia_list :
@@ -145,7 +151,8 @@ class AsistenciaView(View):
                    'clase_real': clase_real,
                    'alumno_list': alumno_list,
                    'horario':horario,
-                    'instancia_cursado':instancia_cursado
+                    'instancia_cursado':instancia_cursado,
+                    'fecha': self.get_fecha()
         }
         return context
 
@@ -177,7 +184,7 @@ class AsistenciaView(View):
          for alumno in context['alumno_list']:
             formset = alumno['formset']
             for form in formset:
-                if 'id' in form.cleaned_data:
+                if 'id' in form.cleaned_data and form.cleaned_data['id'] is not None:
                     asistencia = Asistencia.objects.filter(id=form.cleaned_data['id']).first()
                 else:
                     asistencia = Asistencia()
@@ -191,10 +198,12 @@ class AsistenciaView(View):
                 asistencia.save()
 
     def post(self, request, *args, **kwargs):
+        success_url = reverse_lazy('administracion:horario_por_fecha',
+                kwargs={'day': self.get_fecha().day, 'month': self.get_fecha().month, 'year': self.get_fecha().year})
         context = self.get_context_data(request)
         if self.validate_formsets(context):
             self.save_formsets(context)
-            return redirect(self.success_url)
+            return redirect(success_url)
         else:
             return render(request, self.template_name, context)
 #endregion

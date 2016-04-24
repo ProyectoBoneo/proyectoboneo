@@ -44,7 +44,7 @@ urlpatterns = patterns('',
                        #endregion
 
                        #region asistencia
-                       url(r'asistencia/(?P<pk>\d+)',
+                       url(r'asistencia/(?P<pk>\d+)/(?P<day>[0-9]+)/(?P<month>[0-9]+)/(?P<year>[0-9]{4})/',
                            views.AsistenciaView.as_view(),
                            name='asistencia')
                        #endregion

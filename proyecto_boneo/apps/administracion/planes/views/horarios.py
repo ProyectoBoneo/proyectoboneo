@@ -125,10 +125,13 @@ class HorarioPorFechaView(ListView):
         return context
 
     def get_fecha(self):
-        year = int(self.kwargs['year'])
-        month = int(self.kwargs['month'])
-        day = int(self.kwargs['day'])
-        dt = datetime(year=year, month=month, day=day)
+        if 'year' in self.kwargs and 'month' in self.kwargs and 'year' in self.kwargs:
+            year = int(self.kwargs['year'])
+            month = int(self.kwargs['month'])
+            day = int(self.kwargs['day'])
+            dt = datetime(year=year, month=month, day=day)
+        else:
+            dt = datetime.today()
         return dt
 
 

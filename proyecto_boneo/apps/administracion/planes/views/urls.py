@@ -29,9 +29,13 @@ materias_patterns = [
        views.HorarioPorFechaView.as_view(),
        name="horario_por_fecha"),
 
-   url(r'^horarios/ir_a_fecha/$',
-       views.HorarioIrAFechaView.as_view(),
-       name="ir_a_fecha")
+   url(r'^horarios/(?P<day>[0-9]+)/(?P<month>[0-9]+)/(?P<year>[0-9]{4})/$',
+       views.HorarioPorFechaView.as_view(),
+       name="horario_por_fecha"),
+
+   url(r'^horarios/hoy/$',
+       views.HorarioPorFechaView.as_view(),
+       name="horario_hoy"),
 ]
 
 plan_patterns = [
