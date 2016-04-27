@@ -106,18 +106,11 @@ class AsistenciaView(View):
 
     def get_context_data(self, request):
         self.fechaAIngresar = self.get_fecha()
-        horario = Horario.objects.filter(pk=self.kwargs['pk']).first()
-        if horario.dia_semana != self.fechaAIngresar.weekday():
-            return {}
-        instancia_cursado = horario.instancia_cursado
+        division = models.Division.objects.filter(pk=self.kwargs['pk']).first()
+        instancia_cursado = division.instancias_cursado.filter(anio_cursado=self.fechaAIngresar.year).first()
         alumno_list = []
-        clase_real_query = ClaseReal.objects.filter(horario=horario).filter(fecha=self.fechaAIngresar)
-        if clase_real_query.exists():
-            clase_real = clase_real_query.first()
-        else:
-            clase_real = None
-        if clase_real != None and clase_real.asistentes.exists() and request.method == 'GET':
-            asistencia_list = models.Asistencia.objects.filter(clase_real=clase_real).all()
+        asistencia_list = models.Asistencia.objects.filter(division=division).filter(fecha=self.fechaAIngresar).all()
+        if asistencia_list != None and asistencia_list.exists() and request.method == 'GET':
             for asistencia in asistencia_list :
                 prefix = str(asistencia.alumno.id)
                 initial =[{
@@ -148,9 +141,8 @@ class AsistenciaView(View):
                                     'formset': formset})
 
         context = {
-                   'clase_real': clase_real,
                    'alumno_list': alumno_list,
-                   'horario':horario,
+                   'division':division,
                     'instancia_cursado':instancia_cursado,
                     'fecha': self.get_fecha()
         }
@@ -170,17 +162,7 @@ class AsistenciaView(View):
 
     def save_formsets(self, context):
          instancia_cursado = context['instancia_cursado']
-         horario = context['horario']
-         if not context['clase_real']:
-            clase_real = ClaseReal()
-         else:
-            clase_real = context['clase_real']
-         clase_real.instancia_cursado = instancia_cursado
-         clase_real.horario = horario
-         clase_real.fecha = self.fechaAIngresar
-         clase_real.hora_inicio = horario.hora_inicio
-         clase_real.hora_fin = horario.hora_fin
-         clase_real.save()
+         division = context['division']
          for alumno in context['alumno_list']:
             formset = alumno['formset']
             for form in formset:
@@ -188,7 +170,8 @@ class AsistenciaView(View):
                     asistencia = Asistencia.objects.filter(id=form.cleaned_data['id']).first()
                 else:
                     asistencia = Asistencia()
-                asistencia.clase_real = clase_real
+                asistencia.division = division
+                asistencia.fecha = self.fechaAIngresar
                 alumno = Alumno.objects.filter(pk=form.cleaned_data['alumno_id']).first()
                 asistencia.alumno = alumno
                 if 'asistio' in form.cleaned_data:

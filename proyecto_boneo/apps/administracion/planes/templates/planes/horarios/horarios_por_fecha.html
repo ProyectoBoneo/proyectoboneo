@@ -16,21 +16,17 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Instancia Cursado</th>
-                    <th>Hora Inicio</th>
-                    <th>Hora Fin</th>
+                    <th>Division</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                {% for horario in object_list %}
+                {% for division in object_list %}
                     <tr>
-                        <td>{{ horario.instancia_cursado}}</td>
-                        <td> {{ horario.hora_inicio }}</td>
-                        <td> {{ horario.hora_fin }}</td>
+                        <td>{{ division}}</td>
                         <td>
-                            <a class="btn btn-default" href="{% url 'administracion:asistencia' horario.id fecha_form.fecha.value.day fecha_form.fecha.value.month fecha_form.fecha.value.year %}">
+                            <a class="btn btn-default" href="{% url 'administracion:asistencia' division.id fecha_form.fecha.value.day fecha_form.fecha.value.month fecha_form.fecha.value.year %}">
                                 <i class="fa fa-edit"></i> Asistencia
                             </a>
                         </td>

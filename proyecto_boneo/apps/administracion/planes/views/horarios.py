@@ -17,6 +17,7 @@ class ConfigurarHorariosDivisionView(View):
     success_url = reverse_lazy('administracion:divisiones')
 
     def get_context_data(self, request):
+        division = models.Division.objects.filter(pk=self.kwargs['pk']).first()
         instancia_cursado = models.InstanciaCursado.objects.año_actual().filter(division__pk=self.kwargs['pk'])
         dias_semana = []
         for dia_semana in models.Horario.objects.get_dias_semana_choices()[0:6]:
@@ -47,7 +48,8 @@ class ConfigurarHorariosDivisionView(View):
                                 'dia_descripcion': dia_semana[1],
                                 'formset': formset})
 
-        context = {'dias_semana': dias_semana}
+        context = {'dias_semana': dias_semana,
+                   'division': division}
         return context
 
     def get(self, request, *args, **kwargs):
@@ -115,7 +117,10 @@ class HorarioPorFechaView(ListView):
 
     def get_queryset(self):
         dia_semana = self.get_fecha().weekday()
-        return models.Horario.objects.filter(dia_semana=dia_semana)
+        divisiones = models.Division.objects.filter(instancias_cursado__horarios__dia_semana=dia_semana)\
+            .order_by('id').distinct('id')
+        return divisiones
+        # return models.Horario.objects.filter(dia_semana=dia_semana)
 
     def get_context_data(self, **kwargs):
         context = super(HorarioPorFechaView, self).get_context_data(**kwargs)

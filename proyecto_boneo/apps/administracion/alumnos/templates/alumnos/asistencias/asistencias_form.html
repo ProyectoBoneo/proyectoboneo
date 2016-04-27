@@ -4,15 +4,9 @@
     <form method="post" action="">
         {% csrf_token %}
         <h2>Planilla de asistencia</h2>
-        <h3>Horario: {{ division }}</h3>
-        <div>
-            <button type="submit" class="btn btn-success">
-                <i class="fa fa-check-circle"></i> Confirmar
-            </button>
-            <a class="btn btn-default" href="{% url 'administracion:horario_por_fecha' fecha.day fecha.month fecha.year %}">
-                <i class="fa fa-arrow-circle-left"></i>  Volver
-            </a>
-        </div>
+        <h3>Fecha: {{ fecha|date:"d F, Y" }}</h3>
+        <h3>Division: {{ division }}</h3>
+
 
         <table class="table">
             <thead>
@@ -60,5 +54,13 @@
                 {% endfor %}
             </tbody>
         </table>
+           <div class="pull-right">
+            <a class="btn btn-default" href="{% url 'administracion:horario_por_fecha' fecha.day fecha.month fecha.year %}">
+                <i class="fa fa-arrow-circle-left"></i>  Volver
+            </a>
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check-circle"></i> Confirmar
+            </button>
+        </div>
     </form>
 {% endblock %}

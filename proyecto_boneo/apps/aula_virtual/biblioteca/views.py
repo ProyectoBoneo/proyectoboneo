@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView,  DetailView, ListView, FilteredListView
-from gutils.django.views import View
 from django.core.urlresolvers import reverse_lazy
 
 from . import forms, models
+from django.views.generic import View
 from proyecto_boneo.apps.administracion.planes.models import Materia
 from collections import defaultdict
+from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, \
+    DetailView, ListView, FilteredListView
 from proyecto_boneo.apps.aula_virtual.biblioteca.forms import MaterialForm, SolicitudMaterialRechazoForm
 
 
@@ -23,12 +24,10 @@ class MaterialesFilteredListView(FilteredListView):
     template_name = 'biblioteca_virtual/materiales/materiales_list.html'
 
 
-
 class MaterialesSearchFilteredListView(FilteredListView):
     form_class = forms.MaterialSearchFilterForm
     model = models.Material
     template_name = 'biblioteca_virtual/materiales/materiales_search.html'
-
 
 
 class MaterialesAdminFilteredListView(FilteredListView):

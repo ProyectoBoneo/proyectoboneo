@@ -26,6 +26,8 @@ class InscripcionAlumno(models.Model):
 
 
 class Asistencia(models.Model):
+        fecha = models.DateField()
         alumno = models.ForeignKey(Alumno, related_name='asistencias')
-        clase_real = models.ForeignKey(ClaseReal, related_name='asistentes')
+        division = models.ForeignKey(Division, related_name='asistentes')
+        # clase_real = models.ForeignKey(ClaseReal, related_name='asistentes')
         asistio = models.BooleanField(default=False)

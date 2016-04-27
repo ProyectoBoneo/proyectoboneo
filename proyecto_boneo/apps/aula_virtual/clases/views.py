@@ -1,6 +1,7 @@
 from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.views import generic
 from proyecto_boneo.apps.administracion.personal.models import Profesor
 
 from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView

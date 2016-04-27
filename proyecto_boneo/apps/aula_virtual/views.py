@@ -1,4 +1,4 @@
-from gutils.django.views import TemplateView
+from proyecto_boneo.apps.administracion.usuarios.customViews.views import TemplateView
 
 
 class AulaVirtualHomeView(TemplateView):
