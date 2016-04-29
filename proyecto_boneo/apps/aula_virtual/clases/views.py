@@ -19,6 +19,15 @@ class ClaseVirtualListView(ListView):
     model = models.ClaseVirtual
     template_name = 'clase_virtual/clase_virtual_list.html'
 
+    def get_queryset(self):
+        if(self.request.user.is_staff):
+            return models.ClaseVirtual.objects.all()
+        if(self.request.user.is_alumno):
+            return models.ClaseVirtual.objects.filter(materia__instancias_cursado__inscripciones__alumno = self.request.user.alumno).distinct()
+        if(self.request.user.is_profesor):
+            return models.ClaseVirtual.objects.filter(materia__instancias_cursado__profesor_titular = self.request.user.profesor).distinct()
+
+
 
 class ClaseVirtualCreateView(CreateView):
     model = models.ClaseVirtual

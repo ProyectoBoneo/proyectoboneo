@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}Proyecto Boneo{%  endblock %}</title>
+    <title>{%  block title %}Proyecto Boneo{%  endblock %}</title>
 
     {% include 'utils/common_styles.html' %}
 
     {% include 'utils/common_scripts.html' %}
 
-    <link rel="stylesheet" href="{% static 'css/utils/pages/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/administracion/base.css' %}">
 
     {% block styles %}
     {% endblock %}
@@ -25,11 +25,27 @@
 <body>
     <div class="page-header">
         {% include 'utils/comunicados_link.html' %}
-        <span class="page-header-title"><a href="{% url 'home' %}">Proyecto Boneo</a></span>
+        <span class="page-header-title"><a href="{% url 'home' %}"><i class="fa fa-edit fa-2x valign-middle"></i> Proyecto Boneo - Admin</a></span>
+        {% block navbar %}
+            <nav class="page-navbar">
+                <ul>
+                    <li><a href="{% url 'administracion:alumnos' %}">Alumnos</a></li>
+                    <li><a href="{% url 'administracion:responsables' %}">Responsables</a></li>
+                    <li><a href="{% url 'administracion:profesores' %}">Profesores</a></li>
+                    <li><a href="{% url 'administracion:divisiones' %}">Divisiones</a></li>
+                    <li><a href="{% url 'administracion:horario_hoy' %}">Asistencia</a></li>
+                    <li><a href="{% url 'administracion:materias' %}">Materias</a></li>
+                    <li><a href="{% url 'administracion:tutorias' %}">Tutorias</a></li>
+                    <li><a href="{% url 'administracion:encuentrotutorias' %}">Encuentro Tutorias</a></li>
+                    <li><a href="{% url 'administracion:estadias' %}">Estadias</a></li>
+                </ul>
+            </nav>
+        {% endblock %}
     </div>
     <div id="content" class="container">
         {% block content %}
         {%  endblock %}
+        {% include 'typeahead/add_model_modal.html' %}
     </div>
 </body>
 </html>
