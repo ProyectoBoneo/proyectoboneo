@@ -4870,3 +4870,21 @@
   border-radius: 30px;
   box-shadow: 1px 1px 1px gray;
 }
+.logout-link {
+  float: right;
+  font-size: 35px;
+  color: white;
+  padding: 25px;
+}
+.logout-link a {
+  position: relative;
+  text-decoration: none;
+  color: white;
+}
+.logout-link a:hover,
+.logout-link a:active,
+.logout-link a:focus,
+.logout-link a:visited {
+  text-decoration: none;
+  color: white;
+}

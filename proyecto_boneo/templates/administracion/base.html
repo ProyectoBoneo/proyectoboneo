@@ -30,6 +30,7 @@
             <nav class="page-navbar">
                 <ul>
                     {% if user.is_staff %}
+                        <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="{% url 'administracion:alumnos' %}">Alumnos</a></li>
                         <li><a href="{% url 'administracion:responsables' %}">Responsables</a></li>
                         <li><a href="{% url 'administracion:profesores' %}">Profesores</a></li>

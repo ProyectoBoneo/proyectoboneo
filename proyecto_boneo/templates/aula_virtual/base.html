@@ -29,6 +29,7 @@
         {% block navbar %}
             <nav class="page-navbar">
                 <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="{% url 'aula_virtual:home_administracion' %}">Aula Virtual</a></li>
 {#                        <li><a href="{% url 'aula_virtual:clases_virtuales' %}">Clases Virtuales</a></li>#}
                     {% if user.is_alumno %}
