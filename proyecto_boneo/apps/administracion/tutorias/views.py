@@ -5,33 +5,26 @@ from django.core.urlresolvers import reverse_lazy
 from django.forms import formset_factory
 from django.shortcuts import render
 from gutils.django.views import View
+from django.views.generic import View,ListView, CreateView, DetailView, UpdateView
 from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 from proyecto_boneo.apps.administracion.personal.models import Profesor
 from proyecto_boneo.apps.administracion.tutorias.forms import EncuentroTutoriaForTutoriaForm
-from gutils.django.views import ListView, CreateView, DetailView, UpdateView, ProtectedDeleteView
+from gutils.django.views import ProtectedDeleteView
 
 
 class TutoriasListView(ListView):
     model = models.Tutoria
     template_name = 'tutorias/tutorias_list.html'
 
-
-class TutoriasAlumnoListView(ListView):
-    model = models.Tutoria
-    template_name = 'tutorias/tutorias_list.html'
-
     def get_queryset(self):
-        self.alumno = Alumno.objects.get(usuario_id=self.request.user.id)
-        return models.Tutoria.objects.filter(alumno=self.alumno)
-
-
-class TutoriasProfesorListView(ListView):
-    model = models.Tutoria
-    template_name = 'tutorias/tutorias_list.html'
-
-    def get_queryset(self):
-        self.profesor = Profesor.objects.get(usuario_id=self.request.user.id)
-        return models.Tutoria.objects.filter(profesor=self.profesor)
+        if self.request.user.is_staff:
+            return models.Tutoria.objects.all()
+        elif self.request.user.is_profesor:
+            self.profesor = Profesor.objects.get(usuario_id=self.request.user.id)
+            return models.Tutoria.objects.filter(profesor=self.profesor)
+        elif self.request.user.is_alumno:
+            self.alumno = Alumno.objects.get(usuario_id=self.request.user.id)
+            return models.Tutoria.objects.filter(alumno=self.alumno)
 
 
 class TutoriaCreateView(CreateView):
@@ -49,8 +42,7 @@ class TutoriaDetailView(View):
         EncuentroTutoriaFormSet = formset_factory(EncuentroTutoriaForTutoriaForm)
         formset = EncuentroTutoriaFormSet()
         return render(request, self.template_name, {'object': tutoria,
-                                                    'formset': formset,
-                                                    'user': self.request.user
+                                                    'formset': formset
                                                     } )
 
     def post(self, request, *args, **kwargs):
@@ -66,8 +58,12 @@ class TutoriaDetailView(View):
             formset = EncuentroTutoriaFormSet()
             return render(request, self.template_name, {
                             'object': tutoria,
-                            'formset':formset,
-                            'user': self.request.user
+                            'formset':formset
+                })
+        else:
+            return render(request, self.template_name, {
+                            'object': tutoria,
+                            'formset':formset
                 })
 
 
@@ -107,6 +103,10 @@ class EncuentroTutoriaUpdateView(UpdateView):
     success_url = reverse_lazy('administracion:encuentrotutorias')
     form_class = forms.EncuentroTutoriaForm
     template_name = 'encuentrotutorias/encuentrotutorias_form.html'
+
+    def get_success_url(self):
+        encuentro_tutoria = models.EncuentroTutoria.objects.filter(pk=self.kwargs['pk']).first()
+        return reverse_lazy('administracion:ver_tutoria', kwargs={'pk': encuentro_tutoria.tutoria.pk})
 
 
 class EncuentroTutoriaDeleteView(ProtectedDeleteView):

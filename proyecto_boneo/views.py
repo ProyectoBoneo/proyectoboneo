@@ -1,7 +1,12 @@
-from gutils.django.views import TemplateView
+import datetime
 
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
+from django.views.generic import View, TemplateView
+from proyecto_boneo.apps.administracion.planes.models import Horario
+from proyecto_boneo.apps.administracion.tutorias.models import EncuentroTutoria
+from proyecto_boneo.apps.aula_virtual.biblioteca.models import Material
+from proyecto_boneo.apps.aula_virtual.clases.models import ClaseVirtual
 
 
 def home_redirect_router(request, *args, **kwargs):
@@ -21,6 +26,22 @@ class StaffHomeView(TemplateView):
 
 class AlumnoHomeView(TemplateView):
     template_name = 'home/alumno_home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AlumnoHomeView, self).get_context_data(**kwargs)
+        context['horarios'] = Horario.objects\
+            .filter(instancia_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
+        context['clases'] = ClaseVirtual.objects\
+            .filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
+        context['ultimos_materiales'] = Material.objects\
+            .filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
+        context['encuentros_tutorias'] = EncuentroTutoria.objects\
+            .filter(tutoria__alumno=self.request.user.alumno).filter(tutoria__anio = datetime.datetime.today().year).distinct()
+        context['proximos_encuentros_tutorias'] = EncuentroTutoria.objects\
+            .filter(tutoria__alumno=self.request.user.alumno).filter(tutoria__anio = datetime.datetime.today().year)\
+            .filter(fecha__gte = datetime.datetime.now()).distinct()
+        return context
+
 
 class ProfesorHomeView(TemplateView):
      template_name = 'home/profesor_home.html'

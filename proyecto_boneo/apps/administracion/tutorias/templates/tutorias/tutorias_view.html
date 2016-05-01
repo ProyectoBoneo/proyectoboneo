@@ -31,26 +31,28 @@
         <p>
             Alumno:{{ object.alumno }}
         </p>
-    <div id="add-encuentrotutoria-button">
-        <button type="button" class="btn btn-primary" id="encuentrotutoria-open">
-            <i  class="fa fa-plus-circle"></i> Nuevo encuentro
-        </button>
-    </div>
-    <div id="add-encuentrotutoria" class="">
-        <form method="post" action="">
-             {% csrf_token %}
-                <table>
-                    {{ formset }}
-                </table>
-                <button type="submit" class="btn btn-success" id="">
-                    <i  class="fa fa-save"></i> Guardar encuentro
-                </button>
-                <button type="button" class="btn btn-danger" id="encuentrotutoria-cancel">
-                    <i  class="fa fa-times-circle"></i> Cancelar
-                </button>
+    {% if user.is_profesor %}
+        <div id="add-encuentrotutoria-button">
+            <button type="button" class="btn btn-primary" id="encuentrotutoria-open">
+                <i  class="fa fa-plus-circle"></i> Nuevo encuentro
+            </button>
+        </div>
+        <div id="add-encuentrotutoria" class="">
+            <form method="post" action="">
+                 {% csrf_token %}
+                    <table>
+                        {{ formset }}
+                    </table>
+                    <button type="submit" class="btn btn-success" id="">
+                        <i  class="fa fa-save"></i> Guardar encuentro
+                    </button>
+                    <button type="button" class="btn btn-danger" id="encuentrotutoria-cancel">
+                        <i  class="fa fa-times-circle"></i> Cancelar
+                    </button>
 
-        </form>
-    </div>
+            </form>
+        </div>
+    {% endif %}
 
     <form method="post" action="">
 
@@ -64,23 +66,25 @@
                     <tr>
                         <td>{{ encuentrotutoria.fecha }}</td>
                         <td>{{ encuentrotutoria.resumen }}</td>
+                        {% if user.is_profesor %}
                         <td>
                             <a class="btn btn-default" href="{% url 'administracion:editar_encuentrotutoria' encuentrotutoria.id %}">
                                 <i class="fa fa-edit"></i> Editar
                             </a>
                         </td>
-                        <td>
-                            <a class="btn btn-danger" href="{% url 'administracion:eliminar_encuentrotutoria' encuentrotutoria.id %}">
-                                <i class="fa fa-trash"></i> Eliminar
-                            </a>
-                        </td>
+
+                            <td>
+                                <a class="btn btn-danger" href="{% url 'administracion:eliminar_encuentrotutoria' encuentrotutoria.id %}">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </a>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </form>
-
-        <a class="btn btn-default" href="{% url 'administracion:tutorias' %}">
-            <i class="fa fa-arrow-circle-left"></i>  Volver
-        </a>
+    <a class="btn btn-default" href="{% url 'administracion:tutorias' %}">
+        <i class="fa fa-arrow-circle-left"></i>  Volver
+    </a>
 {% endblock %}

@@ -3,11 +3,14 @@
 {% block content %}
     <h3>Tutorias</h3>
 
+    {% if user.is_staff %}
     <div class="row">
-             <a class="btn btn-default" href="{% url 'administracion:nuevo_tutoria' %}">
-                <i class="fa fa-plus-circle"></i> Nuevo
-             </a>
+         <a class="btn btn-default" href="{% url 'administracion:nuevo_tutoria' %}">
+            <i class="fa fa-plus-circle"></i> Nuevo
+         </a>
     </div>
+    {% endif %}
+
     <div class="col-xs-10">
     {% if object_list %}
         <table class="table">
@@ -34,7 +37,7 @@
 {#                            {% for destinatario in tutoria.destinatarios.all %} {{ destinatario }}<br/>{% endfor %}#}
 {#                        </td>#}
                         <td>{{ tutoria.alumno }}</td>
-                        {% if user.is_profesor %}
+                        {% if user.is_profesor or user.is_alumno %}
                             <td>
                                 <a class="btn btn-default" href="{% url 'administracion:ver_tutoria' tutoria.id %}">
                                     <i class="fa fa-eye"></i> Ver

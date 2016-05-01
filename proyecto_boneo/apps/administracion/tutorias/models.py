@@ -16,7 +16,10 @@ class Tutoria(models.Model):
 class EncuentroTutoria(models.Model):
     fecha = models.DateTimeField()
     tutoria = models.ForeignKey(Tutoria)
+    # lugar_de_encuentro = models.TextField(null=True, blank=True)
     resumen = models.TextField(null=True, blank=True)
+    # observaciones_profesor = models.TextField(null=True, blank=True)
+    # retroalimentacion_alumno = models.TextField(null=True, blank=True)
     # TODO: observacionesProfesor (privada para el)
     # TODO:Agregar lugar punto de encuentro
     # TODO: retroalimentacionAlumno (el alumno puede ingresar solo este dato) nullable
