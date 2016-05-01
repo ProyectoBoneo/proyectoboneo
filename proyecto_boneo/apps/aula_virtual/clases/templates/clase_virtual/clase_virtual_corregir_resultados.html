@@ -7,16 +7,18 @@
 
 
     <h3>Clase Virtual</h3>
-        <p>
-            Nombre: {{ clase_virtual.nombre }}
-        </p>
-        <p>
-            Materia: {{ clase_virtual.materia }}
-        </p>
-        <p>
-            Descripcion:{{ clase_virtual.descripcion }}
-        </p>
-
+    <p>
+        Nombre: {{ clase_virtual.nombre }}
+    </p>
+    <p>
+        Materia: {{ clase_virtual.materia }}
+    </p>
+    <p>
+        Descripcion: {{ clase_virtual.descripcion }}
+    </p>
+    <p>
+        Tipo: {{ clase_virtual.descripcion_tipo }}
+    </p>
     <form method="post" class="form-horizontal" action="">
         {{ formset.management_form }}
         {% csrf_token %}

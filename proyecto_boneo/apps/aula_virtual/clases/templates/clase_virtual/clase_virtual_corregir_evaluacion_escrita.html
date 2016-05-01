@@ -1,0 +1,41 @@
+{% extends 'clase_virtual/base.html' %}
+{% block title %}Clases virtuales{% endblock %}
+{% block content %}
+    <script>
+
+    </script>
+
+
+    <h3>Clase Virtual</h3>
+    <p>
+        Nombre: {{ clase_virtual.nombre }}
+    </p>
+    <p>
+        Materia: {{ clase_virtual.materia }}
+    </p>
+    <p>
+        Descripción: {{ clase_virtual.descripcion }}
+    </p>
+    <p>
+        Tipo: {{ clase_virtual.descripcion_tipo }}
+    </p>
+    <form method="post" class="form-horizontal" action="">
+        {% csrf_token %}
+        <div class="input-group">
+            {{ form.nota.label_tag }}
+            {{ form.nota }}
+            {{ form.nota.errors }}
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-6 col-sm-4">
+            <a class="btn btn-default" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id %}">
+                <i class="fa fa-arrow-circle-left"></i>  Volver
+            </a>
+        </div>
+        <div class="col-xs-6 col-sm-offset-4 col-sm-4">
+            <button class="btn btn-success pull-right" type="submit">
+                <i class="fa fa-save"></i>  Guardar Correción
+            </button>
+        </div>
+    </form>
+{% endblock %}

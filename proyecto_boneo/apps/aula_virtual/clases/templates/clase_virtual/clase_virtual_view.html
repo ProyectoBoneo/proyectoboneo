@@ -47,69 +47,69 @@
     </script>
 
     <h3>Clase Virtual</h3>
-
-        <p>
-            Nombre: {{ object.nombre }}
-        </p>
-        <p>
-            Materia: {{ object.materia }}
-        </p>
-        <p>
-            Descripcion:{{ object.descripcion }}
-        </p>
-    <div class="row">
-        <div class="col-sm-8">
+    <p>
+        Nombre: {{ object.nombre }}
+    </p>
+    <p>
+        Materia: {{ object.materia }}
+    </p>
+    <p>
+        Descripcion: {{ object.descripcion }}
+    </p>
+    <p>
+        Tipo: {{ object.descripcion_tipo }}
+    </p>
+    {% if object.tipo != object.EVALUACION_ESCRITA %}
+        <div class="row">
+            <div class="col-sm-8">
                 <form method="post" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-
-            {{ tipo_ejercicio_form.tipo_ejercicio.label_tag }}
-            <div class="input-group">
-                {{ tipo_ejercicio_form.tipo_ejercicio }}
-                {{ tipo_ejercicio_form.tipo_ejercicio.errors }}
-                <div class="input-group-btn">
-                    <a class="btn btn-success" id="btn_crear_tipo_ejercicio" href="#">
-                        <i class="fa fa-plus-circle"></i>
-                    </a>
-                </div>
+                    {% csrf_token %}
+                    {{ tipo_ejercicio_form.tipo_ejercicio.label_tag }}
+                    <div class="input-group">
+                        {{ tipo_ejercicio_form.tipo_ejercicio }}
+                        {{ tipo_ejercicio_form.tipo_ejercicio.errors }}
+                        <div class="input-group-btn">
+                            <a class="btn btn-success" id="btn_crear_tipo_ejercicio" href="#">
+                                <i class="fa fa-plus-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </form>
             </div>
-    </form>
         </div>
-    </div>
 
+        <table class="table">
+            <thead>
+                <th>Ejercicio</th>
+            </thead>
+            <tbody>
+                {% for ejercicio in object.ejercicios.all %}
+                    <tr>
+                        <td>
+                            {{ ejercicio.ejerciciovirtualtexto }}
+                            {{ ejercicio.ejerciciovirtualmultiplechoice }}
+                        </td>
+                        <td>
+                            <a class="btn btn-default"
+                            {% if ejercicio.ejerciciovirtualtexto %}
+                                   href="{% url 'aula_virtual:editar_ejercicio_texto' ejercicio.id %}">
+                            {% elif ejercicio.ejerciciovirtualmultiplechoice%}
+                                   href="{% url 'aula_virtual:editar_ejercicio_multiple_choice' ejercicio.id %}">
+                            {% endif %}
+                                <i class="fa fa-edit"></i> Editar
+                            </a>
 
-
-    <table class="table">
-        <thead>
-            <th>Ejercicio</th>
-        </thead>
-        <tbody>
-            {% for ejercicio in object.ejercicios.all %}
-                <tr>
-                    <td>
-                        {{ ejercicio.ejerciciovirtualtexto }}
-                        {{ ejercicio.ejerciciovirtualmultiplechoice }}
-                    </td>
-                    <td>
-                        <a class="btn btn-default"
-                        {% if ejercicio.ejerciciovirtualtexto %}
-                               href="{% url 'aula_virtual:editar_ejercicio_texto' ejercicio.id %}">
-                        {% elif ejercicio.ejerciciovirtualmultiplechoice%}
-                               href="{% url 'aula_virtual:editar_ejercicio_multiple_choice' ejercicio.id %}">
-                        {% endif %}
-                            <i class="fa fa-edit"></i> Editar
-                        </a>
-
-                    </td>
-                    <td>
-                        <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_ejercicio' ejercicio.id %}">
-                            <i class="fa fa-trash"></i> Eliminar
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_ejercicio' ejercicio.id %}">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
     <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
         <i class="fa fa-arrow-circle-left"></i>  Volver
     </a>

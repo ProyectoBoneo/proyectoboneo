@@ -1,8 +1,6 @@
 from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views import generic
-from proyecto_boneo.apps.administracion.personal.models import Profesor
 
 from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView
 from gutils.django.views import View
@@ -23,10 +21,9 @@ class ClaseVirtualListView(ListView):
         if(self.request.user.is_staff):
             return models.ClaseVirtual.objects.all()
         if(self.request.user.is_alumno):
-            return models.ClaseVirtual.objects.filter(materia__instancias_cursado__inscripciones__alumno = self.request.user.alumno).distinct()
+            return models.ClaseVirtual.objects.filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
         if(self.request.user.is_profesor):
-            return models.ClaseVirtual.objects.filter(materia__instancias_cursado__profesor_titular = self.request.user.profesor).distinct()
-
+            return models.ClaseVirtual.objects.filter(materia__instancias_cursado__profesor_titular=self.request.user.profesor).distinct()
 
 
 class ClaseVirtualCreateView(CreateView):
@@ -76,58 +73,85 @@ class ClaseVirtualResultadosView(View):
 
 class ClaseVirtualCorreccionListView(View):
     template_name = 'clase_virtual/clase_virtual_resultados_list.html'
+
     def get(self, request, *args, **kwargs):
         clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk']).first()
-        alumnos = models.Alumno.objects.filter(inscripciones__instancia_cursado__materia = clase_virtual.materia)
-        respuestas_realizadas = models.RespuestaEjercicioVirtual.objects.filter(clase_virtual=clase_virtual)\
-            .filter(alumno__in=alumnos).values('alumno').annotate(num_respuestas=Count("alumno")).distinct()
-        respuestas_correctas = models.RespuestaEjercicioVirtual.objects.filter(clase_virtual=clase_virtual)\
-            .filter(es_correcta=True)\
-            .filter(alumno__in=alumnos).values('alumno').annotate(num_correctas=Count("alumno")).distinct()
+        alumnos = models.Alumno.objects.filter(inscripciones__instancia_cursado__materia=clase_virtual.materia)
+
+        for alumno in alumnos:
+            try:
+                alumno.nota_actual = models.ResultadoEvaluacion.objects.get(alumno=alumno,
+                                                                            clase_virtual=clase_virtual).nota
+            except models.ResultadoEvaluacion.DoesNotExist:
+                alumno.nota_actual = None
+
         return render(request, self.template_name, {
-                            'clase_virtual':clase_virtual,
+                            'clase_virtual': clase_virtual,
                             'alumnos': alumnos,
-                            'respuestas_realizadas': respuestas_realizadas,
-                            'respuestas_correctas': respuestas_correctas
                         })
 
 
 class ClaseVirtualCorreccionResultadosView(View):
     template_name = 'clase_virtual/clase_virtual_corregir_resultados.html'
+    template_name_evaluacion = 'clase_virtual/clase_virtual_corregir_evaluacion_escrita.html'
 
     def get(self, request, *args, **kwargs):
         clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk']).first()
         alumno = models.Alumno.objects.filter(pk=self.kwargs['alumno_pk']).first()
-        respuestas = models.RespuestaEjercicioVirtual.objects.filter(clase_virtual=clase_virtual)\
-            .filter(alumno=alumno)
-        formset = CorregirRespuestaEjercicioVirtualFormSet(queryset=respuestas)
 
-        return render(request, self.template_name, {
-                                'clase_virtual':clase_virtual,
-                                'respuestas': respuestas,
-                                'formset': formset
-                            })
+        if clase_virtual.tipo == models.ClaseVirtual.EVALUACION_ESCRITA:
+            try:
+                resultado = models.ResultadoEvaluacion.objects.get(alumno=alumno, clase_virtual=clase_virtual)
+            except models.ResultadoEvaluacion.DoesNotExist:
+                resultado = None
+            form = forms.CorregirEvaluacionEscritaForm(initial={'nota': resultado.nota if resultado else None})
+            return render(request, self.template_name_evaluacion, {'clase_virtual': clase_virtual, 'form': form})
+        else:
+            respuestas = models.RespuestaEjercicioVirtual.objects.filter(clase_virtual=clase_virtual)\
+                .filter(alumno=alumno)
+            formset = CorregirRespuestaEjercicioVirtualFormSet(queryset=respuestas)
+            return render(request, self.template_name, {
+                                    'clase_virtual': clase_virtual,
+                                    'respuestas': respuestas,
+                                    'formset': formset
+                                })
+
+    def update_resultado_evaluacion(self, clase_virtual, alumno, nota):
+        models.ResultadoEvaluacion.objects.update_or_create(clase_virtual=clase_virtual, alumno=alumno,
+                                                            defaults={'nota': nota})
+
+    def update_resultados(self, clase_virtual, alumno, respuestas):
+        if clase_virtual.tipo == models.ClaseVirtual.EVALUACION:
+            total = len(respuestas)
+            correctas = len(respuestas.filter(es_correcta=True))
+            self.update_resultado_evaluacion(clase_virtual, alumno, round((correctas/total)*10, 2))
 
     def post(self, request, *args, **kwargs):
         clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk']).first()
         alumno = models.Alumno.objects.filter(pk=self.kwargs['alumno_pk']).first()
-        respuestas = models.RespuestaEjercicioVirtual.objects.filter(clase_virtual=clase_virtual)\
-            .filter(alumno=alumno)
-        formset = CorregirRespuestaEjercicioVirtualFormSet(request.POST)
-        if formset.is_valid():
-            formset.save()
-            return render(request, self.template_name, {
-                        'clase_virtual':clase_virtual,
+
+        if clase_virtual.tipo == models.ClaseVirtual.EVALUACION_ESCRITA:
+            form = forms.CorregirEvaluacionEscritaForm(request.POST)
+            if form.is_valid():
+                self.update_resultado_evaluacion(clase_virtual, alumno, form.cleaned_data['nota'])
+                return redirect(reverse_lazy('aula_virtual:corregir_resultados_clase_virtual',
+                                             kwargs={'pk': clase_virtual.id}))
+            else:
+                return render(request, self.template_name_evaluacion, {'clase_virtual': clase_virtual, 'form': form})
+        else:
+            respuestas = models.RespuestaEjercicioVirtual.objects.filter(clase_virtual=clase_virtual, alumno=alumno)
+            formset = CorregirRespuestaEjercicioVirtualFormSet(request.POST)
+            if formset.is_valid():
+                formset.save()
+                self.update_resultados(clase_virtual, alumno, respuestas)
+                return redirect(reverse_lazy('aula_virtual:corregir_resultados_clase_virtual',
+                                             kwargs={'pk': clase_virtual.id}))
+            else:
+                return render(request, self.template_name, {
+                        'clase_virtual': clase_virtual,
                         'respuestas': respuestas,
                         'formset': formset
                     })
-        else:
-            return render(request, self.template_name, {
-                    'clase_virtual':clase_virtual,
-                    'respuestas': respuestas,
-                    'formset': formset
-                })
-        return;
 
 
 def obtener_siguiente_ejercicio_a_resolver(clase_virtual):

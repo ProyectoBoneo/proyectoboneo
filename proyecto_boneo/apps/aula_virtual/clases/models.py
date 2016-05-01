@@ -5,11 +5,24 @@ from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 
 
 class ClaseVirtual(models.Model):
-    # TODO: Agregar criterios de evaluación y puntaje por ejercicio
-    # TODO: Pertenece a un profesor quien la administra o puede ser editada por cualquier profesor
+    EVALUACION = 'eva'
+    EVALUACION_ESCRITA = 'esc'
+    CLASE_NORMAL = 'nor'
+
+    TIPO_CHOICES = (
+        (CLASE_NORMAL, 'Clase Virtual'),
+        (EVALUACION, 'Evaluación'),
+        (EVALUACION_ESCRITA, 'Evaluación Escrita'),
+    )
+
     materia = models.ForeignKey(Materia, related_name='clases_virtuales')
-    nombre = models.CharField(max_length=30, default="Clase")
+    nombre = models.CharField(max_length=30, default='Clase')
     descripcion = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=3, choices=TIPO_CHOICES)
+
+    @property
+    def descripcion_tipo(self):
+        return [t[1] for t in self.TIPO_CHOICES if t[0] == self.tipo][0]
 
 
 class EjercicioVirtual(models.Model):
@@ -80,3 +93,9 @@ class RespuestaEjercicioVirtualTexto(RespuestaEjercicioVirtual):
 class RespuestaEjercicioVirtualMultipleChoice(RespuestaEjercicioVirtual):
     opcion_seleccionada = models.ForeignKey(OpcionEjercicioMultipleChoice, related_name='+')
     ejercicio = models.ForeignKey(EjercicioVirtualMultipleChoice, related_name='respuestas')
+
+
+class ResultadoEvaluacion(models.Model):
+    clase_virtual = models.ForeignKey(ClaseVirtual, related_name='resultados')
+    alumno = models.ForeignKey(Alumno, related_name='resultados_evaluaciones')
+    nota = models.FloatField()
