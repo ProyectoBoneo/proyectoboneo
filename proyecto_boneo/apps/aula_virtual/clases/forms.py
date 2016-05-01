@@ -8,17 +8,14 @@ from proyecto_boneo.apps.aula_virtual.clases.models import EjercicioVirtualMulti
 
 
 class ClaseVirtualForm(BaseModelForm):
-    def __init__(self, *args, **kwargs):
-        profesor = kwargs.pop('profesor', None) # pop the 'user' from kwargs dictionary
+    def __init__(self, profesor, *args, **kwargs):
         super(ClaseVirtualForm, self).__init__(*args, **kwargs)
-        self.fields['materia'].queryset = models.Materia.objects.filter\
-        (instancias_cursado__profesor_titular = profesor).distinct()
+        self.fields['materia'].queryset = models.Materia.objects.filter(
+            instancias_cursado__profesor_titular=profesor).distinct()
 
     class Meta:
         model = models.ClaseVirtual
         exclude = []
-        labels = {}
-        widgets = {}
 
 
 class EjercicioVirtualForm(BaseModelForm):
@@ -26,35 +23,32 @@ class EjercicioVirtualForm(BaseModelForm):
     class Meta:
         model = models.EjercicioVirtual
         exclude = ['clase_virtual']
-        labels = {}
 
 
 class EjercicioVirtualTextoForm(BaseModelForm):
 
     class Meta:
         model = models.EjercicioVirtualTexto
-        fields = ['ayuda','consigna']
-        labels = {}
+        fields = ['ayuda', 'consigna']
 
 
 class EjercicioVirtualMultipleChoiceForm(BaseModelForm):
 
     class Meta:
         model = models.EjercicioVirtualMultipleChoice
-        fields = ['ayuda','pregunta','explicacion']
-        labels = {}
+        fields = ['ayuda', 'pregunta', 'explicacion']
 
 
 class OpcionEjercicioMultipleChoiceForm(BaseModelForm):
     class Meta:
         model = models.OpcionEjercicioMultipleChoice
-        fields=['texto','opcion_correcta']
-        labels = {}
+        fields = ['texto', 'opcion_correcta']
 
 OpcionEjercicioVirtualFormSet = inlineformset_factory(EjercicioVirtualMultipleChoice, OpcionEjercicioMultipleChoice,
                                                       form=OpcionEjercicioMultipleChoiceForm)
-OpcionEjercicioVirtualUpdateFormSet = inlineformset_factory(EjercicioVirtualMultipleChoice, OpcionEjercicioMultipleChoice,
-                                                      form=OpcionEjercicioMultipleChoiceForm, extra=0)
+OpcionEjercicioVirtualUpdateFormSet = inlineformset_factory(EjercicioVirtualMultipleChoice,
+                                                            OpcionEjercicioMultipleChoice,
+                                                            form=OpcionEjercicioMultipleChoiceForm, extra=0)
 
 
 class ClaseVirtualFilterForm(BaseFilterForm):
@@ -81,24 +75,26 @@ class TipoEjercicioForm(BaseForm):
 class RespuestaEjercicioVirtualTextoForm(BaseModelForm):
     class Meta:
         model = models.RespuestaEjercicioVirtualTexto
-        fields=['texto']
-        labels = {}
+        fields = ['texto']
 
 
 class RespuestaEjercicioVirtualMultipleChoiceForm(BaseModelForm):
     class Meta:
         model = models.RespuestaEjercicioVirtualMultipleChoice
-        fields=['opcion_seleccionada']
-        labels = {}
+        fields = ['opcion_seleccionada']
 
 
 class RespuestaEjercicioVirtualCorreccionForm(BaseModelForm):
     class Meta:
         model = models.RespuestaEjercicioVirtual
-        fields=['es_correcta', 'id']
+        fields = ['es_correcta', 'id']
         labels = {}
         widgets = {'id': forms.HiddenInput()}
 
 CorregirRespuestaEjercicioVirtualFormSet = modelformset_factory(models.RespuestaEjercicioVirtual,
                                                                 form=RespuestaEjercicioVirtualCorreccionForm,
                                                                 extra=0)
+
+
+class CorregirEvaluacionEscritaForm(BaseForm):
+    nota = forms.FloatField(label='Nota', min_value=1, max_value=10)
