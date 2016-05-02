@@ -5012,7 +5012,7 @@ div[data-toggle="buttons"] label.active {
 }
 .page-header {
   min-height: 80px;
-  background-color: #71c575;
+  background-color: #113472;
   margin: 0;
 }
 .page-header .page-header-title a {
@@ -5031,7 +5031,7 @@ div[data-toggle="buttons"] label.active {
   text-decoration: none;
 }
 .page-navbar {
-  background-color: #71c575;
+  background-color: #113472;
   margin: 0;
 }
 .page-navbar ul {
@@ -5052,5 +5052,5 @@ div[data-toggle="buttons"] label.active {
 .page-navbar ul li:active,
 .page-navbar ul li:focus {
   text-decoration: none;
-  background-color: #82e387;
+  background-color: #0e295a;
 }

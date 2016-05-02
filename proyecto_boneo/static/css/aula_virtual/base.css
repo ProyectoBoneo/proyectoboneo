@@ -4943,7 +4943,7 @@ select.with_errors {
 }
 .page-header {
   min-height: 80px;
-  background-color: #71c575;
+  background-color: #113472;
   margin: 0;
 }
 .page-header .page-header-title a {
@@ -4962,7 +4962,7 @@ select.with_errors {
   text-decoration: none;
 }
 .page-navbar {
-  background-color: #71c575;
+  background-color: #113472;
   margin: 0;
 }
 .page-navbar ul {
@@ -4983,7 +4983,7 @@ select.with_errors {
 .page-navbar ul li:active,
 .page-navbar ul li:focus {
   text-decoration: none;
-  background-color: #82e387;
+  background-color: #0e295a;
 }
 /*!
  * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
