@@ -64,7 +64,7 @@
                     </li>
 
                 {% for key, value_list  in materia_dict.items %}
-                    <p>Ano: {{ key }}</p>
+                    <p>Año: {{ key }}</p>
                 {% for materia in value_list %}
                     <li {% if current_materia.id == materia.id %} class="bg-primary" {% endif %}>
                         <a href="{% url 'aula_virtual:materiales_by_materia' materia.id %}">{{ materia.descripcion }}</a>

@@ -1,49 +1,51 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Divisiones{% endblock %}
 {% block content %}
-    <h3>Divisiones</h3>
-    <div class="margin-top margin-bottom">
-        <label for="anio_lectivo" class="margin-right">Año lectivo</label>
-        {% if anio_lectivo %}
-            <input id="anio_lectivo" type="number" class="int" disabled="disabled" value="{{ anio_lectivo }}"/>
-        {% else %}
-            <input id="anio_lectivo" type="text" disabled="disabled" value="No generado aún"/>
-        {% endif %}
-        {% if necesario_generar %}
-            <span class="with_errors margin-left">Es necesario generar las instancias de cursado para el ciclo lectivo actual</span>
-        {% endif %}
-    </div>
-    <div class="margin-top margin-bottom">
-        <a class="btn btn-default" href="{% url 'administracion:configurar_divisiones' %}">Configurar divisiones</a>
-        {% if necesario_generar %}
-            <a class="btn btn-default" href="{% url 'administracion:generar_instancias_cursado' %}">Generar instancias de cursado</a>
-        {% else %}
-            <a class="btn btn-default" href="{% url 'administracion:configurar_profesores_materias' %}">Configurar profesores por materia</a>
-        {% endif %}
-    </div>
-    {% if object_list %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Año</th>
-                    <th>División</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for division in object_list %}
+    <div class="col-md-offset-1 col-md-10">
+        <h3>Divisiones</h3>
+        <div class="margin-top margin-bottom">
+            <label for="anio_lectivo" class="margin-right">Año lectivo</label>
+            {% if anio_lectivo %}
+                <input id="anio_lectivo" type="number" class="int" disabled="disabled" value="{{ anio_lectivo }}"/>
+            {% else %}
+                <input id="anio_lectivo" type="text" disabled="disabled" value="No generado aún"/>
+            {% endif %}
+            {% if necesario_generar %}
+                <span class="with_errors margin-left">Es necesario generar las instancias de cursado para el ciclo lectivo actual</span>
+            {% endif %}
+        </div>
+        <div class="margin-top margin-bottom">
+            <a class="btn btn-default" href="{% url 'administracion:configurar_divisiones' %}">Configurar divisiones</a>
+            {% if necesario_generar %}
+                <a class="btn btn-default" href="{% url 'administracion:generar_instancias_cursado' %}">Generar instancias de cursado</a>
+            {% else %}
+                <a class="btn btn-default" href="{% url 'administracion:configurar_profesores_materias' %}">Configurar profesores por materia</a>
+            {% endif %}
+        </div>
+        {% if object_list %}
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ division.anio }}</td>
-                        <td>{{ division.letra }}</td>
-                        <td>
-                            <a class="btn btn-default" href="{% url 'administracion:configurar_horarios_materias' division.id %}">
-                                Configurar horarios por materia
-                            </a>
-                        </td>
+                        <th>División</th>
+                        <th></th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>No hay divisiones cargadas en el sistema</p>
-    {% endif %}
+                </thead>
+                <tbody>
+                    {% for division in object_list %}
+                        <tr>
+                            <td>{{ division.anio }}° {{ division.letra }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'administracion:configurar_horarios_materias' division.id %}">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i> Calendario semanal
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay divisiones cargadas en el sistema</p>
+        {% endif %}
+    </div>
+
 {% endblock %}

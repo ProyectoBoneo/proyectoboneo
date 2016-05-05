@@ -61,6 +61,7 @@ class AlumnosInscripcionesView(ModelFormsetView):
 
     def get_queryset(self):
         return InscripcionAlumno.objects.filter(alumno=self.alumno)
+
 #endregion
 
 

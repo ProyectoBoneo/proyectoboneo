@@ -14,7 +14,7 @@
         <button type="submit" class="btn btn-default">
             <i class="fa fa-filter"></i> Filtrar
         </button>
-        <a class="btn btn-default" href="{% url 'administracion:nuevo_profesor' %}">
+        <a class="btn btn-success" href="{% url 'administracion:nuevo_profesor' %}">
             <i class="fa fa-plus-circle"></i>  Nuevo profesor
         </a>
     </form>
@@ -39,7 +39,7 @@
                         <td>{{ profesor.apellido }}</td>
                         <td>{{ profesor.domicilio }}</td>
                         <td>
-                            <a class="btn btn-default" href="{% url 'administracion:editar_profesor' profesor.id %}">
+                            <a class="btn btn-primary" href="{% url 'administracion:editar_profesor' profesor.id %}">
                                 <i class="fa fa-edit"></i> Editar
                             </a>
                         </td>

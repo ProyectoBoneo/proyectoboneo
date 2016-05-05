@@ -1,8 +1,9 @@
 {% extends 'aula_virtual/base.html' %}
 {% block title %}Solicitud Material{% endblock %}
 {% block content %}
-    <h3>Material</h3>
-    <form method="post" action="." enctype="multipart/form-data">
+    <h3>Solicitud de Material</h3>
+    <div class="col-md-offset-2 col-md-8">
+        <form method="post" action="." enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             {{ form.descripcion.label_tag }}
@@ -22,4 +23,6 @@
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>
+    </div>
+
 {% endblock %}

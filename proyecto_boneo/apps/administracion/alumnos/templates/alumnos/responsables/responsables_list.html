@@ -14,7 +14,7 @@
         <button type="submit" class="btn btn-default">
             <i class="fa fa-filter"></i> Filtrar
         </button>
-        <a class="btn btn-default" href="{% url 'administracion:nuevo_responsable' %}">
+        <a class="btn btn-success" href="{% url 'administracion:nuevo_responsable' %}">
             <i class="fa fa-plus-circle"></i>  Nuevo responsable
         </a>
     </form>
@@ -23,8 +23,7 @@
             <thead>
                 <tr>
                     <th>DNI</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
+                    <th>Apellido y Nombre</th>
                     <th>Domicilio</th>
                     <th></th>
                     <th></th>
@@ -34,11 +33,10 @@
                 {% for responsable in object_list %}
                     <tr>
                         <td>{{ responsable.dni }}</td>
-                        <td>{{ responsable.nombre }}</td>
-                        <td>{{ responsable.apellido }}</td>
+                        <td>{{ responsable.apellido }} {{ responsable.nombre }}</td>
                         <td>{{ responsable.domicilio }}</td>
                         <td>
-                            <a class="btn btn-default" href="{% url 'administracion:editar_responsable' responsable.id %}">
+                            <a class="btn btn-primary" href="{% url 'administracion:editar_responsable' responsable.id %}">
                                 <i class="fa fa-edit"></i> Editar
                             </a>
                         </td>
