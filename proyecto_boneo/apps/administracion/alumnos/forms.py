@@ -1,14 +1,16 @@
+from functools import partial, wraps
 from django import forms
 from django.forms import formset_factory
-from django.forms.models import modelformset_factory
+from django.forms.models import modelformset_factory, ModelChoiceIterator
+from django.utils.functional import curry
 from gutils.django.forms import BaseFilterForm, BaseFormsetModelForm, BaseForm, BaseFormsetForm
-from gutils.django.forms.typeahead.widgets import TypeaheadDropDownAddModelWidget
+from gutils.django.forms.typeahead.widgets import TypeaheadDropDownAddModelWidget, TypeaheadDropDownModelWidget
+from proyecto_boneo.apps.administracion.alumnos.lookups import AlumnoLookup
 
 from proyecto_boneo.apps.administracion.personal.forms import PersonaForm
 from proyecto_boneo.apps.administracion.alumnos.models import InscripcionAlumno, Alumno
 
 from . import models
-from proyecto_boneo.apps.administracion.planes.models import InstanciaCursado, Horario
 
 
 class ResponsableForm(PersonaForm):
@@ -57,6 +59,28 @@ InscripcionesFormset = modelformset_factory(InscripcionAlumno,
                                             form=InscripcionForm,
                                             can_delete=True,
                                             extra=1)
+
+
+class InscripcionAlumnoForm(BaseFormsetForm):
+    alumno = forms.ModelChoiceField(queryset = Alumno.objects.all(),
+                                     widget=TypeaheadDropDownModelWidget(AlumnoLookup),)
+
+    # def __init__(self, **kwargs):
+    #     self.alumnos = kwargs.pop('alumnos')
+    #     super(InscripcionAlumnoForm, self).__init__(**kwargs)
+    #     iterator = ModelChoiceIterator(self.fields['alumno'])
+    #     choices = [iterator.choice(obj) for obj in self.alumnos]
+    #     self.fields['alumno'].choices = choices
+
+# InscripcionesAlumnoFormset = formset_factory(wraps(InscripcionAlumnoForm)
+#                                              (partial(InscripcionAlumnoForm,
+#                                                       alumnos=Alumno.objects.all())),
+#                                              can_delete=True,
+#                                              extra=1)
+
+InscripcionesAlumnoFormset = formset_factory(InscripcionAlumnoForm,
+                                             can_delete=True,
+                                             extra=1)
 
 
 class AsistenciaForm(BaseFormsetForm):

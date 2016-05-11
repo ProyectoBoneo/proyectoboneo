@@ -10,9 +10,10 @@
     </script>
 {% endblock %}
 {% block content %}
-    <h3>Inscripciones del alumno {{ alumno }}</h3>
+    <h3>Inscripciones de división {{ division }}</h3>
     <form method="post" action=".">
         {% csrf_token %}
+                {{ formset.management_form }}
         <table class="table">
             <thead>
                 <tr>
@@ -21,10 +22,10 @@
                 </tr>
             </thead>
             <tbody>
-                {% for form in formset.forms %}
+                {% for form in formset %}
                     <tr>
                         <td hidden="hidden">{{ form.pk }}{{ form.DELETE }}</td>
-                        <td>{{ form.instancia_cursado }}</td>
+                        <td>{{ form.alumno }}</td>
                         <td>
                             <a id="remove-{{ form.prefix }}-row" href="#void" class="delete-row btn btn-danger {% if form.non_field_errors %}with_errors{% endif %}"
                                {% if form.non_field_errors %}title="{{ form.non_field_errors.0 }}"{% endif %}><i class="fa fa-minus-circle"></i>
@@ -33,7 +34,6 @@
                     </tr>
                 {% endfor %}
             </tbody>
-            {{ formset.management_form }}
         </table>
 
         <button type="submit" class="btn btn-success">

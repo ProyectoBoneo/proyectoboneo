@@ -28,12 +28,18 @@
                     <tr>
                         <th>División</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for division in object_list %}
                         <tr>
                             <td>{{ division.anio }}° {{ division.letra }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'administracion:inscripciones_alumno' division.id %}">
+                                <i class="fa fa-edit"></i> Inscripciones
+                            </a>
+                        </td>
                             <td>
                                 <a class="btn btn-primary" href="{% url 'administracion:configurar_horarios_materias' division.id %}">
                                     <i class="fa fa-calendar" aria-hidden="true"></i> Calendario semanal

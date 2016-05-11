@@ -4967,6 +4967,9 @@ select.with_errors {
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
+.twitter-typeahead {
+  width: 90%;
+}
 @font-face {
   font-family: "bumblebee";
   src: url("/static/fonts/bumble_bees.ttf");
