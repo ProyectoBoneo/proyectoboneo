@@ -63,7 +63,8 @@ InscripcionesFormset = modelformset_factory(InscripcionAlumno,
 
 class InscripcionAlumnoForm(BaseFormsetForm):
     alumno = forms.ModelChoiceField(queryset = Alumno.objects.all(),
-                                     widget=TypeaheadDropDownModelWidget(AlumnoLookup),)
+                                     widget=TypeaheadDropDownModelWidget(AlumnoLookup),
+                                    show_hidden_initial=True)
 
     # def __init__(self, **kwargs):
     #     self.alumnos = kwargs.pop('alumnos')
@@ -80,7 +81,7 @@ class InscripcionAlumnoForm(BaseFormsetForm):
 
 InscripcionesAlumnoFormset = formset_factory(InscripcionAlumnoForm,
                                              can_delete=True,
-                                             extra=1)
+                                             extra=5)
 
 
 class AsistenciaForm(BaseFormsetForm):

@@ -103,18 +103,32 @@ class AlumnosInscripcionesView(View):
         division = context['division']
         formset = context['formset']
         for form in formset:
-            if 'alumno' in form.cleaned_data and form.cleaned_data['alumno'] is not None:
+            if form.has_changed() and 'alumno' in form.cleaned_data and form.cleaned_data['alumno'] is not None:
                 alumno = Alumno.objects.filter(id=form.cleaned_data['alumno'].id).first()
                 for instancia_cursado in division.instancias_cursado.filter(anio_cursado=datetime.today().year).all():
                     inscripcion_alumno, created = InscripcionAlumno.objects.get_or_create(alumno=alumno,
                                                      instancia_cursado=instancia_cursado)
-                    inscripcion_alumno.save()
-                alumno.division = division
+                if division != alumno.division:
+                    alumno.division = division
+                    alumno.save()
+        for formToDelete in formset.deleted_forms:
+            if 'alumno' in formToDelete.cleaned_data and formToDelete.cleaned_data['alumno'] is not None:
+                alumno = Alumno.objects.filter(id=formToDelete.cleaned_data['alumno'].id).first()
+                for instancia_cursado in division.instancias_cursado.filter(anio_cursado=datetime.today().year).all():
+                    inscripcion_alumno_borrar = InscripcionAlumno.objects.get(alumno=alumno,
+                                                     instancia_cursado=instancia_cursado)
+                    inscripcion_alumno_borrar.delete()
+                alumno.division = None
                 alumno.save()
 
     def post(self, request, *args, **kwargs):
-        success_url = reverse_lazy('administracion:alumnos')
+        mode = request.POST.get('mode-field')
+
         context = self.get_context_data(request)
+        if mode=='confirmar':
+           success_url = reverse_lazy('administracion:divisiones')
+        else:
+           success_url = reverse_lazy('administracion:inscripciones_alumno', kwargs={'pk':context['division'].id})
         if self.validate_formsets(context):
             self.save_formsets(context)
             return redirect(success_url)
