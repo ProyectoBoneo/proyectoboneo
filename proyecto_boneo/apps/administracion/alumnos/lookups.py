@@ -1,10 +1,15 @@
 from gutils.django.forms.typeahead.lookups import Lookup, register_lookup
+from proyecto_boneo.apps.administracion.personal.forms import PersonaForm
 
 from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
 
 from . import models
-from .forms import ResponsableForm
 
+class ResponsableForm(PersonaForm):
+
+    class Meta:
+        model = models.Responsable
+        exclude = ['fecha_ingreso', 'usuario']
 
 class ResponsableLookup(Lookup):
     model = models.Responsable
@@ -20,3 +25,10 @@ class ResponsableLookup(Lookup):
         return super(ResponsableLookup, cls).save_model(form)
 
 register_lookup(ResponsableLookup)
+
+
+class AlumnoLookup(Lookup):
+    model = models.Alumno
+    search_fields = ['nombre', 'apellido']
+
+register_lookup(AlumnoLookup)

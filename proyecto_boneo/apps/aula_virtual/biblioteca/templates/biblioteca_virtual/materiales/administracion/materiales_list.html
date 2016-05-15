@@ -1,8 +1,9 @@
 {% extends 'aula_virtual/base.html' %}
 {% block title %}Materiales{% endblock %}
 {% block content %}
-    <h3>Materiales</h3>
-    {% if filter_form %}
+    <div class="col-md-offset-1 col-md-10">
+        <h3>Materiales</h3>
+        {% if filter_form %}
         <form action="../" method="get" class="margin-bottom-2x">
             <div class="form-group">
                         {{ filter_form.descripcion.label_tag }}
@@ -11,57 +12,59 @@
             <button type="submit" class="btn btn-default">
                 <i class="fa fa-filter"></i> Filtrar
             </button>
-            <a class="btn btn-default" href="{% url 'aula_virtual:nuevo_material' %}">
+            <a class="btn btn-success" href="{% url 'aula_virtual:nuevo_material' %}">
                 <i class="fa fa-plus-circle"></i>  Nuevo material
             </a>
         </form>
-    {% endif %}
+        {% endif %}
 
-    {% if object_list %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Descripción</th>
-                    <th>Archivo</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for material in object_list %}
+        {% if object_list %}
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ material.id }}</td>
-                        <td>{{ material.descripcion }}</td>
-                        <td>{{ material.nombre_archivo }}</td>
-                        <td>
-                            <a class="btn btn-primary" href="{% url 'aula_virtual:ver_material' material.id %}">
-                                <i class="fa fa-eye"></i> Ver
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-primary" href="{{ material.archivo.url }}" download="{{ material.descripcion }}">
-                                <i class="fa fa-download"></i> Descargar
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-default" href="{% url 'aula_virtual:editar_material' material.id %}">
-                                <i class="fa fa-edit"></i> Editar
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_material' material.id %}">
-                                <i class="fa fa-trash"></i> Eliminar
-                            </a>
-                        </td>
-
+                        <th>Id</th>
+                        <th>Descripción</th>
+                        <th>Archivo</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>No hay materiales que coincidan con el criterio de filtrado</p>
-    {% endif %}
+                </thead>
+                <tbody>
+                    {% for material in object_list %}
+                        <tr>
+                            <td>{{ material.id }}</td>
+                            <td>{{ material.descripcion }}</td>
+                            <td>{{ material.nombre_archivo }}</td>
+                            <td>
+                                <a class="btn btn-default" href="{% url 'aula_virtual:ver_material' material.id %}">
+                                    <i class="fa fa-eye"></i> Ver
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-default" href="{{ material.archivo.url }}" download="{{ material.descripcion }}">
+                                    <i class="fa fa-download"></i> Descargar
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'aula_virtual:editar_material' material.id %}">
+                                    <i class="fa fa-edit"></i> Editar
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_material' material.id %}">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </a>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay materiales que coincidan con el criterio de filtrado</p>
+        {% endif %}
+    </div>
+
 {% endblock %}

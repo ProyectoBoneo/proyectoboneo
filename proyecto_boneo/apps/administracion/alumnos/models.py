@@ -12,7 +12,7 @@ class Responsable(Persona):
 class Alumno(PersonaLegajo):
     usuario = models.OneToOneField(UsuarioBoneo, related_name='alumno')
     responsable = models.ForeignKey(Responsable, related_name='alumnos', on_delete=models.PROTECT)
-    division = models.ForeignKey(Division, related_name='alumnos')
+    division = models.ForeignKey(Division, related_name='alumnos', null=True, blank=True)
 
     def crear_usuario(self, email):
         super(Alumno, self).crear_usuario(email)

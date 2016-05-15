@@ -3,6 +3,9 @@
 {% block content %}
     <div class="container width-64x margin-top-20x">
         <div class="inline-group">
+            {% for horario in horarios %}
+                {{ horario.instancia_cursado }}
+            {% endfor %}
 {#            <a class="btn btn-lg btn-default width-30x" href="{% url 'aula_virtual:home_administracion' %}">#}
 {#                <i class="fa fa-book"></i> Aula Virtual#}
 {#            </a>#}

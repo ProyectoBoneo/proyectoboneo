@@ -1,6 +1,7 @@
 {% extends 'aula_virtual/base.html' %}
 {% block title %}Materiales{% endblock %}
 {% block content %}
+    <div class="col-md-offset-1 col-md-10">
     <h3>Materiales</h3>
     {% if filter_form %}
         <form action="." method="get" class="margin-bottom-2x">
@@ -32,10 +33,10 @@
                         <td>{{ material.descripcion }}</td>
                         <td>{{ material.observaciones }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{% url 'aula_virtual:ver_material' material.id %}">
+                            <a class="btn btn-default" href="{% url 'aula_virtual:ver_material' material.id %}">
                                 <i class="fa fa-eye"></i> Ver
                             </a>
-                            <a class="btn btn-primary" href="{{ material.archivo.url }}" download="{{ material.descripcion }}">
+                            <a class="btn btn-default" href="{{ material.archivo.url }}" download="{{ material.descripcion }}">
                                 <i class="fa fa-download"></i> Descargar
                             </a>
                         </td>
@@ -46,4 +47,5 @@
     {% else %}
         <p>No hay materiales disponibles.</p>
     {% endif %}
+    </div>
 {% endblock %}
