@@ -18,8 +18,6 @@
             <a class="btn btn-default" href="{% url 'administracion:configurar_divisiones' %}">Configurar divisiones</a>
             {% if necesario_generar %}
                 <a class="btn btn-default" href="{% url 'administracion:generar_instancias_cursado' %}">Generar instancias de cursado</a>
-            {% else %}
-                <a class="btn btn-default" href="{% url 'administracion:configurar_profesores_materias' %}">Configurar profesores por materia</a>
             {% endif %}
         </div>
         {% if object_list %}
@@ -38,6 +36,11 @@
                         <td>
                             <a class="btn btn-default" href="{% url 'administracion:inscripciones_alumno' division.id %}">
                                 <i class="fa fa-edit"></i> Inscripciones
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'administracion:configurar_profesores_materias' division.id %}">
+                                <i class="fa fa-edit"></i> Profesores por Materia
                             </a>
                         </td>
                             <td>

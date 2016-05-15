@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import modelformset_factory, BaseModelFormSet, ModelForm
 from django.forms.formsets import formset_factory
 
 from gutils.django.forms import BaseModelForm, BaseFilterForm, BaseFormsetForm, BaseForm
@@ -7,7 +8,7 @@ from gutils.django.forms.typeahead.widgets import TypeaheadDropDownModelWidget
 from . import models
 from proyecto_boneo.apps.administracion.personal.models import Profesor
 from proyecto_boneo.apps.administracion.personal.lookups import ProfesorLookup
-from proyecto_boneo.apps.administracion.planes.models import Materia
+from proyecto_boneo.apps.administracion.planes.models import Materia, InstanciaCursado
 
 
 class MateriaForm(BaseModelForm):
@@ -52,15 +53,15 @@ CantidadDivisionesFormset = formset_factory(ConfigurarCantidadDivisionesForm,
                                             can_delete=True, extra=0)
 
 
-class ConfigurarProfesoresMateriasForm(BaseFormsetForm):
-    instancia_cursado = forms.ModelChoiceField(queryset=models.InstanciaCursado.objects.all())
-    profesor = forms.ModelChoiceField(queryset=Profesor.objects.all(), empty_label=None,
-                                      widget=TypeaheadDropDownModelWidget(ProfesorLookup),
-                                      required=False)
+class ConfigurarProfesoresMateriasForm(ModelForm):
+        model = InstanciaCursado
+        fields = ('profesor_titular')
 
 
-ConfigurarMateriasProfesoresFormset = formset_factory(ConfigurarProfesoresMateriasForm,
-                                                      can_delete=True, extra=0)
+ConfigurarMateriasProfesoresFormset = \
+    modelformset_factory(InstanciaCursado, fields=('profesor_titular',),
+                         widgets={'profesor_titular': TypeaheadDropDownModelWidget(ProfesorLookup)},
+                         extra=0)
 
 
 class ConfigurarHorariosMateriasForm(BaseFormsetForm):
