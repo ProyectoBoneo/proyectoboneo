@@ -23,6 +23,7 @@
     </script>
 </head>
 <body>
+    <div class="page-header">
        <div class="fluid-container">
             <div class="row">
                 <div class="col-xs-1">
@@ -64,15 +65,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="page-header">
-        {% if user.is_authenticated %}
-            {% include 'utils/logout_link.html' %}
-            {% include 'utils/profile_link.html' %}
-            {% include 'utils/comunicados_link.html' %}
-        {% endif %}
-        <span class="page-header-title"><a href="{% url 'home' %}"><i class="fa fa-edit fa-2x valign-middle"></i> Colegio Boneo - Admin</a></span>
-
     </div>
     <div id="content" class="container">
         {% block content %}
