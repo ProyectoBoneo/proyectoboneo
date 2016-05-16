@@ -1,0 +1,30 @@
+{% extends 'utils/base.html' %}
+{% block title %}Mi Perfil{% endblock %}
+{% block content %}
+    <h3>{{ object.alumno }}{{ object.profesor }}</h3>
+        <p>
+            <strong>Nombre de Usuario:</strong>  {{ object.username }}
+        </p>
+        <p>
+            <strong>E-Mail:</strong>  {{ object.email }}
+        </p>
+        {% if user.is_profesor or user.is_alumno %}
+            <p>
+            <strong>DNI:</strong>  {{ object.alumno.dni }}{{ object.profesor.dni }}
+        </p>
+            <p>
+                <strong>Fecha de Ingreso:</strong> {{ object.alumno.fecha_ingreso }}{{ object.profesor.dni }}
+            </p>
+            <p>
+                <strong>Fecha de Nacimiento:</strong>  {{ object.alumno.fecha_nacimiento }}{{ object.profesor.dni }}
+            </p>
+        {% endif %}
+
+        <a class="btn btn-default" href="{% url 'administracion:editar_mi_perfil' %}">
+            <i class="fa fa-pencil"></i>  Editar Mis Datos de Usuario
+        </a>
+        <a class="btn btn-default" href="{% url 'password_change' %}">
+            <i class="fa fa-key"></i>  Cambiar Password
+        </a>
+    </form>
+{% endblock %}

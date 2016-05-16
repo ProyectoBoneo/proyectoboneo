@@ -40,6 +40,8 @@ class AlumnosDeleteView(ProtectedDeleteView):
     template_name = 'alumnos/alumnos/alumnos_confirm_delete.html'
 
 
+
+
 # class AlumnosInscripcionesView(ModelFormsetView):
 #     template_name = 'alumnos/alumnos/alumnos_inscripciones.html'
 #     formset = forms.InscripcionesFormset

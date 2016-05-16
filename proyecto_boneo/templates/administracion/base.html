@@ -23,37 +23,56 @@
     </script>
 </head>
 <body>
+       <div class="fluid-container">
+            <div class="row">
+                <div class="col-xs-1">
+                    <span class="page-header-title"><a href="{% url 'home' %}">Admin</a></span>
+                </div>
+                <div class="col-xs-9">
+                    {% block navbar %}
+                            <nav class="page-navbar">
+                                <ul>
+                                    {% if user.is_staff %}
+                                        <li><a href="{% url 'home' %}">Home</a></li>
+                                        <li><a href="{% url 'administracion:alumnos' %}">Alumnos</a></li>
+                                        <li><a href="{% url 'administracion:responsables' %}">Responsables</a></li>
+                                        <li><a href="{% url 'administracion:profesores' %}">Profesores</a></li>
+                                        <li><a href="{% url 'administracion:divisiones' %}">Divisiones</a></li>
+                                        <li><a href="{% url 'administracion:horario_hoy' %}">Asistencia</a></li>
+                                        <li><a href="{% url 'administracion:materias' %}">Materias</a></li>
+                                        <li><a href="{% url 'administracion:tutorias' %}">Tutorías</a></li>
+                                        <li><a href="{% url 'administracion:estadias' %}">Estadías</a></li>
+                                    {% endif %}
+                                    {% if user.is_alumno %}
+                                        <li><a href="{% url 'home' %}">Home</a></li>
+                                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
+                                    {% endif %}
+                                    {% if user.is_profesor %}
+                                        <li><a href="{% url 'home' %}">Home</a></li>
+                                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        {% endblock %}
+                </div>
+                <div class="col-xs-2">
+                    {% if user.is_authenticated %}
+                        {% include 'utils/logout_link.html' %}
+                        {% include 'utils/profile_link.html' %}
+                        {% include 'utils/comunicados_link.html' %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="page-header">
         {% if user.is_authenticated %}
-            <span class="logout-link"><a href="{% url 'logout' %}" id="logout"><i class="fa fa-sign-out valign-middle"></i></a></span>
+            {% include 'utils/logout_link.html' %}
+            {% include 'utils/profile_link.html' %}
             {% include 'utils/comunicados_link.html' %}
         {% endif %}
         <span class="page-header-title"><a href="{% url 'home' %}"><i class="fa fa-edit fa-2x valign-middle"></i> Colegio Boneo - Admin</a></span>
-        {% block navbar %}
-            <nav class="page-navbar">
-                <ul>
-                    {% if user.is_staff %}
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'administracion:alumnos' %}">Alumnos</a></li>
-                        <li><a href="{% url 'administracion:responsables' %}">Responsables</a></li>
-                        <li><a href="{% url 'administracion:profesores' %}">Profesores</a></li>
-                        <li><a href="{% url 'administracion:divisiones' %}">Divisiones</a></li>
-                        <li><a href="{% url 'administracion:horario_hoy' %}">Asistencia</a></li>
-                        <li><a href="{% url 'administracion:materias' %}">Materias</a></li>
-                        <li><a href="{% url 'administracion:tutorias' %}">Tutorías</a></li>
-                        <li><a href="{% url 'administracion:estadias' %}">Estadías</a></li>
-                    {% endif %}
-                    {% if user.is_alumno %}
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
-                    {% endif %}
-                    {% if user.is_profesor %}
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        {% endblock %}
+
     </div>
     <div id="content" class="container">
         {% block content %}

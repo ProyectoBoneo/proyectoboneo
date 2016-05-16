@@ -24,18 +24,29 @@
 </head>
 <body>
     <div class="page-header">
-        {% if user.is_authenticated %}
-            <span class="logout-link"><a href="{% url 'logout' %}" id="logout"><i class="fa fa-sign-out valign-middle"></i></a></span>
-            {% include 'utils/comunicados_link.html' %}
-        {% endif %}
-        <span class="page-header-title"><a href="{% url 'home' %}"><i class="fa fa-edit fa-2x valign-middle"></i> Colegio Boneo - Clases Virtuales</a></span>
-        {% block navbar %}
-            <nav class="page-navbar">
-                <ul>
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                </ul>
-            </nav>
-        {% endblock %}
+        <div class="fluid-container">
+            <div class="row">
+                <div class="col-xs-1">
+                    <span class="page-header-title"><a href="{% url 'home' %}">Clases</a></span>
+                </div>
+                <div class="col-xs-9">
+                    {% block navbar %}
+                        <nav class="page-navbar">
+                            <ul>
+                                    <li><a href="{% url 'home' %}">Home</a></li>
+                            </ul>
+                        </nav>
+                    {% endblock %}
+                </div>
+                <div class="col-xs-2">
+                    {% if user.is_authenticated %}
+                        {% include 'utils/logout_link.html' %}
+                        {% include 'utils/profile_link.html' %}
+                        {% include 'utils/comunicados_link.html' %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
     <div id="content" class="fluid-container">
 

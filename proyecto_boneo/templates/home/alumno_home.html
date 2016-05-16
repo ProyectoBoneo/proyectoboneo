@@ -1,11 +1,13 @@
 {% extends 'utils/base.html' %}
 {% block title %}Proyecto boneo{% endblock %}
 {% block content %}
-    <div class="container width-64x margin-top-20x">
+    <div class="container width-64x margin-top-5x">
         <div class="inline-group">
+            <p>Aca tendriamos un calendario que muestre las materias semanales</p>
             {% for horario in horarios %}
                 {{ horario.instancia_cursado }}
             {% endfor %}
+            <p>Tambien tendriamos los proximos encuentros de tutorias pactados y otra info importante.</p>
 {#            <a class="btn btn-lg btn-default width-30x" href="{% url 'aula_virtual:home_administracion' %}">#}
 {#                <i class="fa fa-book"></i> Aula Virtual#}
 {#            </a>#}
