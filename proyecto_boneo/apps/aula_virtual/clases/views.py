@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -76,7 +77,8 @@ class ClaseVirtualCorreccionListView(View):
 
     def get(self, request, *args, **kwargs):
         clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk']).first()
-        alumnos = models.Alumno.objects.filter(inscripciones__instancia_cursado__materia=clase_virtual.materia)
+        alumnos = models.Alumno.objects.filter(inscripciones__instancia_cursado__materia=clase_virtual.materia)\
+            .filter(inscripciones__instancia_cursado__anio_cursado=datetime.today().year).distinct()
 
         for alumno in alumnos:
             try:
