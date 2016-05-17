@@ -7,7 +7,26 @@
             {% for horario in horarios %}
                 {{ horario.instancia_cursado }}
             {% endfor %}
-            <p>Tambien tendriamos los proximos encuentros de tutorias pactados y otra info importante.</p>
+         <h4>Proximos encuentros de tutorías</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="20%">Fecha</th>
+                    <th width="30%">Profesor</th>
+                    <th width="50%">Resumen</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for encuentro_tutoria in proximos_encuentros_tutorias %}
+                <tr>
+                    <td>{{ encuentro_tutoria.fecha }}</td>
+                    <td>{{ encuentro_tutoria.tutoria.profesor }}</td>
+                    <td>{{ encuentro_tutoria.resumen }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
 {#            <a class="btn btn-lg btn-default width-30x" href="{% url 'aula_virtual:home_administracion' %}">#}
 {#                <i class="fa fa-book"></i> Aula Virtual#}
 {#            </a>#}
