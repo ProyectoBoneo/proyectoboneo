@@ -3,15 +3,17 @@
 {% block content %}
     <h3>Encuentro Tutoria</h3>
 
-        <p>
-            Fecha: {{ object.fecha }}
-        </p>
-        <p>
-            Tutoria: {{ object.tutoria }}
-        </p>
-        <p>
-            Resumen:{{ object.resumen }}
-        </p>
+    <div class="row">
+        <div class="col-sm-12">
+            <h5><strong>Fecha: </strong> {{ object.fecha }}</h5>
+        </div>
+        <div class="col-sm-12">
+            <h5><strong>Tutoria: </strong> {{ object.tutoria }}</h5>
+        </div>
+        <div class="col-sm-12">
+            <h5><strong>Resumen:</strong> {{ object.resumen }}</h5>
+        </div>
+    </div>
 
         <a class="btn btn-default" href="{% url 'administracion:ver_tutoria' object.tutoria.pk %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver

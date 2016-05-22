@@ -42,13 +42,13 @@
                             {% endif %}
                             {% if user.is_alumno %}
                                 <li><a href="{% url 'home' %}">Home</a></li>
-                                <li><a href="{% url 'administracion:home' %}">Administración</a></li>
+                                <li><a href="{% url 'administracion:tutorias' %}">Administración</a></li>
                                 <li><a href="{% url 'aula_virtual:biblioteca_home' %}">Biblioteca</a></li>
                                 <li><a href="{% url 'aula_virtual:clases_virtuales' %}">Clases Virtuales</a></li>
                             {% endif %}
                             {% if user.is_profesor %}
                                 <li><a href="{% url 'home' %}">Home</a></li>
-                                <li><a href="{% url 'administracion:home' %}">Administración</a></li>
+                                <li><a href="{% url 'administracion:tutorias' %}">Administración</a></li>
                                 <li><a href="{% url 'aula_virtual:materiales_admin' %}">Biblioteca</a></li>
                                 <li><a href="{% url 'aula_virtual:clases_virtuales' %}">Clases Virtuales</a></li>
                             {% endif %}

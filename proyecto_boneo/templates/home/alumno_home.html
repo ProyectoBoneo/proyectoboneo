@@ -30,7 +30,7 @@
                 },
                 {
                     events: [ // put the array in the `events` property
-                        {% for encuentro_tutoria in proximos_encuentros_tutorias %}
+                        {% for encuentro_tutoria in encuentros_tutorias %}
                             {
                                 title  : 'Encuentro Tutoría - {{ encuentro_tutoria.tutoria.profesor }}',
                                 start  : '{{ encuentro_tutoria.fecha }}',
@@ -57,9 +57,8 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th width="20%">Fecha</th>
+                    <th width="50%">Fecha</th>
                     <th width="30%">Profesor</th>
-                    <th width="50%">Resumen</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -67,7 +66,6 @@
                 <tr>
                     <td>{{ encuentro_tutoria.fecha }}</td>
                     <td>{{ encuentro_tutoria.tutoria.profesor }}</td>
-                    <td>{{ encuentro_tutoria.resumen }}</td>
                     <td>
                         <a class="btn btn-default" href="{% url 'administracion:ver_encuentrotutoria' encuentro_tutoria.id %}">
                             <i class="fa fa-eye"></i> Ver
@@ -77,6 +75,28 @@
                 {% endfor %}
                 </tbody>
             </table>
+         <h4>Nuevas clases virtuales</h4>
+            <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="50%">Nombre</th>
+                        <th width="50%">Materia</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for clase in clases_no_respondidas %}
+                    <tr>
+                        <td>{{ clase.nombre }}</td>
+                        <td>{{ clase.materia }}</td>
+                        <td>
+                            <a class="btn btn-default" href="{% url 'aula_virtual:ingresar_clase_virtual' clase.id %}">
+                                <i class="fa fa-eye"></i> Ver
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
         </div>
 
 {#            <a class="btn btn-lg btn-default width-30x" href="{% url 'aula_virtual:home_administracion' %}">#}

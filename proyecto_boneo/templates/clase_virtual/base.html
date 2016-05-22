@@ -34,6 +34,7 @@
                         <nav class="page-navbar">
                             <ul>
                                     <li><a href="{% url 'home' %}">Home</a></li>
+                                    <li><a href="{% url 'aula_virtual:clases_virtuales' %}">Clases Virtuales</a></li>
                             </ul>
                         </nav>
                     {% endblock %}
@@ -48,14 +49,9 @@
             </div>
         </div>
     </div>
-    <div id="content" class="fluid-container">
-
-        <div {% if materia_dict %}id="wrapper"{% endif %}>
-            <div id="page-content-wrapper">
-                {% block content %}
-                {%  endblock %}
-            </div>
-        </div>
+    <div id="content" class="container">
+            {% block content %}
+            {%  endblock %}
         {% include 'typeahead/add_model_modal.html' %}
     </div>
 </body>
