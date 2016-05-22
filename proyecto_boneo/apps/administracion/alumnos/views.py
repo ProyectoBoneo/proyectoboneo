@@ -11,9 +11,6 @@ from . import forms, models
 
 
 #region Alumnos
-from proyecto_boneo.apps.administracion.planes.models import Horario, ClaseReal
-
-
 class AlumnosFilteredListView(FilteredListView):
     form_class = forms.AlumnoFilterForm
     model = models.Alumno
@@ -39,28 +36,6 @@ class AlumnosDeleteView(ProtectedDeleteView):
     success_url = reverse_lazy('administracion:alumnos')
     template_name = 'alumnos/alumnos/alumnos_confirm_delete.html'
 
-
-# class AlumnosInscripcionesView(ModelFormsetView):
-#     template_name = 'alumnos/alumnos/alumnos_inscripciones.html'
-#     formset = forms.InscripcionesFormset
-#
-#     def __init__(self, **kwargs):
-#         self._alumno = None
-#         super(AlumnosInscripcionesView, self).__init__(**kwargs)
-#
-#     @property
-#     def alumno(self):
-#         if not self._alumno:
-#             self._alumno = get_object_or_404(models.Alumno, pk=self.kwargs['pk'])
-#         return self._alumno
-#
-#     def get_context_data(self, *args, **kwargs):
-#         context = super(AlumnosInscripcionesView, self).get_context_data(*args, **kwargs)
-#         context['alumno'] = self.alumno
-#         return context
-#
-#     def get_queryset(self):
-#         return InscripcionAlumno.objects.filter(alumno=self.alumno)
 
 class AlumnosInscripcionesView(View):
     template_name = 'alumnos/alumnos/alumnos_inscripciones.html'
