@@ -17,7 +17,7 @@ materias_patterns = [
    url(r'^materias/eliminar/(?P<pk>\d+)/$', user_is_staff(views.MateriasDeleteView.as_view()),
        name='eliminar_materia'),
 
-   url(r'^divisiones/profesores_por_materia/$',
+   url(r'^divisiones/(?P<pk>\d+)/profesores_por_materia/$',
        user_is_staff(views.ConfigurarProfesoresMateriasView.as_view()),
        name='configurar_profesores_materias'),
 

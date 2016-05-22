@@ -21,16 +21,20 @@
     </script>
 
     <h3>Tutoria</h3>
+    <div class="row">
+        <div class="col-sm-4">
+            <h4>Año: <small><strong>{{ object.anio }}</strong></small></h4>
+        </div>
+        <div class="col-sm-4">
+            <h4>Profesor: <small><strong>{{ object.profesor }}</strong></small></h4>
+        </div>
+        <div class="col-sm-4">
+            <h4>Alumno: <small><strong>{{ object.alumno }}</strong></small></h4>
+        </div>
+    </div>
 
-        <p>
-            Año: {{ object.anio }}
-        </p>
-        <p>
-            Profesor: {{ object.profesor }}
-        </p>
-        <p>
-            Alumno:{{ object.alumno }}
-        </p>
+
+
     {% if user.is_profesor %}
         <div id="add-encuentrotutoria-button">
             <button type="button" class="btn btn-primary" id="encuentrotutoria-open">

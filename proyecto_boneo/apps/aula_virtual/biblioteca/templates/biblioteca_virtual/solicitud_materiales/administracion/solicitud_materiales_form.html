@@ -22,7 +22,8 @@
             registrarHandlers();
         });
     </script>
-    <h3>Responder Solicitud Material</h3>
+    <div class="col-md-offset-2 col-md-8">
+        <h3>Responder Solicitud Material</h3>
 
     <div class="panel panel-default">
             <div class="panel-heading">
@@ -46,6 +47,9 @@
             <button type="button" class="btn btn-danger" id="rechazar-solicitud">
                 <i  class="fa fa-times-circle"></i> Rechazar Solicitud
             </button>
+            <a href="{% url 'aula_virtual:ver_solicitudes_pendientes_admin' %}" type="button" class="btn btn-default" id="rechazar-solicitud">
+                <i  class="fa fa-arrow-left"></i> Volver
+            </a>
     </div>
 
     <div id="aceptar-solicitud-panel">
@@ -98,6 +102,8 @@
                 <i class="fa fa-arrow-circle-left"></i>  Volver
             </a>
         </form>
+    </div>
+
     </div>
 
 {% endblock %}

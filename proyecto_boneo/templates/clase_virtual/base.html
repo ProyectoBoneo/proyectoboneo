@@ -24,12 +24,15 @@
 </head>
 <body>
     <div class="page-header">
-        <span class="page-header-title"><i class="fa fa-book fa-2x valign-middle"></i> Proyecto Boneo</span>
+        {% if user.is_authenticated %}
+            <span class="logout-link"><a href="{% url 'logout' %}" id="logout"><i class="fa fa-sign-out valign-middle"></i></a></span>
+            {% include 'utils/comunicados_link.html' %}
+        {% endif %}
+        <span class="page-header-title"><a href="{% url 'home' %}"><i class="fa fa-edit fa-2x valign-middle"></i> Colegio Boneo - Clases Virtuales</a></span>
         {% block navbar %}
             <nav class="page-navbar">
                 <ul>
-                        <li><a href="{% url 'aula_virtual:home_administracion' %}">Aula Virtual</a></li>
-                        <li><a href="{% url 'aula_virtual:clases_virtuales' %}">Clases Virtuales</a></li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
                 </ul>
             </nav>
         {% endblock %}

@@ -24,26 +24,32 @@
 </head>
 <body>
     <div class="page-header">
-        {% include 'utils/comunicados_link.html' %}
-        <span class="page-header-title"><a href="{% url 'home' %}"><i class="fa fa-edit fa-2x valign-middle"></i> Proyecto Boneo - Admin</a></span>
+        {% if user.is_authenticated %}
+            <span class="logout-link"><a href="{% url 'logout' %}" id="logout"><i class="fa fa-sign-out valign-middle"></i></a></span>
+            {% include 'utils/comunicados_link.html' %}
+        {% endif %}
+        <span class="page-header-title"><a href="{% url 'home' %}"><i class="fa fa-edit fa-2x valign-middle"></i> Colegio Boneo - Admin</a></span>
         {% block navbar %}
             <nav class="page-navbar">
                 <ul>
                     {% if user.is_staff %}
+                        <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="{% url 'administracion:alumnos' %}">Alumnos</a></li>
                         <li><a href="{% url 'administracion:responsables' %}">Responsables</a></li>
                         <li><a href="{% url 'administracion:profesores' %}">Profesores</a></li>
                         <li><a href="{% url 'administracion:divisiones' %}">Divisiones</a></li>
                         <li><a href="{% url 'administracion:horario_hoy' %}">Asistencia</a></li>
                         <li><a href="{% url 'administracion:materias' %}">Materias</a></li>
-                        <li><a href="{% url 'administracion:tutorias' %}">Tutorias</a></li>
-                        <li><a href="{% url 'administracion:estadias' %}">Estadias</a></li>
+                        <li><a href="{% url 'administracion:tutorias' %}">Tutorías</a></li>
+                        <li><a href="{% url 'administracion:estadias' %}">Estadías</a></li>
                     {% endif %}
                     {% if user.is_alumno %}
-                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorias</a></li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
                     {% endif %}
                     {% if user.is_profesor %}
-                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorias</a></li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
                     {% endif %}
                 </ul>
             </nav>

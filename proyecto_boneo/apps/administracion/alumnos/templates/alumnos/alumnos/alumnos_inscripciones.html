@@ -8,12 +8,31 @@
             new InscripcionesController();
         })
     </script>
+        <script>
+        $(document).ready(function(){
+                $('#agregar').click(function() {
+                    var form_idx = $('#id_form-TOTAL_FORMS').val();
+                    $('#formset-container tbody').append($('#empty_form').html());
+                    $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+                });
+
+                $('#agregar-alumno').click(function() {
+                  $('#mode-field').val('agregar');
+                  $(this).parents('form').submit();
+                });
+                $('#confirmar').click(function() {
+                  $('#mode-field').val('confirmar');
+                  $(this).parents('form').submit();
+                });
+        });
+    </script>
 {% endblock %}
 {% block content %}
-    <h3>Inscripciones del alumno {{ alumno }}</h3>
+    <h3>Inscripciones de división {{ division }}</h3>
     <form method="post" action=".">
         {% csrf_token %}
-        <table class="table">
+                {{ formset.management_form }}
+        <table class="table" id="formset-container">
             <thead>
                 <tr>
                     <th>Inscripción</th>
@@ -21,26 +40,55 @@
                 </tr>
             </thead>
             <tbody>
-                {% for form in formset.forms %}
-                    <tr>
-                        <td hidden="hidden">{{ form.pk }}{{ form.DELETE }}</td>
-                        <td>{{ form.instancia_cursado }}</td>
+                {% for form in formset %}
+                    <tr class="dynamic-form">
+                    <td hidden="hidden">{{ form.DELETE }}</td>
+                        <td>{{ form.alumno }}</td>
                         <td>
-                            <a id="remove-{{ form.prefix }}-row" href="#void" class="delete-row btn btn-danger {% if form.non_field_errors %}with_errors{% endif %}"
+
+                            <a id="remove-form-row" href="#void" class="delete-row btn btn-danger  {% if form.non_field_errors %}with_errors{% endif %}"
                                {% if form.non_field_errors %}title="{{ form.non_field_errors.0 }}"{% endif %}><i class="fa fa-minus-circle"></i>
                             </a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
-            {{ formset.management_form }}
         </table>
 
-        <button type="submit" class="btn btn-success">
-            <i class="fa fa-check-circle"></i> Confirmar
-        </button>
-        <a class="btn btn-default" href="{% url 'administracion:alumnos' %}">
-            <i class="fa fa-arrow-circle-left"></i>  Volver
-        </a>
+{#        <div style="display:none" >#}
+{#        <table>#}
+{#            <tbody id="empty_form" style="display:none" >#}
+{#                <tr>#}
+{#                <td style="display:none" hidden="hidden">{{ formset.empty_form.DELETE }}</td>#}
+{#                <td>{{ formset.empty_form.alumno }}</td>#}
+{#                <td>#}
+{#                    <a id="remove-{{ form.prefix }}-row" href="#void" class="delete-row btn btn-danger {% if form.non_field_errors %}with_errors{% endif %}"#}
+{#                       {% if form.non_field_errors %}title="{{ form.non_field_errors.0 }}"{% endif %}><i class="fa fa-minus-circle"></i>#}
+{#                    </a>#}
+{#                </td>#}
+{#            </tr>#}
+{#            </tbody>#}
+{#        </table>#}
+{##}
+{#        </div>#}
+        <input type="hidden" name='mode-field' id="mode-field" value="confirmar"/>
+    <div class="row">
+        <div class="col-xs-3">
+            <button id='agregar-alumno' type="button" class="btn btn-success">
+                <i class="fa fa-plus"></i> Agregar Alumno
+            </button>
+        </div>
+        <div class="col-xs-offset-3 col-xs-3">
+            <button id='confirmar' type="button" class="btn btn-success pull-right">
+                <i class="fa fa-check-circle"></i> Confirmar
+            </button>
+        </div>
+        <div class="col-xs-3">
+            <a class="btn btn-default" href="{% url 'administracion:divisiones' %}">
+                <i class="fa fa-arrow-circle-left"></i>  Volver
+            </a>
+        </div>
+    </div>
+
     </form>
 {% endblock %}

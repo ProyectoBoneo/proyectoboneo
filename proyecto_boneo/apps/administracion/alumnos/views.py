@@ -40,27 +40,101 @@ class AlumnosDeleteView(ProtectedDeleteView):
     template_name = 'alumnos/alumnos/alumnos_confirm_delete.html'
 
 
-class AlumnosInscripcionesView(ModelFormsetView):
+# class AlumnosInscripcionesView(ModelFormsetView):
+#     template_name = 'alumnos/alumnos/alumnos_inscripciones.html'
+#     formset = forms.InscripcionesFormset
+#
+#     def __init__(self, **kwargs):
+#         self._alumno = None
+#         super(AlumnosInscripcionesView, self).__init__(**kwargs)
+#
+#     @property
+#     def alumno(self):
+#         if not self._alumno:
+#             self._alumno = get_object_or_404(models.Alumno, pk=self.kwargs['pk'])
+#         return self._alumno
+#
+#     def get_context_data(self, *args, **kwargs):
+#         context = super(AlumnosInscripcionesView, self).get_context_data(*args, **kwargs)
+#         context['alumno'] = self.alumno
+#         return context
+#
+#     def get_queryset(self):
+#         return InscripcionAlumno.objects.filter(alumno=self.alumno)
+
+class AlumnosInscripcionesView(View):
     template_name = 'alumnos/alumnos/alumnos_inscripciones.html'
-    formset = forms.InscripcionesFormset
 
-    def __init__(self, **kwargs):
-        self._alumno = None
-        super(AlumnosInscripcionesView, self).__init__(**kwargs)
-
-    @property
-    def alumno(self):
-        if not self._alumno:
-            self._alumno = get_object_or_404(models.Alumno, pk=self.kwargs['pk'])
-        return self._alumno
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(AlumnosInscripcionesView, self).get_context_data(*args, **kwargs)
-        context['alumno'] = self.alumno
+    def get_context_data(self, request):
+        division_query = models.Division.objects.filter(pk=self.kwargs['pk'])
+        division = division_query.first()
+        context = None
+        if request.method == 'POST':
+            formset = forms.InscripcionesAlumnoFormset(request.POST)
+            context = {
+               'formset': formset,
+               'division': division
+            }
+        if request.method == 'GET':
+            alumno_list = division_query.first().alumnos.all()
+            alumno_form_list = []
+            if alumno_list != None and alumno_list.exists() and request.method == 'GET':
+                for alumno in alumno_list:
+                    alumno_form_list.append({'alumno': alumno.id})
+            formset = forms.InscripcionesAlumnoFormset(initial=alumno_form_list)
+            context = {
+                       'formset': formset,
+                       'division': division
+            }
         return context
 
-    def get_queryset(self):
-        return InscripcionAlumno.objects.filter(alumno=self.alumno)
+    def get(self, request, *args, **kwargs):
+            return render(request, self.template_name, self.get_context_data(request))
+
+    def validate_formsets(self, context):
+        valido = True
+        formset = context['formset']
+        for form in formset:
+            if not form.is_valid():
+                valido= False
+        return valido
+
+    def save_formsets(self, context):
+        division = context['division']
+        formset = context['formset']
+        for form in formset:
+            if form.has_changed() and 'alumno' in form.cleaned_data and form.cleaned_data['alumno'] is not None:
+                alumno = Alumno.objects.filter(id=form.cleaned_data['alumno'].id).first()
+                for instancia_cursado in division.instancias_cursado.filter(anio_cursado=datetime.today().year).all():
+                    inscripcion_alumno, created = InscripcionAlumno.objects.get_or_create(alumno=alumno,
+                                                     instancia_cursado=instancia_cursado)
+                if division != alumno.division:
+                    alumno.division = division
+                    alumno.save()
+        for formToDelete in formset.deleted_forms:
+            if 'alumno' in formToDelete.cleaned_data and formToDelete.cleaned_data['alumno'] is not None:
+                alumno = Alumno.objects.filter(id=formToDelete.cleaned_data['alumno'].id).first()
+                for instancia_cursado in division.instancias_cursado.filter(anio_cursado=datetime.today().year).all():
+                    inscripcion_alumno_borrar = InscripcionAlumno.objects.get(alumno=alumno,
+                                                     instancia_cursado=instancia_cursado)
+                    inscripcion_alumno_borrar.delete()
+                alumno.division = None
+                alumno.save()
+
+    def post(self, request, *args, **kwargs):
+        mode = request.POST.get('mode-field')
+
+        context = self.get_context_data(request)
+        if mode=='confirmar':
+           success_url = reverse_lazy('administracion:divisiones')
+        else:
+           success_url = reverse_lazy('administracion:inscripciones_alumno', kwargs={'pk':context['division'].id})
+        if self.validate_formsets(context):
+            self.save_formsets(context)
+            return redirect(success_url)
+        else:
+            return render(request, self.template_name, context)
+
 #endregion
 
 

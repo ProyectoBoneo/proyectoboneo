@@ -1,40 +1,45 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Horarios de materias{% endblock %}
 {% block content %}
-    <h1>{{ day }}</h1>
-    <form method="post" action="{% url 'administracion:ir_a_fecha' %}">
-        {% csrf_token %}
-        <div class="col-sm-10">
-            {{ fecha_form.fecha }}
-        </div>
-        <div class="col-sm-2">
-            <button type="submit" class="btn btn-success"> Ir a Fecha</button>
-        </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <h1>{{ day }}</h1>
+            <form method="post" action="{% url 'administracion:ir_a_fecha' %}">
+                {% csrf_token %}
+                <div class="col-sm-10">
+                    {{ fecha_form.fecha }}
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-success"> Ir a Fecha</button>
+                </div>
 
-    </form>
-    {% if object_list %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Division</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for division in object_list %}
-                    <tr>
-                        <td>{{ division}}</td>
-                        <td>
-                            <a class="btn btn-default" href="{% url 'administracion:asistencia' division.id fecha_form.fecha.value.day fecha_form.fecha.value.month fecha_form.fecha.value.year %}">
-                                <i class="fa fa-edit"></i> Asistencia
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>No hay horarios designados en esta fecha</p>
-    {% endif %}
+            </form>
+            {% if object_list %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="text-align:right;">Division</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for division in object_list %}
+                            <tr>
+                                <td style="text-align:right;"><h5>{{ division}}</h5></td>
+                                <td>
+                                    <a class="btn btn-primary" href="{% url 'administracion:asistencia' division.id fecha_form.fecha.value.day fecha_form.fecha.value.month fecha_form.fecha.value.year %}">
+                                        <i class="fa fa-calendar-o"></i></i> Asistencia
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No hay horarios designados en esta fecha</p>
+            {% endif %}
+        </div>
+    </div>
+
 {% endblock %}
