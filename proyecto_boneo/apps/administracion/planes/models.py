@@ -135,18 +135,3 @@ class Horario(models.Model):
     dia_semana = models.IntegerField()
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
-
-
-class DiasNoHabiles(models.Model):
-    anio_cursado = models.IntegerField()
-    fecha_inicio = models.DateField()
-    fecha_fin = models.DateField()
-
-
-class ClaseReal(models.Model):
-    horario = models.ForeignKey(Horario, related_name='clases')
-    fecha = models.DateTimeField()
-    hora_inicio = models.TimeField()
-    hora_fin = models.TimeField()
-    instancia_cursado = models,ForeignKey(InstanciaCursado,
-                                          related_name='clases')

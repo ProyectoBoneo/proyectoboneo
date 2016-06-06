@@ -108,16 +108,17 @@ class Command(BaseCommand):
 
     def _create_test_users(self):
         UsuarioBoneo.objects.create_superuser('admin', 'admin@admin.com', 'admin')
-        alumno = Alumno.objects.create(email='alumno@alumno.com', nombre='Juan', apellido='Pruebas', dni=36538548,
-                                       fecha_nacimiento=datetime.datetime.today() - datetime.timedelta(days=365*15),
-                                       responsable=self._create_responsable())
+        alumno = Alumno(nombre='Juan', apellido='Pruebas', dni=36538548,
+                        division=Division.objects.first(),
+                        fecha_nacimiento=datetime.datetime.today() - datetime.timedelta(days=365*15),
+                        responsable=self._create_responsable())
+        alumno.crear_usuario('alumno@boneo.com')
         alumno.save()
-        alumno.crear_usuario(alumno.email)
-        profesor = Profesor.objects.create(email='profesor@profesor.com', nombre='Alberto', apellido='Pruebas',
-                                           dni=26538548,
-                                           fecha_nacimiento=datetime.datetime.today() - datetime.timedelta(days=365*33))
+        profesor = Profesor(nombre='Alberto', apellido='Pruebas',
+                            dni=26538548,
+                            fecha_nacimiento=datetime.datetime.today() - datetime.timedelta(days=365*33))
+        profesor.crear_usuario('profesor@boneo.com')
         profesor.save()
-        profesor.crear_usuario(profesor.email)
 
     def _load_data(self):
         self.names = []
@@ -156,8 +157,8 @@ class Command(BaseCommand):
         self._create_alumnos()
         self.stdout.write('Asignando profesores a materias...')
         self._assign_profesores_materias()
-        self.stdout.write('Creando inscripciones...')
-        self._create_inscripciones()
         self.stdout.write('Creando usuarios de pruebas...')
         self._create_test_users()
+        self.stdout.write('Creando inscripciones...')
+        self._create_inscripciones()
         self.stdout.write('Listo :)')

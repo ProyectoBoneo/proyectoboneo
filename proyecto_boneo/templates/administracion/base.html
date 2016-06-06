@@ -46,6 +46,7 @@
                     {% if user.is_alumno %}
                         <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
+                        <li><a href="{% url 'aula_virtual:estado_academico' alumno_pk=user.alumno.id %}">Estado académico</a></li>
                     {% endif %}
                     {% if user.is_profesor %}
                         <li><a href="{% url 'home' %}">Home</a></li>

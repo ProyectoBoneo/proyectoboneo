@@ -44,6 +44,7 @@ PROJECT_APPS = ('gutils',
                 'proyecto_boneo.apps.aula_virtual.biblioteca',
                 'proyecto_boneo.apps.aula_virtual.clases',
                 'proyecto_boneo.apps.aula_virtual.comunicados',
+                'proyecto_boneo.apps.aula_virtual.perfil_academico',
                 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
