@@ -38,6 +38,11 @@
                         <td>{{ alumno.apellido }} {{ alumno.nombre }} </td>
                         <td>{{ alumno.domicilio }}</td>
                         <td>
+                            <a class="btn btn-primary" href="{% url 'aula_virtual:estado_academico' alumno.id %}">
+                                <i class="fa fa-archive"></i> Estado Académico
+                            </a>
+                        </td>
+                        <td>
                             <a class="btn btn-primary" href="{% url 'administracion:editar_alumno' alumno.id %}">
                                 <i class="fa fa-edit"></i> Editar
                             </a>

@@ -12,12 +12,12 @@ class Responsable(Persona):
 
 
 class Alumno(PersonaLegajo):
-    PROMEDIO_UPDATE_THRESHOLD = 3600 * 24
+    PROMEDIO_UPDATE_THRESHOLD = 3600
     usuario = models.OneToOneField(UsuarioBoneo, related_name='alumno')
     responsable = models.ForeignKey(Responsable, related_name='alumnos', on_delete=models.PROTECT)
     division = models.ForeignKey(Division, related_name='alumnos', null=True, blank=True)
-    _promedio = models.FloatField()
-    last_promedio_date = models.DateTimeField()
+    _promedio = models.FloatField(null=True, blank=True)
+    last_promedio_date = models.DateTimeField(null=True, blank=True)
 
     def crear_usuario(self, email):
         super(Alumno, self).crear_usuario(email)
@@ -39,11 +39,11 @@ class Alumno(PersonaLegajo):
 
 
 class InscripcionAlumno(models.Model):
-    PROMEDIO_UPDATE_THRESHOLD = 3600
+    PROMEDIO_UPDATE_THRESHOLD = 1500
     alumno = models.ForeignKey(Alumno, related_name='inscripciones')
     instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='inscripciones')
-    _promedio = models.FloatField()
-    last_promedio_date = models.DateTimeField()
+    _promedio = models.FloatField(null=True, blank=True)
+    last_promedio_date = models.DateTimeField(null=True, blank=True)
 
     def calcular_promedio(self):
         from proyecto_boneo.apps.aula_virtual.clases.models import ClaseVirtual, ResultadoEvaluacion
