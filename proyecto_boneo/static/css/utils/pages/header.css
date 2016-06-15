@@ -1,11 +1,11 @@
 .page-header {
-  min-height: 80px;
+  min-height: 20px;
   background-color: cornflowerblue;
   margin: 0;
 }
 .page-header .page-header-title a {
-  padding-top: 20px;
-  padding-left: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
   color: white;
   font-size: 28px;
   text-decoration: none;

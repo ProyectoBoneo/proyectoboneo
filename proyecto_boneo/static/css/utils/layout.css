@@ -4872,9 +4872,9 @@
 }
 .logout-link {
   float: right;
-  font-size: 35px;
+  font-size: 20px;
   color: white;
-  padding: 25px;
+  padding: 6px 5px 5px 5px;
 }
 .logout-link a {
   position: relative;

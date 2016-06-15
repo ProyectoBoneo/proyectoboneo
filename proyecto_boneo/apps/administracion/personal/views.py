@@ -1,7 +1,8 @@
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView
+from gutils.django.views import CreateView, ProtectedDeleteView, FilteredListView
 from django.core.urlresolvers import reverse_lazy
 
 from . import forms, models
+from django.views.generic import UpdateView
 
 
 class PersonaCreateView(CreateView):
