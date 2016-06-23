@@ -47,29 +47,21 @@
                                     {% if user.is_alumno %}
                                         <li><a href="{% url 'home' %}">Home</a></li>
                                         <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
+                                        <li><a href="{% url 'aula_virtual:estado_academico' alumno_pk=user.alumno.id %}">Estado académico</a></li>
                                     {% endif %}
                                     {% if user.is_profesor %}
                                         <li><a href="{% url 'home' %}">Home</a></li>
                                         <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
+
                                     {% endif %}
                                 </ul>
                             </nav>
-                        {% endblock %}
                 </div>
                 <div class="col-xs-2">
                     {% if user.is_authenticated %}
                         {% include 'utils/logout_link.html' %}
                         {% include 'utils/profile_link.html' %}
                         {% include 'utils/comunicados_link.html' %}
-                    {% endif %}
-                    {% if user.is_alumno %}
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
-                        <li><a href="{% url 'aula_virtual:estado_academico' alumno_pk=user.alumno.id %}">Estado académico</a></li>
-                    {% endif %}
-                    {% if user.is_profesor %}
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
                     {% endif %}
                 </ul>
             </nav>

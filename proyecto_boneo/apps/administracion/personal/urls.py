@@ -19,5 +19,5 @@ urlpatterns = [
 
    url(r'^profesores/eliminar/(?P<pk>\d+)/$',
        user_is_staff(views.ProfesoresDeleteView.as_view()),
-       name='eliminar_profesor')
+       name='eliminar_profesor'),
 ]

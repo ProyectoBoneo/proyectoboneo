@@ -1,8 +1,7 @@
-from gutils.django.views import CreateView, ProtectedDeleteView, FilteredListView
+from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView
 from django.core.urlresolvers import reverse_lazy
 
 from . import forms, models
-from django.views.generic import UpdateView
 
 
 class PersonaCreateView(CreateView):
@@ -48,4 +47,5 @@ class ProfesoresDeleteView(ProtectedDeleteView):
     model = models.Profesor
     success_url = reverse_lazy('administracion:profesores')
     template_name = 'personal/profesores/profesores_confirm_delete.html'
+
 #endregion
