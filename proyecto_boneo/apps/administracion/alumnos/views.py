@@ -1,5 +1,5 @@
 from datetime import date, datetime, timedelta
-from gutils.django.views import ProtectedDeleteView, FilteredListView, ModelFormsetView, View
+from gutils.django.views import ProtectedDeleteView, FilteredListView, ModelFormsetView, View, TemplateView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -110,6 +110,9 @@ class AlumnosInscripcionesView(View):
         else:
             return render(request, self.template_name, context)
 
+
+class AlumnosAyudaTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_list.html'
 #endregion
 
 

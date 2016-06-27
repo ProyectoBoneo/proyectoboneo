@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{%  block title %}Proyecto Boneo - Ayuda{%  endblock %}</title>
+
+    {% include 'utils/common_styles.html' %}
+
+    {% include 'utils/common_scripts.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/administracion/base.css' %}">
+
+    {% block styles %}
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
+
+    <script>
+        $(function() {
+            getMainController().configure_controls();
+        });
+    </script>
+</head>
+<body>
+    <div class="page-header">
+       <div class="fluid-container">
+            <div class="row">
+                <div class="col-xs-1">
+                    <span class="page-header-title"><a href="{% url 'home' %}">Ayuda</a></span>
+                </div>
+                <div class="col-xs-9">
+                    {% block navbar %}
+                            <nav class="page-navbar">
+                                <ul>
+                                </ul>
+                            </nav>
+                </div>
+                <div class="col-xs-2">
+                </ul>
+            </nav>
+        {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="container">
+        {% block content %}
+        {%  endblock %}
+        {% include 'typeahead/add_model_modal.html' %}
+    </div>
+</body>
+</html>

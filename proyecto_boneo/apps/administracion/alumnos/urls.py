@@ -23,6 +23,10 @@ urlpatterns = patterns('',
                        url(r'^(?P<pk>\d+)/inscripciones/$',
                            user_is_staff(views.AlumnosInscripcionesView.as_view()),
                            name='inscripciones_alumno'),
+
+                       url(r'^ayuda/alumno$',
+                           login_required(views.AlumnosAyudaTemplateView.as_view()),
+                           name='ayuda_alumnos'),
                        #endregion
 
                        #region responsables
