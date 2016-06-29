@@ -62,3 +62,7 @@ class ProfesorHomeView(TemplateView):
             .filter(tutoria__profesor=self.request.user.profesor).filter(tutoria__anio = datetime.datetime.today().year)\
             .filter(fecha__gte = datetime.datetime.now()).distinct()
         return context
+
+
+class IndiceView(TemplateView):
+     template_name = 'ayuda/indice.html'
