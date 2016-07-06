@@ -1,6 +1,6 @@
 import datetime
 
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, View
+from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, View, TemplateView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, render
 
@@ -81,3 +81,17 @@ class ConfigurarProfesoresMateriasView(View):
                 return redirect(self.success_url)
             else:
                 return render(request, self.template_name, context)
+
+
+class MateriasAyudaTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_list.html'
+
+class MateriasAyudaNuevoTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_nuevo.html'
+
+class MateriasAyudaEditarTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_editar.html'
+
+class MateriasAyudaEliminarTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_eliminar.html'
+

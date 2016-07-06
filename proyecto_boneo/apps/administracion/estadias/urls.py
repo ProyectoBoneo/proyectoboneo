@@ -20,7 +20,23 @@ estadias_patterns = [
        name='editar_estadia'),
 
    url(r'^eliminar/(?P<pk>\d+)/$', user_is_staff(views.EstadiaDeleteView.as_view()),
-       name='eliminar_estadia')
+       name='eliminar_estadia'),
+
+   url(r'^ayuda/estadia$',
+       login_required(views.EstadiaAyudaTemplateView.as_view()),
+       name='ayuda_estadias'),
+
+   url(r'^ayuda/nuevo_estadia$',
+       login_required(views.EstadiaAyudaNuevoTemplateView.as_view()),
+       name='ayuda_nuevo_estadia'),
+
+   url(r'^ayuda/editar_estadia$',
+       login_required(views.EstadiaAyudaEditarTemplateView.as_view()),
+       name='ayuda_editar_estadia'),
+
+   url(r'^ayuda/eliminar_estadia$',
+       login_required(views.EstadiaAyudaEliminarTemplateView.as_view()),
+       name='ayuda_eliminar_estadia'),
 
 ]
 

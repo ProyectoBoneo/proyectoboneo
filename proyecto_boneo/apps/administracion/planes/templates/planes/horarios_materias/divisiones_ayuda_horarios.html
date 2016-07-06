@@ -1,0 +1,8 @@
+{% extends 'ayuda/base.html' %}
+{% block title %}Configuración de horarios{% endblock %}
+{% block content %}
+<h4>Configuración de horarios</h4>
+<p>
+Esta pantalla presenta para la división seleccionada, los horarios por día de la semana donde cada horario es representado por una hora de inicio y hora de fin, para una materia determinada. Cada día tiene por defecto, un formulario de horario por materia. Para agregar más de un horario, debe hacer clic sobre el botón Agregar horario en el día deseado. El sistema agrega al día un nuevo formulario de horario para ese día, donde puede ingresar un nuevo horario con materia, hora inicio, hora fin. Repita este proceso para todos los horarios de la división para cada día. Cada formulario de horario tiene un campo que puede tildar para marcar el horario para eliminación. Cuando ingrese todos los datos, debe confirmar los cambios haciendo clic sobre el botón Confirmar, ante lo que el sistema guardará los horarios ingresados para la división. Si abre la configuración de horarios de una división con horarios existentes, esta misma pantalla sirve de pantalla de edición de horarios existentes, pudiendo editar los horarios existentes, agregar horarios adicionales y eliminar horarios.
+</p>
+{% endblock %}
