@@ -1,6 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Eliminar profesor{% endblock %}
 {% block content %}
+    <h3 class="inline-title">Eliminar profesor</h3>  <span class=""><a href="{% url 'administracion:ayuda_eliminar_profesor' %}" onclick="window.open('{% url 'administracion:ayuda_eliminar_profesor' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action="">
         {% csrf_token %}
         <p>¿Desea eliminar el profesor "{{ object }}"?</p>

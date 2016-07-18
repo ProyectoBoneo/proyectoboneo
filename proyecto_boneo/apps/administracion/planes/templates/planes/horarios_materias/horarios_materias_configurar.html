@@ -19,7 +19,7 @@
     </script>
     <form method="post" action=".">
         {% csrf_token %}
-        <h3>Horarios por materia</h3>
+        <h3 class="inline-title">Horarios por materia</h3> <span class=""><a href="{% url 'administracion:ayuda_horarios_division' %}" onclick="window.open('{% url 'administracion:ayuda_horarios_division' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
         <h4>División: {{ division }}</h4>
         <div>
             <button type="submit" class="btn btn-success">

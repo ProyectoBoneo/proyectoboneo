@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-from gutils.django.views import View
+from gutils.django.views import View, TemplateView
 from .. import forms, models
 from proyecto_boneo.apps.administracion.planes.forms import ConfigurarHorariosMateriasForm, HorarioFechaForm
 from proyecto_boneo.apps.administracion.planes.models import Horario
@@ -110,6 +110,10 @@ class ConfigurarHorariosDivisionView(View):
                 return redirect(self.success_url)
             else:
                 return render(request, self.template_name, context)
+
+
+class HorariosDivisionAyudaTemplateView(TemplateView):
+    template_name = 'planes/horarios_materias/divisiones_ayuda_horarios.html'
 
 
 class HorarioPorFechaView(ListView):

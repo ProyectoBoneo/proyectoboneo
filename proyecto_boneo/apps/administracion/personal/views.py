@@ -50,14 +50,14 @@ class ProfesoresDeleteView(ProtectedDeleteView):
 
 
 class ProfesoresAyudaTemplateView(TemplateView):
-    template_name = 'profesores/profesores/profesores_ayuda_list.html'
+    template_name = 'personal/profesores/profesores_ayuda_list.html'
 
 class ProfesoresAyudaNuevoTemplateView(TemplateView):
-    template_name = 'profesores/profesores/profesores_ayuda_nuevo.html'
+    template_name = 'personal/profesores/profesores_ayuda_nuevo.html'
 
 class ProfesoresAyudaEditarTemplateView(TemplateView):
-    template_name = 'profesores/profesores/profesores_ayuda_editar.html'
+    template_name = 'personal/profesores/profesores_ayuda_editar.html'
 
 class ProfesoresAyudaEliminarTemplateView(TemplateView):
-    template_name = 'profesores/profesores/profesores_ayuda_eliminar.html'
+    template_name = 'personal/profesores/profesores_ayuda_eliminar.html'
 #endregion
