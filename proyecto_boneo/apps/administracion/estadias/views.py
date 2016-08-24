@@ -42,13 +42,13 @@ class EstadiaDeleteView(ProtectedDeleteView):
 
 
 class EstadiaAyudaTemplateView(TemplateView):
-    template_name = 'estadias/estadias/estadias_ayuda_list.html'
+    template_name = 'estadias/estadias_ayuda_list.html'
 
 class EstadiaAyudaNuevoTemplateView(TemplateView):
-    template_name = 'estadias/estadias/estadias_ayuda_nuevo.html'
+    template_name = 'estadias/estadias_ayuda_nuevo.html'
 
 class EstadiaAyudaEditarTemplateView(TemplateView):
-    template_name = 'estadias/estadias/estadias_ayuda_editar.html'
+    template_name = 'estadias/estadias_ayuda_editar.html'
 
 class EstadiaAyudaEliminarTemplateView(TemplateView):
-    template_name = 'estadias/estadias/estadias_ayuda_eliminar.html'
+    template_name = 'estadias/estadias_ayuda_eliminar.html'

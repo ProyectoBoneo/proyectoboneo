@@ -1,6 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Eliminar materia{% endblock %}
 {% block content %}
+    <h3 class="inline-title">Eliminar materia</h3> <span class=""><a href="{% url 'administracion:ayuda_eliminar_materia' %}" onclick="window.open('{% url 'administracion:ayuda_eliminar_materia' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action=".">
         {% csrf_token %}
         <p>¿Desea eliminar la materia "{{ object }}"?</p>

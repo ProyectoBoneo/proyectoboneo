@@ -3,7 +3,8 @@ from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView
+from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView, \
+    TemplateView
 from gutils.django.views import View
 from django.core.urlresolvers import reverse_lazy
 
@@ -378,3 +379,19 @@ class EjercicioVirtualDeleteView(ProtectedDeleteView):
 
     def get_success_url(self):
         return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.clase_virtual.id})
+
+
+class ClaseVirtualAyudaTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_list.html'
+
+class ClaseVirtualAyudaVerTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_ver.html'
+
+class ClaseVirtualAyudaNuevoTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_nuevo.html'
+
+class ClaseVirtualAyudaEditarTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_editar.html'
+
+class ClaseVirtualAyudaEliminarTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_eliminar.html'

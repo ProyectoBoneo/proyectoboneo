@@ -4,7 +4,7 @@ from . import forms, models
 from django.core.urlresolvers import reverse_lazy
 from django.forms import formset_factory
 from django.shortcuts import render
-from gutils.django.views import View
+from gutils.django.views import View, TemplateView
 from django.views.generic import View,ListView, CreateView, DetailView, UpdateView
 from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 from proyecto_boneo.apps.administracion.personal.models import Profesor
@@ -113,3 +113,31 @@ class EncuentroTutoriaDeleteView(ProtectedDeleteView):
     model = models.EncuentroTutoria
     success_url = reverse_lazy('administracion:encuentrotutorias')
     template_name = 'encuentrotutorias/encuentrotutorias_confirm_delete.html'
+
+
+class TutoriasAyudaTemplateView(TemplateView):
+    template_name = 'tutorias/tutorias_ayuda_list.html'
+
+class TutoriasAyudaVerTemplateView(TemplateView):
+    template_name = 'tutorias/tutorias_ayuda_ver.html'
+
+class TutoriasAyudaNuevoTemplateView(TemplateView):
+    template_name = 'tutorias/tutorias_ayuda_nuevo.html'
+
+class TutoriasAyudaEditarTemplateView(TemplateView):
+    template_name = 'tutorias/tutorias_ayuda_editar.html'
+
+class TutoriasAyudaEliminarTemplateView(TemplateView):
+    template_name = 'tutorias/tutorias_ayuda_eliminar.html'
+
+class EncuentroTutoriasAyudaTemplateView(TemplateView):
+    template_name = 'encuentrotutorias/encuentrotutorias_ayuda_list.html'
+
+class EncuentroTutoriasAyudaNuevoTemplateView(TemplateView):
+    template_name = 'encuentrotutorias/encuentrotutorias_ayuda_nuevo.html'
+
+class EncuentroTutoriasAyudaEditarTemplateView(TemplateView):
+    template_name = 'encuentrotutorias/encuentrotutorias_ayuda_editar.html'
+
+class EncuentroTutoriasAyudaEliminarTemplateView(TemplateView):
+    template_name = 'encuentrotutorias/encuentrotutorias_ayuda_eliminar.html'

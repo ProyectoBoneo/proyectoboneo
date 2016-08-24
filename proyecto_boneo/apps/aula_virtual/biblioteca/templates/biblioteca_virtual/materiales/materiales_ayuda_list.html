@@ -2,6 +2,17 @@
 {% block title %}Listado de material{% endblock %}
 {% block content %}
 <h4>Listado de material</h4>
-<p> Al ingresar al módulo de materiales, se presenta un listado con las materiales del sistema, y filtros por campo para facilitar la búsqueda de las materiales, </p>
-<p> Desde esta pantalla se puede acceder a la pantalla de creación de nuevo material, haciendo clic en el botón de nuevo material, así como ir a las pantallas de edición o eliminación de una material determinado mediante los botones correspondientes presentes en el listado. Además, es posible acceder al material para verlo de manera online, o bien un botón para iniciar la descarga del material. </p>
+ {% if user.is_profesor %}
+    <p> Al ingresar al módulo de materiales, se presenta un listado con las materiales del sistema, y filtros por campo para facilitar la búsqueda de las materiales, </p>
+    <p> Desde esta pantalla se puede acceder a la pantalla de creación de nuevo material, haciendo clic en el botón de nuevo material, así como ir a las pantallas de edición o eliminación de una material determinado mediante los botones correspondientes presentes en el listado. Además, es posible acceder al material para verlo de manera online, o bien un botón para iniciar la descarga del material. </p>
+{% endif %}
+{% if user.is_alumno %}
+    <p> Al ingresar al módulo de materiales, se presenta un listado con las materiales del sistema. </p>
+    <p> Desde esta pantalla, haciendo clic en el botón de nuevo material es posible acceder al material para verlo de manera online, o bien un botón para iniciar la descarga del material. </p>
+{% endif %}
+{% if user.is_personal_administrativo %}
+    <p> Al ingresar al módulo de materiales, se presenta un listado con las materiales del sistema, y filtros por campo para facilitar la búsqueda de las materiales, </p>
+    <p> Desde esta pantalla se puede acceder a la pantalla de creación de nuevo material, haciendo clic en el botón de nuevo material, así como ir a las pantallas de edición o eliminación de una material determinado mediante los botones correspondientes presentes en el listado. Además, es posible acceder al material para verlo de manera online, o bien un botón para iniciar la descarga del material. </p>
+{% endif %}
+
 {% endblock %}

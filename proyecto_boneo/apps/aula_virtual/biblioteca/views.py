@@ -6,7 +6,7 @@ from django.views.generic import View
 from proyecto_boneo.apps.administracion.planes.models import Materia
 from collections import defaultdict
 from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, \
-    DetailView, ListView, FilteredListView
+    DetailView, ListView, FilteredListView, TemplateView
 from proyecto_boneo.apps.aula_virtual.biblioteca.forms import MaterialForm, SolicitudMaterialRechazoForm
 
 
@@ -213,3 +213,37 @@ class SolicitudMaterialesAlumnoDeleteView(ProtectedDeleteView):
     model = models.SolicitudMaterial
     success_url = reverse_lazy('aula_virtual:ver_solicitudes')
     template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_confirm_delete.html'
+
+
+class MaterialesAyudaTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_list.html'
+
+class MaterialesAyudaNuevoTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_nuevo.html'
+
+class MaterialesAyudaEditarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_editar.html'
+
+class MaterialesAyudaEliminarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_eliminar.html'
+
+class MaterialesAyudaBuscarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_buscar.html'
+
+class MaterialesAyudaVerTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_ver.html'
+
+class SolicitudMaterialesAyudaTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_list.html'
+
+class SolicitudMaterialesAyudaPendientesTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_pendiente_list.html'
+
+class SolicitudMaterialesAyudaNuevoTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_nuevo.html'
+
+class SolicitudMaterialesAyudaEditarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_editar.html'
+
+class SolicitudMaterialesAyudaEliminarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_eliminar.html'

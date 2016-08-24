@@ -2,7 +2,7 @@
 {% block title %}Solicitudes de Materiales{% endblock %}
 {% block content %}
     <div class="col-md-offset-1 col-md-10">
-        <h3>Mis Solicitudes de Materiales</h3>
+        <h3 class="inline-title">Mis Solicitudes de Materiales</h3> <span class=""><a href="{% url 'aula_virtual:ayuda_solicitudes_materiales' %}" onclick="window.open('{% url 'aula_virtual:ayuda_solicitudes_materiales' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
         {% if filter_form %}
             <form action="." method="get" class="margin-bottom-2x">
                 <div class="form-group">

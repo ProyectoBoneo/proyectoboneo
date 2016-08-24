@@ -1,0 +1,12 @@
+{% extends 'ayuda/base.html' %}
+{% block title %}Visualización de tutorías{% endblock %}
+{% block content %}
+<h4>Visualización de tutorías</h4>
+
+{% if user.is_profesor %}
+    <p>En la parte superior, se muestran los datos de la tutoría seleccionada. También existe el botón nuevo encuentro tutoría, que permite acceder a la pantalla para generar un nuevo encuentro para la tutoría actual. En el listado se visualiza cada una de los encuentros correspondientes a la tutoría seleccionada, en orden cronológico. Se muestra fecha y resumen de cada uno de los encuentros. Además para cada encuentro existen botones de edición y eliminación.</p>
+{% endif %}
+{% if user.is_alumno %}
+    <p>En la parte superior, se muestran los datos de la tutoría seleccionada. En el listado se visualiza cada una de los encuentros correspondientes a la tutoría seleccionada, en orden cronológico. Se muestra fecha y resumen de cada uno de los encuentros.</p>
+{% endif %}
+{% endblock %}

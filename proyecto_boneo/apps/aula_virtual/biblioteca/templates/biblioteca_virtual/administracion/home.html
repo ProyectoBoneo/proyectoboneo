@@ -2,7 +2,7 @@
 {% block title %}Biblioteca Virtual{% endblock %}
 
 {% block content %}
-        <h3>Materiales</h3>
+        <h3 class="inline-title">Materiales</h3> <span class=""><a href="{% url 'aula_virtual:ayuda_materiales' %}" onclick="window.open('{% url 'aula_virtual:ayuda_materiales' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
         <form action="." method="get" class="margin-bottom-2x">
             <a href="{% url 'aula_virtual:buscar_material' %}" type="submit" class="btn btn-default">
                 <i class="fa fa-search"></i> Buscar
