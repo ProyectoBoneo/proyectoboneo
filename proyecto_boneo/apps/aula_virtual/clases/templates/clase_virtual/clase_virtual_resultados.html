@@ -2,7 +2,6 @@
 {% block title %}Clases virtuales{% endblock %}
 {% block content %}
     <script>
-
     </script>
 
     <h3 class="inline-title">Clase Virtual</h3>
@@ -13,22 +12,33 @@
             Materia: {{ clase_virtual.materia }}
         </p>
         <p>
-            Descripcion:{{ clase_virtual.descripcion }}
+            Descripcion: {{ clase_virtual.descripcion }}
+        </p>
+        <p>
+            Puntaje: {{ clase_virtual.puntaje_alumno }}
         </p>
     <ul class="list-group ">
-    {% for  respuesta in respuestas %}
+    {% for respuesta in respuestas %}
         <div class="col-sm-6">
                 <li class="list-group-item borderless">
             <div class="row list-group-item-header">
               <div class="col-xs-12">
-                     <h4 class="list-group-item-heading text-default">{{ respuesta.respuesta_instance.ejercicio }}
+                     <h4 class="list-group-item-heading text-default">{{ respuesta.ejercicio }}
                       <small class="pull-right">
-                        {% if respuesta.es_correcta == None %}
+                        {% if respuesta.puntaje_obtenido == None %}
                             <h4 class="list-group-item-heading text-default text-right">No corregida </h4>
-                        {% elif respuesta.es_correcta %}
-                            <h4 class="list-group-item-heading text-success text-right">Correcta <i class="fa fa-check-circle"></i></h4>
-                        {% elif not respuesta.es_correcta %}
-                            <h4 class="list-group-item-heading text-danger text-right">Incorrecta <i class="fa fa-times-circle"></i></h4>
+                        {% elif respuesta.puntaje_obtenido == respuesta.ejercicio.puntaje  %}
+                            <h4 class="list-group-item-heading text-success text-right">
+                                {{ respuesta.puntaje_obtenido }}/{{ respuesta.ejercicio.puntaje }} <i class="fa fa-check-circle"></i>
+                            </h4>
+                        {% elif respuesta.puntaje_obtenido > 0  %}
+                            <h4 class="list-group-item-heading text-right">
+                                {{ respuesta.puntaje_obtenido }}/{{ respuesta.ejercicio.puntaje }}
+                            </h4>
+                        {% elif respuesta.puntaje_obtenido == 0 %}
+                            <h4 class="list-group-item-heading text-danger text-right">
+                                {{ respuesta.puntaje_obtenido }}/{{ respuesta.ejercicio.puntaje }} <i class="fa fa-times-circle"></i>
+                            </h4>
                         {% else %}
                             <h4 class="list-group-item-heading text-default text-right">No corregida</h4>
                         {% endif %}
@@ -36,16 +46,16 @@
               </div>
           </div>
 
-        {%  if respuesta.is_respuesta_virtual_multiple_choice  %}
-            <div class="row">
+        {%  if respuesta.ejercicio.tipo_ejercicio == 'mch'  %}
+        <div class="row">
             <div class="col-sm-12">
                  <ul class="list-group">
                      <li class="list-group-item borderless list-group-item-divider">
                          <h6 class="list-group-item-heading "><strong>Opciones disponibles</strong></h6>
                      </li>
 
-                     {% for opcion in respuesta.respuesta_instance.ejercicio.opciones.all  %}
-                        {% if opcion.opcion_correcta and respuesta.respuesta_instance.opcion_seleccionada == opcion %}
+                     {% for opcion in respuesta.ejercicio.opciones.all  %}
+                        {% if opcion.opcion_correcta and respuesta.opcion_seleccionada == opcion %}
                             <li class="list-group-item borderless list-group-item-success">
                                 <span class="pull-right label label-success">Selecciono la respuesta correcta!</span>
                                 {{ opcion.texto }}
@@ -55,7 +65,7 @@
                                 <span class="pull-right label label-success">Esta era la respuesta correcta</span>
                                 {{ opcion.texto }}
                             </li>
-                        {% elif respuesta.respuesta_instance.opcion_seleccionada == opcion %}
+                        {% elif respuesta.opcion_seleccionada == opcion %}
                             <li class="list-group-item borderless list-group-item-danger">
                                 <span class="pull-right label label-danger">Esta respuesta es incorrecta.</span>
                                 {{ opcion.texto }}
@@ -68,12 +78,10 @@
                     {% endfor %}
                 </ul>
             </div>
-
           </div>
-        {% elif respuesta.is_respuesta_virtual_texto  %}
+        {% elif respuesta.ejercicio.tipo_ejercicio == 'txt'  %}
             <div class="row">
                 <div class="col-sm-12">
-
                     <ul class="list-group">
                         <li class="list-group-item-divider list-group-item">
                           <h6 class="list-group-item-heading"><strong>Mi respuesta</strong></h6>
@@ -81,38 +89,13 @@
                         <li class="list-group-item borderless">
 
                           <p class="list-group-item-text">
-                              {{ respuesta.respuesta_instance.texto }}
+                              {{ respuesta.texto }}
                           </p>
                         </li>
                       </ul>
                 </div>
             </div>
         {% endif %}
-{#        <div class="panel#}
-{#        {% if respuesta.es_correcta == None %}#}
-{#                panel-default">#}
-{#        {% elif respuesta.es_correcta %}#}
-{#                panel-success">#}
-{#        {% elif not respuesta.es_correcta %}>#}
-{#                panel-danger">#}
-{#        {% else %}#}
-{#                bg-default">#}
-{#        {% endif %}#}
-          <!-- Default panel contents -->
-{#          <div class="panel-heading">#}
-
-{#          </div>#}
-
-          <!-- Table -->
-{#          <table class="table">#}
-{#          <thead>#}
-{##}
-{#          </thead>#}
-{#          <tbody>#}
-{##}
-{#          </tbody>#}
-{#          </table>#}
-{#        </div>#}
         </li>
         </div>
         {% if forloop.counter|divisibleby:2 %}

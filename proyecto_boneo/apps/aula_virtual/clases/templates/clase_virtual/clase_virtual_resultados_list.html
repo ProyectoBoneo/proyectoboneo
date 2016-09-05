@@ -14,32 +14,110 @@
     <p>
         Descripcion: {{ clase_virtual.descripcion }}
     </p>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Alumno</th>
-                <th>Nota actual</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for alumno in alumnos %}
+    {% if show_pendientes_correccion %}
+        <h4>Pendientes de corrección</h4>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        {{ alumno }}
-                    </td>
-                    <td>
-                        {{ alumno.nota_actual|default_if_none:"No cargado" }}
-                    </td>
-                    <td>
-                        <a class="btn btn-default btn-sm" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id  alumno.id %}">
-                             <i class="fa fa-edit"></i> Corregir
-                        </a>
-                    </td>
+                    <th>Alumno</th>
+                    <th>Nota</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for alumno in alumnos_no_corregida_list %}
+                    <tr>
+                        <td>
+                            {{ alumno }}
+                        </td>
+                        <td>
+                            {% if not alumno.resuelto %}
+                                No cargado
+                            {% elif not alumno.corregido %}
+                                No corregido
+                            {% else %}
+                                {{ alumno.nota_actual|default_if_none:"No corregido" }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-default btn-sm" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id  alumno.id %}">
+                                 <i class="fa fa-edit"></i> Corregir
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if show_corregidos %}
+        <h4>Corregidos</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Alumno</th>
+                    <th>Nota</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alumno in alumnos_corregida_list %}
+                    <tr>
+                        <td>
+                            {{ alumno }}
+                        </td>
+                        <td>
+                            {% if not alumno.resuelto %}
+                                No cargado
+                            {% elif not alumno.corregido %}
+                                No corregido
+                            {% else %}
+                                {{ alumno.nota_actual|default_if_none:"No corregido" }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-default btn-sm" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id  alumno.id %}">
+                                 <i class="fa fa-edit"></i> Corregir
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if show_no_resueltos %}
+        <h4>No resueltos</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Alumno</th>
+                    <th>Nota</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alumno in alumnos_no_resuelta_list %}
+                    <tr>
+                        <td>
+                            {{ alumno }}
+                        </td>
+                        <td>
+                            {% if not alumno.resuelto %}
+                                No cargado
+                            {% elif not alumno.corregido %}
+                                No corregido
+                            {% else %}
+                                {{ alumno.nota_actual|default_if_none:"No corregido" }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-default btn-sm" href="{% url 'aula_virtual:corregir_resultados_clase_virtual' clase_virtual.id  alumno.id %}">
+                                 <i class="fa fa-edit"></i> Corregir
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 
     <a class="btn btn-default" href="{% url 'aula_virtual:clases_virtuales' %}">
         <i class="fa fa-arrow-circle-left"></i>  Volver

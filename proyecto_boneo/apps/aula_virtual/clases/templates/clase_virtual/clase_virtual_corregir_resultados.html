@@ -29,14 +29,23 @@
                         <li class="list-group-item borderless">
                         <div class="row list-group-item-header">
                           <div class="col-xs-12">
-                                 <h4 class="list-group-item-heading text-default">{{ form.instance.respuesta_instance.ejercicio }}
+                                 <h4 class="list-group-item-heading text-default">{{ form.instance.ejercicio }}
                                   <small class="pull-right">
-                                    {% if form.instance.es_correcta == None %}
+
+                                    {% if form.instance.puntaje_obtenido == None %}
                                         <h4 class="list-group-item-heading text-default text-right">No corregida </h4>
-                                    {% elif form.instance.es_correcta %}
-                                        <h4 class="list-group-item-heading text-success text-right">Correcta <i class="fa fa-check-circle"></i></h4>
-                                    {% elif not form.instance.es_correcta %}
-                                        <h4 class="list-group-item-heading text-danger text-right">Incorrecta <i class="fa fa-times-circle"></i></h4>
+                                    {% elif form.instance.puntaje_obtenido == form.instance.ejercicio.puntaje %}
+                                        <h4 class="list-group-item-heading text-success text-right">
+                                            {{ form.instance.puntaje_obtenido }} / {{ form.instance.ejercicio.puntaje }} <i class="fa fa-check-circle"></i>
+                                        </h4>
+                                    {% elif form.instance.puntaje_obtenido > 0 %}
+                                        <h4 class="list-group-item-heading text-right">
+                                            {{ form.instance.puntaje_obtenido }} / {{ form.instance.ejercicio.puntaje }}
+                                        </h4>
+                                    {% elif form.instance.puntaje_obtenido == 0 %}
+                                        <h4 class="list-group-item-heading text-danger text-right">
+                                            {{ form.instance.puntaje_obtenido }} / {{ form.instance.ejercicio.puntaje }} <i class="fa fa-times-circle"></i>
+                                        </h4>
                                     {% else %}
                                         <h4 class="list-group-item-heading text-default text-right">No corregida</h4>
                                     {% endif %}
@@ -44,7 +53,7 @@
                           </div>
                       </div>
 
-                       {%  if form.instance.is_respuesta_virtual_multiple_choice  %}
+                       {%  if form.instance.ejercicio.tipo_ejercicio == 'mch'  %}
                            <div class="row">
                             <div class="col-sm-12">
                                  <ul class="list-group">
@@ -52,8 +61,8 @@
                                          <h6 class="list-group-item-heading "><strong>Opciones disponibles</strong></h6>
                                      </li>
 
-                                     {% for opcion in form.instance.respuesta_instance.ejercicio.opciones.all  %}
-                                        {% if opcion.opcion_correcta and form.instance.respuesta_instance.opcion_seleccionada == opcion %}
+                                     {% for opcion in form.instance.ejercicio.opciones.all  %}
+                                        {% if opcion.opcion_correcta and form.instance.opcion_seleccionada == opcion %}
                                             <li class="list-group-item borderless list-group-item-success">
                                                 <span class="pull-right label label-success">Selecciono la respuesta correcta!</span>
                                                 {{ opcion.texto }}
@@ -63,7 +72,7 @@
                                                 <span class="pull-right label label-success">Esta era la respuesta correcta</span>
                                                 {{ opcion.texto }}
                                             </li>
-                                        {% elif form.instance.respuesta_instance.opcion_seleccionada == opcion %}
+                                        {% elif form.instance.opcion_seleccionada == opcion %}
                                             <li class="list-group-item borderless list-group-item-danger">
                                                 <span class="pull-right label label-danger">Esta respuesta es incorrecta.</span>
                                                 {{ opcion.texto }}
@@ -78,7 +87,7 @@
                             </div>
 
                           </div>
-                       {% elif form.instance.is_respuesta_virtual_texto  %}
+                       {% elif form.instance.ejercicio.tipo_ejercicio == 'txt'  %}
                            <div class="row">
                                 <div class="col-sm-12">
 
@@ -89,23 +98,25 @@
                                         <li class="list-group-item borderless">
 
                                           <p class="list-group-item-text">
-                                              {{ form.instance.respuesta_instance.texto }}
+                                              {{ form.instance.texto }}
                                           </p>
                                         </li>
                                   </ul>
                                 </div>
                             </div>
                        {% endif %}
-                    {% if form.instance.is_respuesta_virtual_texto %}
+                    {% if form.instance.ejercicio.tipo_ejercicio == 'txt' %}
                         <div class="row">
                             <div class="col-xs-6 col-xs-offset-6">
-                              {{ form.es_correcta.label_tag }}
-                              {{ form.es_correcta }}
+                              {{ form.puntaje_obtenido.label_tag }}
+                              {{ form.puntaje_obtenido }}
                             </div>
                         </div>
+                    {% elif form.instance.ejercicio.tipo_ejercicio == 'mch'  %}
                     {% else %}
-                        <div style="display:none;">
-                            {{ form.es_correcta }}
+                        <div>
+                              {{ form.puntaje_obtenido.label_tag }}
+                              {{ form.puntaje_obtenido }}
                         </div>
                     {% endif %}
                     </li>

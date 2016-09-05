@@ -4,7 +4,7 @@ from django.forms import inlineformset_factory, modelformset_factory
 from gutils.django.forms import BaseModelForm, BaseFilterForm, BaseForm
 
 from . import models
-from proyecto_boneo.apps.aula_virtual.clases.models import EjercicioVirtualMultipleChoice, OpcionEjercicioMultipleChoice
+from proyecto_boneo.apps.aula_virtual.clases.models import EjercicioVirtual,OpcionEjercicio
 
 
 class ClaseVirtualForm(BaseModelForm):
@@ -18,36 +18,29 @@ class ClaseVirtualForm(BaseModelForm):
         exclude = []
 
 
-class EjercicioVirtualForm(BaseModelForm):
-
-    class Meta:
-        model = models.EjercicioVirtual
-        exclude = ['clase_virtual']
-
-
 class EjercicioVirtualTextoForm(BaseModelForm):
 
     class Meta:
-        model = models.EjercicioVirtualTexto
-        fields = ['ayuda', 'consigna']
+        model = models.EjercicioVirtual
+        fields = ['ayuda', 'puntaje','consigna']
 
 
 class EjercicioVirtualMultipleChoiceForm(BaseModelForm):
 
     class Meta:
-        model = models.EjercicioVirtualMultipleChoice
-        fields = ['ayuda', 'pregunta', 'explicacion']
+        model = models.EjercicioVirtual
+        fields = ['ayuda', 'puntaje','consigna', 'explicacion']
 
 
 class OpcionEjercicioMultipleChoiceForm(BaseModelForm):
     class Meta:
-        model = models.OpcionEjercicioMultipleChoice
-        fields = ['texto', 'opcion_correcta']
+        model = models.OpcionEjercicio
+        fields = ['texto','opcion_correcta']
 
-OpcionEjercicioVirtualFormSet = inlineformset_factory(EjercicioVirtualMultipleChoice, OpcionEjercicioMultipleChoice,
+OpcionEjercicioVirtualFormSet = inlineformset_factory(EjercicioVirtual, OpcionEjercicio,
                                                       form=OpcionEjercicioMultipleChoiceForm)
-OpcionEjercicioVirtualUpdateFormSet = inlineformset_factory(EjercicioVirtualMultipleChoice,
-                                                            OpcionEjercicioMultipleChoice,
+OpcionEjercicioVirtualUpdateFormSet = inlineformset_factory(EjercicioVirtual,
+                                                            OpcionEjercicio,
                                                             form=OpcionEjercicioMultipleChoiceForm, extra=0)
 
 
@@ -74,20 +67,20 @@ class TipoEjercicioForm(BaseForm):
 
 class RespuestaEjercicioVirtualTextoForm(BaseModelForm):
     class Meta:
-        model = models.RespuestaEjercicioVirtualTexto
+        model = models.RespuestaEjercicioVirtual
         fields = ['texto']
 
 
 class RespuestaEjercicioVirtualMultipleChoiceForm(BaseModelForm):
     class Meta:
-        model = models.RespuestaEjercicioVirtualMultipleChoice
+        model = models.RespuestaEjercicioVirtual
         fields = ['opcion_seleccionada']
 
 
 class RespuestaEjercicioVirtualCorreccionForm(BaseModelForm):
     class Meta:
         model = models.RespuestaEjercicioVirtual
-        fields = ['es_correcta', 'id']
+        fields = ['puntaje_obtenido', 'id']
         labels = {}
         widgets = {'id': forms.HiddenInput()}
 

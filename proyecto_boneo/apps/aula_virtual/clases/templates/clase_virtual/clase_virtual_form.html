@@ -1,7 +1,7 @@
 {% extends 'clase_virtual/base.html' %}
 {% block title %}Clase Virtual{% endblock %}
 {% block content %}
-    <h3>Clase Virtual</h3> <span class=""><a href="{% url 'aula_virtual:ayuda_clase_virtual_nuevo' %}" onclick="window.open('{% url 'aula_virtual:ayuda_clase_virtual_nuevo' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Clase Virtual</h3> <span class=""><a href="{% url 'aula_virtual:ayuda_nuevo_clase_virtual' %}" onclick="window.open('{% url 'aula_virtual:ayuda_nuevo_clase_virtual' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
 
     <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}

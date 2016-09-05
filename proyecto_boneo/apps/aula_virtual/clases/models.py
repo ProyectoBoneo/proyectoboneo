@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 
 from proyecto_boneo.apps.administracion.planes.models import Materia
 from proyecto_boneo.apps.administracion.alumnos.models import Alumno
@@ -24,75 +25,61 @@ class ClaseVirtual(models.Model):
     def descripcion_tipo(self):
         return [t[1] for t in self.TIPO_CHOICES if t[0] == self.tipo][0]
 
+    def es_resuelta_alumno(self, alumno):
+        return RespuestaEjercicioVirtual.objects.filter(clase_virtual=self).filter(alumno=alumno).count() > 0
+
+    def es_corregida_alumno(self, alumno):
+        respuesta_list = RespuestaEjercicioVirtual.objects.filter(clase_virtual=self)\
+            .filter(alumno=alumno)
+        for respuesta in respuesta_list:
+            if respuesta.puntaje_obtenido == None:
+                return False
+        return True
+
+    def obtener_puntaje_alumno(self, alumno):
+        return RespuestaEjercicioVirtual.objects.filter(clase_virtual=self)\
+            .filter(alumno=alumno).aggregate(Sum("puntaje_obtenido"))["puntaje_obtenido__sum"]
 
 class EjercicioVirtual(models.Model):
+    TEXTO = 'txt'
+    MULTIPLE_CHOICE = 'mch'
+
+    TIPO_CHOICES = (
+        (TEXTO, 'Texto'),
+        (MULTIPLE_CHOICE , 'Multiple Choice'),
+    )
+
+    tipo_ejercicio = models.CharField(max_length=3, choices=TIPO_CHOICES)
     clase_virtual = models.ForeignKey(ClaseVirtual, related_name='ejercicios')
+    puntaje = models.FloatField(null=True, blank=True)
     orden_prioridad = models.IntegerField(null=True, blank=True)
 
-    def is_ejercicio_virtual_multiple_choice(self):
-        return hasattr(self,'ejerciciovirtualmultiplechoice')
-
-    def is_ejercicio_virtual_texto(self):
-        return hasattr(self,'ejerciciovirtualtexto')
-
-    def ejercicio_instance(self):
-        if (self.is_ejercicio_virtual_multiple_choice()):
-            return self.ejerciciovirtualmultiplechoice
-        elif(self.is_ejercicio_virtual_texto()):
-            return self.ejerciciovirtualtexto
-        return
-
-
-class EjercicioVirtualTexto(EjercicioVirtual):
-    ayuda = models.TextField(null=True, blank=True)
     consigna = models.CharField(max_length=100)
+    ayuda = models.TextField(null=True, blank=True)
+    explicacion = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return '{}'.format(self.consigna)
 
-
-class EjercicioVirtualMultipleChoice(EjercicioVirtual):
-    ayuda = models.TextField(null=True, blank=True)
-    pregunta = models.CharField(max_length=100)
-    explicacion = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return '{}'.format(self.pregunta)
+    @property
+    def descripcion_tipo(self):
+        return [t[1] for t in self.TIPO_CHOICES if t[0] == self.tipo][0]
 
 
-class OpcionEjercicioMultipleChoice(models.Model):
+class OpcionEjercicio(models.Model):
     texto = models.CharField(max_length=100)
-    ejercicio = models.ForeignKey(EjercicioVirtualMultipleChoice, related_name='opciones')
+    ejercicio = models.ForeignKey(EjercicioVirtual, related_name='opciones')
     opcion_correcta = models.BooleanField(default=False)
 
 
 class RespuestaEjercicioVirtual(models.Model):
     alumno = models.ForeignKey(Alumno, related_name='respuestas')
-    es_correcta = models.NullBooleanField(null=True,default=None)
     clase_virtual = models.ForeignKey(ClaseVirtual, related_name='respuestas')
+    ejercicio = models.ForeignKey(EjercicioVirtual, related_name='respuestas')
 
-    def is_respuesta_virtual_multiple_choice(self):
-        return hasattr(self,'respuestaejerciciovirtualmultiplechoice')
-
-    def is_respuesta_virtual_texto(self):
-        return hasattr(self,'respuestaejerciciovirtualtexto')
-
-    def respuesta_instance(self):
-        if (self.is_respuesta_virtual_multiple_choice()):
-            return self.respuestaejerciciovirtualmultiplechoice
-        elif(self.is_respuesta_virtual_texto()):
-            return self.respuestaejerciciovirtualtexto
-        return
-
-
-class RespuestaEjercicioVirtualTexto(RespuestaEjercicioVirtual):
-    texto = models.TextField()
-    ejercicio = models.ForeignKey(EjercicioVirtualTexto, related_name='respuestas')
-
-
-class RespuestaEjercicioVirtualMultipleChoice(RespuestaEjercicioVirtual):
-    opcion_seleccionada = models.ForeignKey(OpcionEjercicioMultipleChoice, related_name='+')
-    ejercicio = models.ForeignKey(EjercicioVirtualMultipleChoice, related_name='respuestas')
+    texto = models.TextField(null=True,default=None)
+    opcion_seleccionada = models.ForeignKey(OpcionEjercicio, related_name='+', null=True)
+    puntaje_obtenido = models.FloatField(null=True, blank=True)
 
 
 class ResultadoEvaluacion(models.Model):
