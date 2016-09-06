@@ -20,9 +20,19 @@ class BaseMaterial(models.Model):
         abstract = True
 
 
+class MaterialManager(models.Manager):
+
+    def publicados(self):
+        queryset = super(MaterialManager, self).get_queryset()
+        return queryset.filter(publicado=True)
+
+
 class Material(BaseMaterial):
+    objects = MaterialManager()
+
     archivo = models.FileField(upload_to=material_location, null=True, blank=True)
     materia = models.ForeignKey(Materia, on_delete=models.PROTECT)
+    publicado = models.BooleanField(null=False, default=True)
 
     @property
     def nombre_archivo(self):

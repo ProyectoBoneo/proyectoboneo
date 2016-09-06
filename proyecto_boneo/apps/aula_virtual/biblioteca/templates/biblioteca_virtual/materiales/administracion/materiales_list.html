@@ -25,6 +25,7 @@
                         <th>Id</th>
                         <th>Descripción</th>
                         <th>Archivo</th>
+                        <th>Publicado</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -37,6 +38,7 @@
                             <td>{{ material.id }}</td>
                             <td>{{ material.descripcion }}</td>
                             <td>{{ material.nombre_archivo }}</td>
+                            <td>{% if material.publicado %} <i class="fa fa-check text-success"> {% else %} <i class="fa fa-times text-danger"> {% endif %}</td>
                             <td>
                                 <a class="btn btn-default" href="{% url 'aula_virtual:ver_material' material.id %}">
                                     <i class="fa fa-eye"></i> Ver

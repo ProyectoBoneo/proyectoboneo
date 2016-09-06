@@ -20,6 +20,7 @@ class ClaseVirtual(models.Model):
     nombre = models.CharField(max_length=30, default='Clase')
     descripcion = models.CharField(max_length=100)
     tipo = models.CharField(max_length=3, choices=TIPO_CHOICES)
+    publicado = models.BooleanField(null=False, default=True)
 
     @property
     def descripcion_tipo(self):

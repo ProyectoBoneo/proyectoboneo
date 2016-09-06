@@ -10,7 +10,7 @@ class MaterialForm(BaseModelForm):
     class Meta:
         model = models.Material
         exclude = []
-        labels = {'descripcion': 'Descripción', }
+        labels = {'descripcion': 'Descripción'}
 
     def clean_archivo(self):
         archivo = self.cleaned_data.get('archivo')
