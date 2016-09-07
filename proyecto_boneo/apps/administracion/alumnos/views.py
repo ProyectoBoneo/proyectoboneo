@@ -1,21 +1,22 @@
-from datetime import date, datetime, timedelta
-from gutils.django.views import ProtectedDeleteView, FilteredListView, ModelFormsetView, View
+from datetime import datetime
+from gutils.django.views import ProtectedDeleteView, FilteredReportListView, View
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 
 from proyecto_boneo.apps.administracion.personal.views import PersonaCreateView, PersonaUpdateView
 
 from proyecto_boneo.apps.administracion.alumnos.models import InscripcionAlumno, Asistencia, Alumno
 
-from . import forms, models
+from . import forms, models, reports
 
 
 #region Alumnos
-class AlumnosFilteredListView(FilteredListView):
+class AlumnosFilteredListView(FilteredReportListView):
     form_class = forms.AlumnoFilterForm
     model = models.Alumno
     template_name = 'alumnos/alumnos/alumnos_list.html'
-    
+    report = reports.AlumnosReport
+
     
 class AlumnosCreateView(PersonaCreateView):
     model = models.Alumno
@@ -114,10 +115,11 @@ class AlumnosInscripcionesView(View):
 
 
 #region Responsables
-class ResponsablesFilteredListView(FilteredListView):
+class ResponsablesFilteredListView(FilteredReportListView):
     form_class = forms.ResponsableFilterForm
     model = models.Responsable
     template_name = 'alumnos/responsables/responsables_list.html'
+    report = reports.ResponsablesReport
 
 
 class ResponsablesCreateView(PersonaCreateView):
