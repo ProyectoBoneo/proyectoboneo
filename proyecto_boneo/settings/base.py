@@ -116,11 +116,11 @@ LANGUAGE_CODE = 'es-AR'
 
 TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
-USE_I18N = True
+USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
 
 APPEND_SLASH = True
 

@@ -23,7 +23,6 @@ class Persona(models.Model):
 
     def crear_usuario(self, email):
         self.usuario = UsuarioBoneo.objects.create(username=email, email=email)
-        # TODO:Remove this default pass, probably we want to send an one time link or another approach
         self.usuario.set_password("pass")
         self.usuario.save()
 

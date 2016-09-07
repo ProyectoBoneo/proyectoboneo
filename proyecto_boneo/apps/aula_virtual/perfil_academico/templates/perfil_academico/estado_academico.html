@@ -16,6 +16,9 @@
             <th>Promedio General</th><td>{{ alumno.promedio }}</td>
         </tr>
     </table>
+    <a target="_blank" href="{% url 'aula_virtual:estado_academico_report' alumno.pk %}" class="btn btn-default">
+        <i class="fa fa-print"></i> Imprimir
+    </a>
     <h4>Inscripciones Actuales</h4>
     <table class="table table-bordered table-striped">
         <tr>

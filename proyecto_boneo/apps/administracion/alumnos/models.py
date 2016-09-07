@@ -51,7 +51,10 @@ class InscripcionAlumno(models.Model):
                                                           clase_virtual__materia=self.instancia_cursado.materia,
                                                           clase_virtual__tipo__in=[ClaseVirtual.EVALUACION,
                                                                                    ClaseVirtual.EVALUACION_ESCRITA])
-        self._promedio = round(evaluaciones.aggregate(models.Avg('nota')), 2)
+        average_notas = evaluaciones.aggregate(models.Avg('nota'))['nota__avg']
+        if not average_notas:
+            average_notas = 0
+        self._promedio = round(average_notas, 2)
         self.last_promedio_date = datetime.datetime.now()
         self.save()
 
