@@ -8,7 +8,7 @@ from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
 class Persona(models.Model):
     nombre = models.CharField(max_length=150)
     apellido = models.CharField(max_length=150)
-    dni = models.BigIntegerField()
+    dni = models.BigIntegerField(unique=True)
     domicilio = models.CharField(max_length=150)
     fecha_ingreso = models.DateField(auto_now_add=True)
     fecha_nacimiento = models.DateField()
@@ -23,7 +23,6 @@ class Persona(models.Model):
 
     def crear_usuario(self, email):
         self.usuario = UsuarioBoneo.objects.create(username=email, email=email)
-        # TODO:Remove this default pass, probably we want to send an one time link or another approach
         self.usuario.set_password("pass")
         self.usuario.save()
 
@@ -35,7 +34,7 @@ class Persona(models.Model):
 
 
 class PersonaLegajo(Persona):
-    legajo = models.BigIntegerField()
+    legajo = models.BigIntegerField(unique=True)
 
     @classmethod
     def _obtener_legajo(cls):

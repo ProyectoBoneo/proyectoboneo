@@ -6,7 +6,7 @@ from django.views.generic import View
 from proyecto_boneo.apps.administracion.planes.models import Materia
 from collections import defaultdict
 from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, \
-    DetailView, ListView, FilteredListView
+    DetailView, ListView, FilteredListView, TemplateView
 from proyecto_boneo.apps.aula_virtual.biblioteca.forms import MaterialForm, SolicitudMaterialRechazoForm
 
 
@@ -23,11 +23,17 @@ class MaterialesFilteredListView(FilteredListView):
     model = models.Material
     template_name = 'biblioteca_virtual/materiales/materiales_list.html'
 
+    def get_queryset(self):
+        return models.Material.objects.publicados()
+
 
 class MaterialesSearchFilteredListView(FilteredListView):
     form_class = forms.MaterialSearchFilterForm
-    model = models.Material
+    queryset = models.Material
     template_name = 'biblioteca_virtual/materiales/materiales_search.html'
+
+    def get_base_queryset(self):
+        return models.Material.objects.publicados()
 
 
 class MaterialesAdminFilteredListView(FilteredListView):
@@ -74,6 +80,9 @@ class BibliotecaHomeView(ListView):
     template_name = 'biblioteca_virtual/administracion/home.html'
     model = models.Material
 
+    def get_queryset(self):
+        return models.Material.objects.publicados()
+
     def get_context_data(self, **kwargs):
         context = super(BibliotecaHomeView, self).get_context_data(**kwargs)
         context['materia_list'] = Materia.objects.all()
@@ -81,7 +90,6 @@ class BibliotecaHomeView(ListView):
         return context
 
 
-# TODO: ADD Form Mixin to display a filter like filteredListViews
 class MaterialesByMateriaFilteredListView(ListView):
     form_class = forms.MaterialFilterForm
     template_name = 'biblioteca_virtual/materiales/materiales_list.html'
@@ -89,7 +97,7 @@ class MaterialesByMateriaFilteredListView(ListView):
 
     def get_queryset(self):
         self.materia = Materia.objects.get(pk=self.args[0])
-        return models.Material.objects.filter(materia=self.materia)
+        return models.Material.objects.publicados().filter(materia=self.materia)
 
     def get_context_data(self, **kwargs):
         context = super(MaterialesByMateriaFilteredListView, self).get_context_data(**kwargs)
@@ -123,7 +131,8 @@ class ResponderSolicitudMaterialView(View):
             return redirect(reverse_lazy('aula_virtual:materiales_admin'))
         else:
             rechazo_solicitud_form = SolicitudMaterialRechazoForm(instance = solicitud_material)
-            return render(request, self.template_name, {'solicitud_material': solicitud_material,
+            return render(request, self.template_name, {
+                        'solicitud_material': solicitud_material,
                         'form':form,
                         'rechazo_solicitud_form': rechazo_solicitud_form,
                         'user': self.request.user
@@ -213,3 +222,37 @@ class SolicitudMaterialesAlumnoDeleteView(ProtectedDeleteView):
     model = models.SolicitudMaterial
     success_url = reverse_lazy('aula_virtual:ver_solicitudes')
     template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_confirm_delete.html'
+
+
+class MaterialesAyudaTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_list.html'
+
+class MaterialesAyudaNuevoTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_nuevo.html'
+
+class MaterialesAyudaEditarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_editar.html'
+
+class MaterialesAyudaEliminarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_eliminar.html'
+
+class MaterialesAyudaBuscarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_buscar.html'
+
+class MaterialesAyudaVerTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/materiales/materiales_ayuda_ver.html'
+
+class SolicitudMaterialesAyudaTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_list.html'
+
+class SolicitudMaterialesAyudaPendientesTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_pendiente_list.html'
+
+class SolicitudMaterialesAyudaNuevoTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_nuevo.html'
+
+class SolicitudMaterialesAyudaEditarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_editar.html'
+
+class SolicitudMaterialesAyudaEliminarTemplateView(TemplateView):
+    template_name = 'biblioteca_virtual/solicitud_materiales/solicitud_materiales_ayuda_eliminar.html'

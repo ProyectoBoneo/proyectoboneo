@@ -1,6 +1,7 @@
 {% extends 'aula_virtual/base.html' %}
 {% block title %}Eliminar material{% endblock %}
 {% block content %}
+    <h3 class="inline-title">Eliminar material</h3> <span class=""><a href="{% url 'aula_virtual:ayuda_eliminar_material' %}" onclick="window.open('{% url 'aula_virtual:ayuda_eliminar_material' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action=".">
         {% csrf_token %}
         <p>¿Desea eliminar el material "{{ object }}"?</p>

@@ -1,9 +1,7 @@
-from functools import partial, wraps
 from django import forms
 from django.forms import formset_factory
-from django.forms.models import modelformset_factory, ModelChoiceIterator
-from django.utils.functional import curry
-from gutils.django.forms import BaseFilterForm, BaseFormsetModelForm, BaseForm, BaseFormsetForm
+from django.forms.models import modelformset_factory
+from gutils.django.forms import BaseFormsetModelForm, BaseFormsetForm, BaseFilterReportForm
 from gutils.django.forms.typeahead.widgets import TypeaheadDropDownAddModelWidget, TypeaheadDropDownModelWidget
 from proyecto_boneo.apps.administracion.alumnos.lookups import AlumnoLookup
 
@@ -20,7 +18,7 @@ class ResponsableForm(PersonaForm):
         exclude = ['fecha_ingreso', 'usuario']
 
 
-class AlumnoFilterForm(BaseFilterForm):
+class AlumnoFilterForm(BaseFilterReportForm):
     nombre = forms.CharField(max_length=150, required=False)
     apellido = forms.CharField(max_length=150, required=False)
 
@@ -29,7 +27,7 @@ class AlumnoFilterForm(BaseFilterForm):
                    'apellido': 'apellido__icontains', }
 
 
-class ResponsableFilterForm(BaseFilterForm):
+class ResponsableFilterForm(BaseFilterReportForm):
     nombre = forms.CharField(max_length=150, required=False)
     apellido = forms.CharField(max_length=150, required=False)
 

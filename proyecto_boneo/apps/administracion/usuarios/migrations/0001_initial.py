@@ -2,10 +2,10 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import django.utils.timezone
-import django.core.validators
 import re
+import django.utils.timezone
 import django.contrib.auth.models
+import django.core.validators
 
 
 class Migration(migrations.Migration):
@@ -18,25 +18,27 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UsuarioBoneo',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('password', models.CharField(verbose_name='password', max_length=128)),
-                ('last_login', models.DateTimeField(null=True, blank=True, verbose_name='last login')),
-                ('is_superuser', models.BooleanField(help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status', default=False)),
-                ('username', models.CharField(validators=[django.core.validators.RegexValidator(re.compile('^[\\w.@+-]+$', 32), 'Enter a valid username.', 'invalid')], help_text='Required. 254 characters or fewer. Letters, numbers and @/./+/-/_ characters', unique=True, verbose_name='username', max_length=254)),
-                ('first_name', models.CharField(blank=True, verbose_name='first name', max_length=30)),
-                ('last_name', models.CharField(blank=True, verbose_name='last name', max_length=30)),
-                ('email', models.EmailField(blank=True, verbose_name='email address', max_length=254)),
-                ('is_staff', models.BooleanField(help_text='Designates whether the user can log into this admin site.', verbose_name='staff status', default=False)),
-                ('is_active', models.BooleanField(help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active', default=True)),
+                ('last_login', models.DateTimeField(verbose_name='last login', null=True, blank=True)),
+                ('is_superuser', models.BooleanField(verbose_name='superuser status', default=False, help_text='Designates that this user has all permissions without explicitly assigning them.')),
+                ('username', models.CharField(verbose_name='username', max_length=254, unique=True, help_text='Required. 254 characters or fewer. Letters, numbers and @/./+/-/_ characters', validators=[django.core.validators.RegexValidator(re.compile('^[\\w.@+-]+$', 32), 'Enter a valid username.', 'invalid')])),
+                ('first_name', models.CharField(verbose_name='first name', max_length=30, blank=True)),
+                ('last_name', models.CharField(verbose_name='last name', max_length=30, blank=True)),
+                ('email', models.EmailField(verbose_name='email address', max_length=254, blank=True)),
+                ('is_staff', models.BooleanField(verbose_name='staff status', default=False, help_text='Designates whether the user can log into this admin site.')),
+                ('is_active', models.BooleanField(verbose_name='active', default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')),
+                ('is_alumno', models.BooleanField(verbose_name='alumno', default=False, help_text='Designates whether this user should be treated as alumno.')),
+                ('is_profesor', models.BooleanField(verbose_name='profesor', default=False, help_text='Designates whether this user should be treated as profesor.')),
                 ('date_joined', models.DateTimeField(verbose_name='date joined', default=django.utils.timezone.now)),
-                ('groups', models.ManyToManyField(related_query_name='user', to='auth.Group', blank=True, related_name='user_set', help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(related_query_name='user', to='auth.Permission', blank=True, related_name='user_set', help_text='Specific permissions for this user.', verbose_name='user permissions')),
+                ('groups', models.ManyToManyField(verbose_name='groups', related_name='user_set', related_query_name='user', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.')),
+                ('user_permissions', models.ManyToManyField(verbose_name='user permissions', related_name='user_set', related_query_name='user', to='auth.Permission', blank=True, help_text='Specific permissions for this user.')),
             ],
             options={
-                'permissions': (('can_view_boneouser', 'Can view Boneo User'),),
-                'verbose_name_plural': 'Users',
                 'verbose_name': 'User',
+                'verbose_name_plural': 'Users',
                 'db_table': 'auth_user',
+                'permissions': (('can_view_boneouser', 'Can view Boneo User'),),
             },
             managers=[
                 ('objects', django.contrib.auth.models.UserManager()),

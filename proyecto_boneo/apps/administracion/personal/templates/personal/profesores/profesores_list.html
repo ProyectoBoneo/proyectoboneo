@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Profesores{% endblock %}
 {% block content %}
-    <h3>Profesores</h3>
+    <h3 class="inline-title">Profesores</h3>  <span class=""><a href="{% url 'administracion:ayuda_profesores' %}" onclick="window.open('{% url 'administracion:ayuda_profesores' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form action="" method="get" class="margin-bottom-2x">
         <div class="form-group">
             {{ filter_form.nombre.label_tag }}
@@ -11,12 +11,22 @@
             {{ filter_form.apellido.label_tag }}
             {{ filter_form.apellido }}
         </div>
-        <button type="submit" class="btn btn-default">
-            <i class="fa fa-filter"></i> Filtrar
-        </button>
+        {{ filter_form.render_xls_report }}
+        {{ filter_form.render_pdf_report }}
         <a class="btn btn-success" href="{% url 'administracion:nuevo_profesor' %}">
             <i class="fa fa-plus-circle"></i>  Nuevo profesor
         </a>
+        <button class="btn btn-default" type="submit" onclick="filterController.filter_click(this)">
+            <i class="fa fa-filter"></i> Filtrar
+        </button>
+
+        <button class="btn btn-default" type="submit" onclick="filterController.filter_print(this)">
+            <i class="fa fa-print"></i> Imprimir
+        </button>
+
+        <button class="btn btn-default" type="submit" onclick="filterController.filter_sheet(this)">
+            <i class="fa fa-file-excel-o"></i> Planilla
+        </button>
     </form>
 
     {% if object_list %}

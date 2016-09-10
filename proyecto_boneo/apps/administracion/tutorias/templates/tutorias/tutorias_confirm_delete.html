@@ -1,6 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Eliminar tutorias{% endblock %}
 {% block content %}
+    <h3 class="inline-title"> Eliminar tutorias </h3> <span class=""><a href="{% url 'administracion:ayuda_eliminar_tutoria' %}" onclick="window.open('{% url 'administracion:ayuda_eliminar_tutoria' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action="">
         {% csrf_token %}
         <p>¿Desea eliminar la tutoria "{{ object }}"?</p>

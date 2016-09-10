@@ -37,7 +37,27 @@ clases_virtuales_patterns = [
         name='corregir_resultados_clase_virtual'),
 
     url(r'^resultados/(?P<pk>\d+)/$', login_required(views.ClaseVirtualResultadosView.as_view()),
-        name='resultados_clase_virtual')
+        name='resultados_clase_virtual'),
+
+     url(r'^ayuda/clase_virtual$',
+       login_required(views.ClaseVirtualAyudaTemplateView.as_view()),
+       name='ayuda_clase_virtual'),
+
+    url(r'^ayuda/ver_clase_virtual$',
+       login_required(views.ClaseVirtualAyudaVerTemplateView.as_view()),
+       name='ayuda_ver_clase_virtual'),
+
+   url(r'^ayuda/nuevo_clase_virtual$',
+       login_required(views.ClaseVirtualAyudaNuevoTemplateView.as_view()),
+       name='ayuda_nuevo_clase_virtual'),
+
+   url(r'^ayuda/editar_clase_virtual$',
+       login_required(views.ClaseVirtualAyudaEditarTemplateView.as_view()),
+       name='ayuda_editar_clase_virtual'),
+
+   url(r'^ayuda/eliminar_clase_virtual$',
+       login_required(views.ClaseVirtualAyudaEliminarTemplateView.as_view()),
+       name='ayuda_eliminar_clase_virtual')
 ]
 
 

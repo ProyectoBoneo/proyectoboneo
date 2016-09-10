@@ -1,0 +1,35 @@
+{% extends 'utils/base.html' %}
+{% block title %}Estado Académico{% endblock %}
+{% block content %}
+    <h3>Estado Académico</h3>
+    <table>
+        <tr>
+            <th>Nombre</th><td>{{ alumno.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Apellido</th><td>{{ alumno.apellido }}</td>
+        </tr>
+        <tr>
+            <th>División</th><td>{{ alumno.division }}</td>
+        </tr>
+        <tr>
+            <th>Promedio General</th><td>{{ alumno.promedio }}</td>
+        </tr>
+    </table>
+    <a target="_blank" href="{% url 'aula_virtual:estado_academico_report' alumno.pk %}" class="btn btn-default">
+        <i class="fa fa-print"></i> Imprimir
+    </a>
+    <h4>Inscripciones Actuales</h4>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Materia</th>
+            <th>Promedio</th>
+        </tr>
+        {% for inscripcion in inscripciones.all %}
+            <tr>
+                <td>{{ inscripcion.instancia_cursado.materia.descripcion }}</td>
+                <td>{{ inscripcion.promedio }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

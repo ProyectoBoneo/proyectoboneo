@@ -1,4 +1,4 @@
-from gutils.django.views import View, ListView
+from gutils.django.views import View, ListView, TemplateView
 from django.core.urlresolvers import reverse_lazy
 
 from django.shortcuts import render, redirect
@@ -102,3 +102,7 @@ class DivisionesGenerarInstanciasCursadoView(View):
             return render(request, self.success_template_name,ctx)
         else:
             return self._instancias_no_necesarias_response(request)
+
+
+class DivisionesAyudaTemplateView(TemplateView):
+    template_name = 'planes/divisiones/divisiones_ayuda_list.html'

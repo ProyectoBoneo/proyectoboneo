@@ -7,14 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('alumnos', '0008_auto_20160910_1210'),
+        ('alumnos', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='Estadia',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('fecha_inicio', models.DateField()),
                 ('fecha_fin', models.DateField()),
                 ('alumno', models.ForeignKey(to='alumnos.Alumno')),

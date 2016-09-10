@@ -12,11 +12,29 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='ClaseReal',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('fecha', models.DateTimeField()),
+                ('hora_inicio', models.TimeField()),
+                ('hora_fin', models.TimeField()),
+            ],
+        ),
+        migrations.CreateModel(
+            name='DiasNoHabiles',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('anio_cursado', models.IntegerField()),
+                ('fecha_inicio', models.DateField()),
+                ('fecha_fin', models.DateField()),
+            ],
+        ),
+        migrations.CreateModel(
             name='Division',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('anio', models.IntegerField()),
-                ('letra', models.CharField(null=True, blank=True, max_length=1)),
+                ('letra', models.CharField(max_length=1, null=True, blank=True)),
                 ('activa', models.BooleanField(default=True)),
             ],
             options={
@@ -24,17 +42,26 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
+            name='Horario',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('dia_semana', models.IntegerField()),
+                ('hora_inicio', models.TimeField()),
+                ('hora_fin', models.TimeField()),
+            ],
+        ),
+        migrations.CreateModel(
             name='InstanciaCursado',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('anio_cursado', models.IntegerField()),
-                ('division', models.ForeignKey(to='planes.Division')),
+                ('division', models.ForeignKey(related_name='instancias_cursado', to='planes.Division')),
             ],
         ),
         migrations.CreateModel(
             name='Materia',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('descripcion', models.CharField(max_length=150)),
                 ('observaciones', models.TextField(null=True, blank=True)),
                 ('anio', models.IntegerField()),
@@ -46,11 +73,21 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='instanciacursado',
             name='materia',
-            field=models.ForeignKey(to='planes.Materia'),
+            field=models.ForeignKey(related_name='instancias_cursado', to='planes.Materia'),
         ),
         migrations.AddField(
             model_name='instanciacursado',
             name='profesor_titular',
-            field=models.ForeignKey(null=True, blank=True, to='personal.Profesor'),
+            field=models.ForeignKey(to='personal.Profesor', blank=True, null=True),
+        ),
+        migrations.AddField(
+            model_name='horario',
+            name='instancia_cursado',
+            field=models.ForeignKey(related_name='horarios', to='planes.InstanciaCursado'),
+        ),
+        migrations.AddField(
+            model_name='clasereal',
+            name='horario',
+            field=models.ForeignKey(related_name='clases', to='planes.Horario'),
         ),
     ]

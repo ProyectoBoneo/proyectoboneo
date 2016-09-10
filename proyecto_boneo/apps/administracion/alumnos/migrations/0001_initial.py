@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Alumno',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('nombre', models.CharField(max_length=150)),
                 ('apellido', models.CharField(max_length=150)),
                 ('dni', models.BigIntegerField()),
@@ -27,15 +27,23 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
+            name='Asistencia',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('fecha', models.DateField()),
+                ('asistio', models.BooleanField(default=False)),
+            ],
+        ),
+        migrations.CreateModel(
             name='InscripcionAlumno',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
             ],
         ),
         migrations.CreateModel(
             name='Responsable',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('nombre', models.CharField(max_length=150)),
                 ('apellido', models.CharField(max_length=150)),
                 ('dni', models.BigIntegerField()),

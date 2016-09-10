@@ -1,6 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Eliminar estadias{% endblock %}
 {% block content %}
+    <h3 class="inline-title">Eliminar estadias</h3> <span class=""><a href="{% url 'administracion:ayuda_eliminar_estadia' %}" onclick="window.open('{% url 'administracion:ayuda_eliminar_estadia' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action="">
         {% csrf_token %}
         <p>¿Desea eliminar la estadia "{{ object }}"?</p>

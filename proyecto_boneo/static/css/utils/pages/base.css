@@ -4921,9 +4921,9 @@ select.with_errors {
 }
 .logout-link {
   float: right;
-  font-size: 35px;
+  font-size: 20px;
   color: white;
-  padding: 25px;
+  padding: 6px 5px 5px 5px;
 }
 .logout-link a {
   position: relative;
@@ -4969,6 +4969,9 @@ select.with_errors {
 }
 .twitter-typeahead {
   width: 90%;
+}
+.inline-title {
+  display: inline-block;
 }
 @font-face {
   font-family: "bumblebee";
@@ -5044,13 +5047,13 @@ div[data-toggle="buttons"] label.active {
   box-shadow: none;
 }
 .page-header {
-  min-height: 80px;
+  min-height: 20px;
   background-color: cornflowerblue;
   margin: 0;
 }
 .page-header .page-header-title a {
-  padding-top: 20px;
-  padding-left: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
   color: white;
   font-size: 28px;
   text-decoration: none;
@@ -5063,4 +5066,9 @@ div[data-toggle="buttons"] label.active {
 .page-header .page-header-title a:hover {
   color: white;
   text-decoration: none;
+}
+.page-footer {
+  min-height: 10px;
+  background-color: #ebebeb;
+  margin: 0;
 }

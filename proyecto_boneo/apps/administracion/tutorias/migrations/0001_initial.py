@@ -7,15 +7,15 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('alumnos', '0003_auto_20160209_2157'),
-        ('personal', '0002_profesor_usuario'),
+        ('alumnos', '0001_initial'),
+        ('personal', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='EncuentroTutoria',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('fecha', models.DateTimeField()),
                 ('resumen', models.TextField(null=True, blank=True)),
             ],
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Tutoria',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('anio', models.IntegerField()),
                 ('alumno', models.ForeignKey(to='alumnos.Alumno')),
                 ('profesor', models.ForeignKey(to='personal.Profesor')),

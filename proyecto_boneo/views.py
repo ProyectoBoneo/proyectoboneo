@@ -31,8 +31,9 @@ class AlumnoHomeView(TemplateView):
         context = super(AlumnoHomeView, self).get_context_data(**kwargs)
         context['horarios'] = Horario.objects\
             .filter(instancia_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
-        context['clases'] = ClaseVirtual.objects\
-            .filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
+        context['clases_no_respondidas'] = ClaseVirtual.objects\
+            .filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno)\
+            .exclude(respuestas__alumno=self.request.user.alumno).distinct()
         context['ultimos_materiales'] = Material.objects\
             .filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
         context['encuentros_tutorias'] = EncuentroTutoria.objects\
@@ -45,3 +46,23 @@ class AlumnoHomeView(TemplateView):
 
 class ProfesorHomeView(TemplateView):
      template_name = 'home/profesor_home.html'
+
+     def get_context_data(self, **kwargs):
+        context = super(ProfesorHomeView, self).get_context_data(**kwargs)
+        context['horarios'] = Horario.objects\
+            .filter(instancia_cursado__profesor_titular=self.request.user.profesor).distinct()
+        # context['clases_no_respondidas'] = ClaseVirtual.objects\
+        #     .filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno)\
+        #     .exclude(respuestas__alumno=self.request.user.alumno).distinct()
+        # context['ultimos_materiales'] = Material.objects\
+        #     .filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
+        context['encuentros_tutorias'] = EncuentroTutoria.objects\
+            .filter(tutoria__profesor=self.request.user.profesor).filter(tutoria__anio = datetime.datetime.today().year).distinct()
+        context['proximos_encuentros_tutorias'] = EncuentroTutoria.objects\
+            .filter(tutoria__profesor=self.request.user.profesor).filter(tutoria__anio = datetime.datetime.today().year)\
+            .filter(fecha__gte = datetime.datetime.now()).distinct()
+        return context
+
+
+class IndiceView(TemplateView):
+     template_name = 'ayuda/indice.html'

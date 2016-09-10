@@ -28,7 +28,7 @@
     </script>
 {% endblock %}
 {% block content %}
-    <h3>Inscripciones de división {{ division }}</h3>
+    <h3 class="inline-title">Inscripciones de división {{ division }}</h3> <span class=""><a href="{% url 'administracion:ayuda_inscripciones_alumno' %}" onclick="window.open('{% url 'administracion:ayuda_inscripciones_alumno' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action=".">
         {% csrf_token %}
                 {{ formset.management_form }}

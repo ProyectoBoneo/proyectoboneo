@@ -44,6 +44,7 @@ PROJECT_APPS = ('gutils',
                 'proyecto_boneo.apps.aula_virtual.biblioteca',
                 'proyecto_boneo.apps.aula_virtual.clases',
                 'proyecto_boneo.apps.aula_virtual.comunicados',
+                'proyecto_boneo.apps.aula_virtual.perfil_academico',
                 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -115,11 +116,11 @@ LANGUAGE_CODE = 'es-AR'
 
 TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
-USE_I18N = True
+USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
 
 APPEND_SLASH = True
 

@@ -7,69 +7,62 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('alumnos', '0001_initial'),
+        ('alumnos', '0006_auto_20160706_2239'),
+        ('planes', '0002_auto_20160605_2035'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='ClaseVirtual',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('nombre', models.CharField(default='Clase', max_length=30)),
                 ('descripcion', models.CharField(max_length=100)),
+                ('tipo', models.CharField(choices=[('nor', 'Clase Virtual'), ('eva', 'Evaluación'), ('esc', 'Evaluación Escrita')], max_length=3)),
+                ('materia', models.ForeignKey(to='planes.Materia', related_name='clases_virtuales')),
             ],
         ),
         migrations.CreateModel(
-            name='EjercicioVirtualMultipleChoice',
+            name='EjercicioVirtual',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('ayuda', models.TextField(null=True, blank=True)),
-                ('pregunta', models.CharField(max_length=100)),
-                ('explicacion', models.TextField(null=True, blank=True)),
-                ('clase_virtual', models.ForeignKey(related_name='ejercicios_multiple_choice', to='clases.ClaseVirtual')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='EjercicioVirtualTexto',
-            fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('ayuda', models.TextField(null=True, blank=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('tipo_ejercicio', models.CharField(choices=[('txt', 'Texto'), ('mch', 'Multiple Choice')], max_length=3)),
+                ('puntaje', models.IntegerField(blank=True, null=True)),
+                ('orden_prioridad', models.IntegerField(blank=True, null=True)),
                 ('consigna', models.CharField(max_length=100)),
-                ('clase_virtual', models.ForeignKey(related_name='ejercicios_texto', to='clases.ClaseVirtual')),
+                ('ayuda', models.TextField(blank=True, null=True)),
+                ('explicacion', models.TextField(blank=True, null=True)),
+                ('clase_virtual', models.ForeignKey(to='clases.ClaseVirtual', related_name='ejercicios')),
             ],
         ),
         migrations.CreateModel(
-            name='OpcionEjercicioMultipleChoice',
+            name='OpcionEjercicio',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
                 ('texto', models.CharField(max_length=100)),
                 ('opcion_correcta', models.BooleanField(default=False)),
-                ('ejercicio', models.ForeignKey(related_name='opciones', to='clases.EjercicioVirtualMultipleChoice')),
+                ('ejercicio', models.ForeignKey(to='clases.EjercicioVirtual', related_name='opciones')),
             ],
         ),
         migrations.CreateModel(
             name='RespuestaEjercicioVirtual',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('texto', models.TextField(null=True, default=None)),
+                ('es_correcta', models.NullBooleanField(default=None)),
+                ('alumno', models.ForeignKey(to='alumnos.Alumno', related_name='respuestas')),
+                ('clase_virtual', models.ForeignKey(to='clases.ClaseVirtual', related_name='respuestas')),
+                ('ejercicio', models.ForeignKey(to='clases.EjercicioVirtual', related_name='respuestas')),
+                ('opcion_seleccionada', models.ForeignKey(null=True, to='clases.OpcionEjercicio', related_name='+')),
             ],
         ),
         migrations.CreateModel(
-            name='RespuestaEjercicioVirtualMultipleChoice',
+            name='ResultadoEvaluacion',
             fields=[
-                ('respuestaejerciciovirtual_ptr', models.OneToOneField(primary_key=True, auto_created=True, to='clases.RespuestaEjercicioVirtual', serialize=False, parent_link=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('nota', models.FloatField()),
+                ('alumno', models.ForeignKey(to='alumnos.Alumno', related_name='resultados_evaluaciones')),
+                ('clase_virtual', models.ForeignKey(to='clases.ClaseVirtual', related_name='resultados')),
             ],
-            bases=('clases.respuestaejerciciovirtual',),
-        ),
-        migrations.CreateModel(
-            name='RespuestaEjercicioVirtualTexto',
-            fields=[
-                ('respuestaejerciciovirtual_ptr', models.OneToOneField(primary_key=True, auto_created=True, to='clases.RespuestaEjercicioVirtual', serialize=False, parent_link=True)),
-                ('texto', models.TextField()),
-            ],
-            bases=('clases.respuestaejerciciovirtual',),
-        ),
-        migrations.AddField(
-            model_name='respuestaejerciciovirtual',
-            name='alumno',
-            field=models.ForeignKey(related_name='+', to='alumnos.Alumno'),
         ),
     ]

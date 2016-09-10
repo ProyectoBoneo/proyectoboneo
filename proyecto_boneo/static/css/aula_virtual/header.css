@@ -4921,9 +4921,9 @@ select.with_errors {
 }
 .logout-link {
   float: right;
-  font-size: 35px;
+  font-size: 20px;
   color: white;
-  padding: 25px;
+  padding: 6px 5px 5px 5px;
 }
 .logout-link a {
   position: relative;
@@ -4969,6 +4969,9 @@ select.with_errors {
 }
 .twitter-typeahead {
   width: 90%;
+}
+.inline-title {
+  display: inline-block;
 }
 @font-face {
   font-family: "bumblebee";
@@ -5044,15 +5047,15 @@ div[data-toggle="buttons"] label.active {
   box-shadow: none;
 }
 .page-header {
-  min-height: 80px;
+  min-height: 20px;
   background-color: #113472;
   margin: 0;
 }
 .page-header .page-header-title a {
-  padding-top: 20px;
-  padding-left: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
   color: white;
-  font-size: 28px;
+  font-size: 16px;
   font-family: "bumblebee";
   display: inline-block;
 }
@@ -5068,8 +5071,8 @@ div[data-toggle="buttons"] label.active {
   margin: 0;
 }
 .page-navbar ul {
-  padding: 0;
-  margin: 0 0 0 10px;
+  padding: 10px 10px 0px 10px;
+  margin: 0 0 0 0px;
   list-style: none;
 }
 .page-navbar ul li {
@@ -5077,9 +5080,9 @@ div[data-toggle="buttons"] label.active {
 }
 .page-navbar ul li a {
   color: white;
-  font-size: 15px;
+  font-size: 14px;
   text-decoration: none;
-  padding: 5px 10px 5px 10px;
+  padding: 0px 10px 0px 10px;
 }
 .page-navbar ul li:hover,
 .page-navbar ul li:active,

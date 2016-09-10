@@ -106,8 +106,19 @@ class Command(BaseCommand):
                 InscripcionAlumno.objects.create(alumno=alumno,
                                                  instancia_cursado=instancia_cursado)
 
-    def _create_superuser(self):
-        UsuarioBoneo.objects.create_superuser('boneo', 'boneo@admin.com', 'boneo')
+    def _create_test_users(self):
+        UsuarioBoneo.objects.create_superuser('admin', 'admin@admin.com', 'admin')
+        alumno = Alumno(nombre='Juan', apellido='Pruebas', dni=36538548,
+                        division=Division.objects.first(),
+                        fecha_nacimiento=datetime.datetime.today() - datetime.timedelta(days=365*15),
+                        responsable=self._create_responsable())
+        alumno.crear_usuario('alumno@boneo.com')
+        alumno.save()
+        profesor = Profesor(nombre='Alberto', apellido='Pruebas',
+                            dni=26538548,
+                            fecha_nacimiento=datetime.datetime.today() - datetime.timedelta(days=365*33))
+        profesor.crear_usuario('profesor@boneo.com')
+        profesor.save()
 
     def _load_data(self):
         self.names = []
@@ -146,8 +157,8 @@ class Command(BaseCommand):
         self._create_alumnos()
         self.stdout.write('Asignando profesores a materias...')
         self._assign_profesores_materias()
+        self.stdout.write('Creando usuarios de pruebas...')
+        self._create_test_users()
         self.stdout.write('Creando inscripciones...')
         self._create_inscripciones()
-        self.stdout.write('Creando super usuario boneo / boneo...')
-        self._create_superuser()
         self.stdout.write('Listo :)')
