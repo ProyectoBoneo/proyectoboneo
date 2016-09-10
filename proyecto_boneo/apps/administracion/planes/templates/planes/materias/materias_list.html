@@ -2,7 +2,7 @@
 {% block title %}Materias{% endblock %}
 {% block content %}
     <div class="col-md-offset-1 col-md-10">
-        <h3>Materias</h3>
+        <h3 class="inline-title">Materias</h3> <span class=""><a href="{% url 'administracion:ayuda_materias' %}" onclick="window.open('{% url 'administracion:ayuda_materias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
         <form action="." method="get" class="margin-bottom-2x">
             <div class="form-group">
                 {{ filter_form.descripcion.label_tag }}

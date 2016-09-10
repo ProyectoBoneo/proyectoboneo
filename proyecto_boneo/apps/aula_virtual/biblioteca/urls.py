@@ -50,7 +50,7 @@ urlpatterns = [
    url(r'^materiales/administracion/ver-solicitudes/$', user_is_not_alumno(views.SolicitudMaterialesAdminFilteredListView.as_view()),
       name='ver_solicitudes_admin'),
 
-       url(r'^materiales/administracion/ver-solicitudes-pendientes/$', user_is_not_alumno(views.SolicitudMaterialesPendientesAdminFilteredListView.as_view()),
+   url(r'^materiales/administracion/ver-solicitudes-pendientes/$', user_is_not_alumno(views.SolicitudMaterialesPendientesAdminFilteredListView.as_view()),
       name='ver_solicitudes_pendientes_admin'),
 
    url(r'^materiales/administracion/responder-solicitud/(?P<pk>\d+)/$', user_is_not_alumno(views.ResponderSolicitudMaterialView.as_view()),
@@ -60,5 +60,49 @@ urlpatterns = [
        name='rechazar_solicitud_material_admin'),
 
    url(r'^materiales/administracion/eliminar-solicitudes/(?P<pk>\d+)/$', user_is_not_alumno(views.SolicitudMaterialesAdminDeleteView.as_view()),
-       name='eliminar_solicitud_material_admin')
+       name='eliminar_solicitud_material_admin'),
+
+    url(r'^ayuda/material',
+       login_required(views.MaterialesAyudaTemplateView.as_view()),
+       name='ayuda_materiales'),
+
+   url(r'^ayuda/nuevo_material$',
+       login_required(views.MaterialesAyudaNuevoTemplateView.as_view()),
+       name='ayuda_nuevo_material'),
+
+   url(r'^ayuda/editar_material$',
+       login_required(views.MaterialesAyudaEditarTemplateView.as_view()),
+       name='ayuda_editar_material'),
+
+   url(r'^ayuda/eliminar_material$',
+       login_required(views.MaterialesAyudaEliminarTemplateView.as_view()),
+       name='ayuda_eliminar_material'),
+
+   url(r'^ayuda/buscar_material$',
+       login_required(views.MaterialesAyudaBuscarTemplateView.as_view()),
+       name='ayuda_buscar_material'),
+
+   url(r'^ayuda/ver_material$',
+       login_required(views.MaterialesAyudaVerTemplateView.as_view()),
+       name='ayuda_ver_material'),
+
+    url(r'^ayuda/solicitud_material',
+       login_required(views.SolicitudMaterialesAyudaTemplateView.as_view()),
+       name='ayuda_solicitudes_materiales'),
+
+    url(r'^ayuda/solicitud_material_pendientes',
+       login_required(views.SolicitudMaterialesAyudaPendientesTemplateView.as_view()),
+       name='ayuda_solicitudes_materiales_pendientes'),
+
+   url(r'^ayuda/nuevo_solicitud_material$',
+       login_required(views.SolicitudMaterialesAyudaNuevoTemplateView.as_view()),
+       name='ayuda_nuevo_solicitud_material'),
+
+   url(r'^ayuda/editar_solicitud_material$',
+       login_required(views.SolicitudMaterialesAyudaEditarTemplateView.as_view()),
+       name='ayuda_editar_solicitud_material'),
+
+   url(r'^ayuda/eliminar_solicitud_material$',
+       login_required(views.SolicitudMaterialesAyudaEliminarTemplateView.as_view()),
+       name='ayuda_eliminar_solicitud_material'),
 ]

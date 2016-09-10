@@ -4921,3 +4921,6 @@
 .twitter-typeahead {
   width: 90%;
 }
+.inline-title {
+  display: inline-block;
+}

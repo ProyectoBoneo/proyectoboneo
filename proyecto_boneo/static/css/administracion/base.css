@@ -4970,6 +4970,9 @@ select.with_errors {
 .twitter-typeahead {
   width: 90%;
 }
+.inline-title {
+  display: inline-block;
+}
 @font-face {
   font-family: "bumblebee";
   src: url("/static/fonts/bumble_bees.ttf");

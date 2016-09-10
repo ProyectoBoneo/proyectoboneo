@@ -1,7 +1,8 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Alumnos{% endblock %}
 {% block content %}
-    <h3>Alumnos</h3>
+    <div class=""></div>
+    <h3 class="inline-title">Alumnos</h3> <span class=""><a href="{% url 'administracion:ayuda_alumnos' %}" onclick="window.open('{% url 'administracion:ayuda_alumnos' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form action="." method="get" class="margin-bottom-2x">
         <div class="form-group">
             {{ filter_form.nombre.label_tag }}

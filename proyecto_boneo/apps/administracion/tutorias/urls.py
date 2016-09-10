@@ -20,7 +20,27 @@ tutorias_patterns = [
        name='editar_tutoria'),
 
    url(r'^eliminar/(?P<pk>\d+)/$', user_is_staff(views.TutoriaDeleteView.as_view()),
-       name='eliminar_tutoria')
+       name='eliminar_tutoria'),
+
+    url(r'^ayuda/tutoria$',
+       login_required(views.TutoriasAyudaTemplateView.as_view()),
+       name='ayuda_tutorias'),
+
+    url(r'^ayuda/ver_tutoria$',
+       login_required(views.TutoriasAyudaVerTemplateView.as_view()),
+       name='ayuda_ver_tutoria'),
+
+   url(r'^ayuda/nuevo_tutoria$',
+       login_required(views.TutoriasAyudaNuevoTemplateView.as_view()),
+       name='ayuda_nuevo_tutoria'),
+
+   url(r'^ayuda/editar_tutoria$',
+       login_required(views.TutoriasAyudaEditarTemplateView.as_view()),
+       name='ayuda_editar_tutoria'),
+
+   url(r'^ayuda/eliminar_tutoria$',
+       login_required(views.TutoriasAyudaEliminarTemplateView.as_view()),
+       name='ayuda_eliminar_tutoria')
 ]
 
 encuentrotutorias_patterns = [
@@ -37,7 +57,23 @@ encuentrotutorias_patterns = [
        name='editar_encuentrotutoria'),
 
    url(r'^encuentro/eliminar/(?P<pk>\d+)/$', login_required(views.EncuentroTutoriaDeleteView.as_view()),
-       name='eliminar_encuentrotutoria')
+       name='eliminar_encuentrotutoria'),
+
+    url(r'^ayuda/encuentrotutoria$',
+       login_required(views.EncuentroTutoriasAyudaTemplateView.as_view()),
+       name='ayuda_encuentrotutorias'),
+
+   url(r'^ayuda/nuevo_encuentrotutoria$',
+       login_required(views.EncuentroTutoriasAyudaNuevoTemplateView.as_view()),
+       name='ayuda_nuevo_encuentrotutoria'),
+
+   url(r'^ayuda/editar_encuentrotutoria$',
+       login_required(views.EncuentroTutoriasAyudaEditarTemplateView.as_view()),
+       name='ayuda_editar_encuentrotutoria'),
+
+   url(r'^ayuda/eliminar_encuentrotutoria$',
+       login_required(views.EncuentroTutoriasAyudaEliminarTemplateView.as_view()),
+       name='ayuda_eliminar_encuentrotutoria')
 ]
 
 urlpatterns = tutorias_patterns + encuentrotutorias_patterns

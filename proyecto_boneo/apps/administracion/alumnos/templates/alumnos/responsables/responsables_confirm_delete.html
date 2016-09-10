@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Eliminar responsable{% endblock %}
 {% block content %}
-    <h3>Eliminar responsable</h3>
+    <h3 class="inline-title">Eliminar responsable</h3> <span class=""><a href="{% url 'administracion:ayuda_eliminar_responsable' %}" onclick="window.open('{% url 'administracion:ayuda_eliminar_responsable' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action=".">
         {% csrf_token %}
         <p>¿Desea eliminar el responsable "{{ object }}"?</p>

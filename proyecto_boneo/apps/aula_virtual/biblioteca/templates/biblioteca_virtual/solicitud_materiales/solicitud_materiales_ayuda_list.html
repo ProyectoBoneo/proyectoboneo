@@ -1,0 +1,18 @@
+{% extends 'ayuda/base.html' %}
+{% block title %}Listado de solicitud de material{% endblock %}
+{% block content %}
+<h4>Listado de solicitud de material</h4>
+
+{% if user.is_profesor %}
+    <p> Al ingresar al módulo de solicitud de materiales, se presenta un listado con las solicitudes de materiales del sistema y filtros por campo para facilitar la búsqueda de las solicitudes de material. </p>
+    <p> Desde esta pantalla puede ir a las pantallas de respuesta de una solicitud de material determinado mediante los botones correspondientes presentes en el listado.</p>
+{% endif %}
+{% if user.is_alumno %}
+    <p> Al ingresar al módulo de solicitud de material, se presenta un listado con las solicitudes de material que usted ha realizado y su estado actual, si han sido aceptadas con un material o si han sido rechazadas con algún motivo.</p>
+    <p> Desde esta pantalla se puede acceder a las pantallas de edición o eliminación de una solicitud de material determinada mediante los botones correspondientes presentes en el listado.</p>
+{% endif %}
+{% if user.is_personal_administrativo %}
+    <p> Al ingresar al módulo de solicitud de materiales, se presenta un listado con las solicitudes de materiales del sistema y filtros por campo para facilitar la búsqueda de las solicitudes de material. </p>
+    <p> Desde esta pantalla puede ir a las pantallas de respuesta de una solicitud de material determinado mediante los botones correspondientes presentes en el listado.</p>
+{% endif %}
+{% endblock %}

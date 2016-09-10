@@ -1,0 +1,187 @@
+{% extends 'clase_virtual/base.html' %}
+{% block title %}Clases Virtuales{% endblock %}
+{% block content %}
+    <h3 class="inline-title">Clases Virtuales</h3> <span class=""><a href="{% url 'aula_virtual:ayuda_clase_virtual' %}" onclick="window.open('{% url 'aula_virtual:ayuda_clase_virtual' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+<div class="row">
+    <div class="col-xs-10">
+    {% if object_list %}
+        {% if clase_virtual_no_resueltas %}
+            <h4>Clases no resueltas</h4>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Nombre</th>
+                    <th>Materia</th>
+                    <th>Descripcion</th>
+                    {% if activateViewingButtons %}
+                        <th></th>
+                    {% endif %}
+                    {% if activateEditingButtons %}
+                        <th></th>
+                        <th></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for clase_virtual in clase_virtual_no_resueltas %}
+                    <tr>
+                        <td>
+                            {% if clase_virtual.tipo == 'eva' %}
+                                Evaluación
+                            {% elif clase_virtual.tipo == 'esc' %}
+                                Evaluación Escrita
+                            {% elif clase_virtual.tipo == 'nor' %}
+                                Clase Virtual
+                            {% endif %}
+                        </td>
+                        <td>{{ clase_virtual.nombre}}</td>
+                        <td>{{ clase_virtual.materia }}</td>
+                        <td>{{ clase_virtual.descripcion }}</td>
+                        {% if clase_virtual %}
+                            {% if not clase_virtual.es_resuelta_alumno %}
+                                <td>
+                                    <a class="btn btn-sm btn-default" href="{% url 'aula_virtual:ingresar_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-pencil-square-o"></i> Resolver
+                                    </a>
+                                </td>
+                            {% else %}
+                                <td>
+                                    <a class="btn btn-sm btn-default" href="{% url 'aula_virtual:resultados_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-bar-chart"></i> Resultados
+                                    </a>
+                                </td>
+                            {% endif %}
+                            {% if clase_virtual.es_corregida_alumno %}
+                                <td>{{ clase_virtual.puntaje_alumno|default_if_none:"" }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if clase_virtual_corregidas %}
+            <h4>Clases corregidas</h4>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Nombre</th>
+                    <th>Materia</th>
+                    <th>Descripcion</th>
+                    {% if activateViewingButtons %}
+                        <th></th>
+                    {% endif %}
+                    {% if activateEditingButtons %}
+                        <th></th>
+                        <th></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for clase_virtual in clase_virtual_corregidas %}
+                    <tr>
+                        <td>
+                            {% if clase_virtual.tipo == 'eva' %}
+                                Evaluación
+                            {% elif clase_virtual.tipo == 'esc' %}
+                                Evaluación Escrita
+                            {% elif clase_virtual.tipo == 'nor' %}
+                                Clase Virtual
+                            {% endif %}
+                        </td>
+                        <td>{{ clase_virtual.nombre}}</td>
+                        <td>{{ clase_virtual.materia }}</td>
+                        <td>{{ clase_virtual.descripcion }}</td>
+                        {% if clase_virtual %}
+                            {% if not clase_virtual.es_resuelta_alumno %}
+                                <td>
+                                    <a class="btn btn-sm btn-default" href="{% url 'aula_virtual:ingresar_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-pencil-square-o"></i> Resolver
+                                    </a>
+                                </td>
+                            {% else %}
+                                <td>
+                                    <a class="btn btn-sm btn-default" href="{% url 'aula_virtual:resultados_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-bar-chart"></i> Resultados
+                                    </a>
+                                </td>
+                            {% endif %}
+                            {% if clase_virtual.es_corregida_alumno %}
+                                <td>{{ clase_virtual.puntaje_alumno|default_if_none:"" }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if clase_virtual_no_corregidas %}
+            <h4>Clases pendientes de corrección</h4>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Nombre</th>
+                    <th>Materia</th>
+                    <th>Descripcion</th>
+                    {% if activateViewingButtons %}
+                        <th></th>
+                    {% endif %}
+                    {% if activateEditingButtons %}
+                        <th></th>
+                        <th></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for clase_virtual in clase_virtual_no_corregidas %}
+                    <tr>
+                        <td>
+                            {% if clase_virtual.tipo == 'eva' %}
+                                Evaluación
+                            {% elif clase_virtual.tipo == 'esc' %}
+                                Evaluación Escrita
+                            {% elif clase_virtual.tipo == 'nor' %}
+                                Clase Virtual
+                            {% endif %}
+                        </td>
+                        <td>{{ clase_virtual.nombre}}</td>
+                        <td>{{ clase_virtual.materia }}</td>
+                        <td>{{ clase_virtual.descripcion }}</td>
+                        {% if clase_virtual %}
+                            {% if not clase_virtual.es_resuelta_alumno %}
+                                <td>
+                                    <a class="btn btn-sm btn-default" href="{% url 'aula_virtual:ingresar_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-pencil-square-o"></i> Resolver
+                                    </a>
+                                </td>
+                            {% else %}
+                                <td>
+                                    <a class="btn btn-sm btn-default" href="{% url 'aula_virtual:resultados_clase_virtual' clase_virtual.id %}">
+                                        <i class="fa fa-bar-chart"></i> Resultados
+                                    </a>
+                                </td>
+                            {% endif %}
+                            {% if clase_virtual.es_corregida_alumno %}
+                                <td>{{ clase_virtual.puntaje_alumno|default_if_none:"" }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    {% else %}
+        <p>No hay clases virtuales que coincidan con el criterio de filtrado</p>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

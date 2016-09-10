@@ -20,4 +20,20 @@ urlpatterns = [
    url(r'^profesores/eliminar/(?P<pk>\d+)/$',
        user_is_staff(views.ProfesoresDeleteView.as_view()),
        name='eliminar_profesor'),
+
+   url(r'^ayuda/profesor$',
+       login_required(views.ProfesoresAyudaTemplateView.as_view()),
+       name='ayuda_profesores'),
+
+   url(r'^ayuda/nuevo_profesor$',
+       login_required(views.ProfesoresAyudaNuevoTemplateView.as_view()),
+       name='ayuda_nuevo_profesor'),
+
+   url(r'^ayuda/editar_profesor$',
+       login_required(views.ProfesoresAyudaEditarTemplateView.as_view()),
+       name='ayuda_editar_profesor'),
+
+   url(r'^ayuda/eliminar_profesor$',
+       login_required(views.ProfesoresAyudaEliminarTemplateView.as_view()),
+       name='ayuda_eliminar_profesor'),
 ]

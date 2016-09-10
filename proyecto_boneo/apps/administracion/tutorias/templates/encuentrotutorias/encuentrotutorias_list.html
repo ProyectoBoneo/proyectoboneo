@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Encuentro Tutoria{% endblock %}
 {% block content %}
-    <h3>Encuentro tutoria</h3>
+    <h3 class="inline-title">Encuentro tutoria</h3> <span class=""><a href="{% url 'administracion:ayuda_encuentrotutorias' %}" onclick="window.open('{% url 'administracion:ayuda_encuentrotutorias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
 
     <div class="row">
          <a class="btn btn-default" href="{% url 'administracion:nuevo_encuentrotutoria' %}">

@@ -1,7 +1,7 @@
 from . import forms, models
 
 from django.core.urlresolvers import reverse_lazy
-from gutils.django.views import ListView, CreateView, DetailView, UpdateView, ProtectedDeleteView
+from gutils.django.views import ListView, CreateView, DetailView, UpdateView, ProtectedDeleteView, TemplateView
 
 
 class EstadiasListView(ListView):
@@ -39,3 +39,16 @@ class EstadiaDeleteView(ProtectedDeleteView):
     model = models.Estadia
     success_url = reverse_lazy('administracion:estadias')
     template_name = 'estadias/estadias_confirm_delete.html'
+
+
+class EstadiaAyudaTemplateView(TemplateView):
+    template_name = 'estadias/estadias_ayuda_list.html'
+
+class EstadiaAyudaNuevoTemplateView(TemplateView):
+    template_name = 'estadias/estadias_ayuda_nuevo.html'
+
+class EstadiaAyudaEditarTemplateView(TemplateView):
+    template_name = 'estadias/estadias_ayuda_editar.html'
+
+class EstadiaAyudaEliminarTemplateView(TemplateView):
+    template_name = 'estadias/estadias_ayuda_eliminar.html'

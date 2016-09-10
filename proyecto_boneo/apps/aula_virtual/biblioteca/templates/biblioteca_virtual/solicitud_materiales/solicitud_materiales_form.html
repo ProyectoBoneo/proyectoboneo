@@ -2,7 +2,7 @@
 {% block title %}Solicitud Material{% endblock %}
 {% block content %}
     <div class="col-md-offset-2 col-md-8">
-        <h3>Solicitud de Material</h3>
+        <h3 class="inline-title">Solicitud de Material</h3> <span class=""><a href="{% url 'aula_virtual:ayuda_nuevo_solicitud_material' %}" onclick="window.open('{% url 'aula_virtual:ayuda_nuevo_solicitud_material' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
 
         <form method="post" action="." enctype="multipart/form-data">
         {% csrf_token %}

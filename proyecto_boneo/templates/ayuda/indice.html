@@ -1,0 +1,17 @@
+{% extends 'ayuda/base.html' %}
+{% block title %}Indice{% endblock %}
+{% block content %}
+<h4>Indice</h4>
+        <ul>
+            <li><a href="{% url 'indice' %}">Índice</a></li>
+            <li><a href="{% url 'administracion:ayuda_alumnos' %}">Alumno.Listado</a></li>
+            <li><a href="{% url 'administracion:ayuda_nuevo_alumno' %}">Alumno.Nuevo.</a></li>
+            <li><a href="{% url 'administracion:ayuda_editar_alumno' %}">Alumno.Editar.</a></li>
+            <li><a href="{% url 'administracion:ayuda_eliminar_alumno' %}">Alumno.Eliminar.</a></li>
+            <li><a href="{% url 'administracion:ayuda_inscripciones_alumno' %}">Alumno.Inscripciones.</a></li>
+            <li><a href="{% url 'administracion:ayuda_responsables' %}">Responsable.Listado</a></li>
+            <li><a href="{% url 'administracion:ayuda_nuevo_responsable' %}">Responsable.Nuevo.</a></li>
+            <li><a href="{% url 'administracion:ayuda_editar_responsable' %}">Responsable.Editar.</a></li>
+            <li><a href="{% url 'administracion:ayuda_eliminar_responsable' %}">Responsable.Eliminar.</a></li>
+        </ul>
+{% endblock %}

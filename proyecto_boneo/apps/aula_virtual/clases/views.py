@@ -3,7 +3,8 @@ from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView
+from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView, \
+    TemplateView
 from gutils.django.views import View
 from django.core.urlresolvers import reverse_lazy
 
@@ -14,17 +15,39 @@ from proyecto_boneo.apps.aula_virtual.clases.forms import TipoEjercicioForm, Opc
 
 
 class ClaseVirtualListView(ListView):
-    form_class = forms.ClaseVirtualFilterForm
-    model = models.ClaseVirtual
     template_name = 'clase_virtual/clase_virtual_list.html'
 
-    def get_queryset(self):
+    def get(self, request, *args, **kwargs):
+        clase_virtual_list = None
         if(self.request.user.is_staff):
-            return models.ClaseVirtual.objects.all()
+            clase_virtual_list = models.ClaseVirtual.objects.all()
         if(self.request.user.is_alumno):
-            return models.ClaseVirtual.objects.filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
+            clase_virtual_list = models.ClaseVirtual.objects.filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
+            self.template_name = 'clase_virtual/clase_virtual_list_alumno.html'
         if(self.request.user.is_profesor):
-            return models.ClaseVirtual.objects.filter(materia__instancias_cursado__profesor_titular=self.request.user.profesor).distinct()
+            clase_virtual_list = models.ClaseVirtual.objects.filter(materia__instancias_cursado__profesor_titular=self.request.user.profesor).distinct()
+        clase_virtual_no_resueltas = []
+        clase_virtual_no_corregidas = []
+        clase_virtual_corregidas = []
+
+        for clase_virtual in clase_virtual_list:
+            if self.request.user.is_alumno:
+                alumno = self.request.user.alumno
+                clase_virtual.es_resuelta_alumno = clase_virtual.es_resuelta_alumno(alumno)
+                clase_virtual.es_corregida_alumno = clase_virtual.es_corregida_alumno(alumno)
+                clase_virtual.puntaje_alumno = clase_virtual.obtener_puntaje_alumno(alumno)
+                if not clase_virtual.es_resuelta_alumno:
+                    clase_virtual_no_resueltas.append(clase_virtual)
+                elif clase_virtual.es_corregida_alumno:
+                    clase_virtual_corregidas.append(clase_virtual)
+                else:
+                    clase_virtual_no_corregidas.append(clase_virtual)
+        return render(request, self.template_name, {
+                            'object_list': clase_virtual_list,
+                            'clase_virtual_no_resueltas': clase_virtual_no_resueltas,
+                            'clase_virtual_corregidas': clase_virtual_corregidas,
+                            'clase_virtual_no_corregidas': clase_virtual_no_corregidas
+                        })
 
 
 class ClaseVirtualCreateView(CreateView):
@@ -64,6 +87,8 @@ class ClaseVirtualResultadosView(View):
     def get(self, request, *args, **kwargs):
         clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk']).first()
         alumno = self.request.user.alumno
+        clase_virtual.es_resuelta_alumno = clase_virtual.es_resuelta_alumno(alumno)
+        clase_virtual.puntaje_alumno = clase_virtual.obtener_puntaje_alumno(alumno)
         respuestas = models.RespuestaEjercicioVirtual.objects.filter(clase_virtual=clase_virtual)\
             .filter(alumno=alumno)
         return render(request, self.template_name, {
@@ -80,16 +105,45 @@ class ClaseVirtualCorreccionListView(View):
         alumnos = models.Alumno.objects.filter(inscripciones__instancia_cursado__materia=clase_virtual.materia)\
             .filter(inscripciones__instancia_cursado__anio_cursado=datetime.today().year).distinct()
 
+        alumnos_no_resuelta_list = []
+        alumnos_no_corregida_list = []
+        alumnos_corregida_list = []
+
         for alumno in alumnos:
             try:
+                alumno.resuelto = True
+                alumno.corregido = True
                 alumno.nota_actual = models.ResultadoEvaluacion.objects.get(alumno=alumno,
                                                                             clase_virtual=clase_virtual).nota
             except models.ResultadoEvaluacion.DoesNotExist:
-                alumno.nota_actual = None
-
+                if clase_virtual.es_resuelta_alumno(alumno):
+                    alumno.resuelto = True
+                    alumno.nota_actual = clase_virtual.obtener_puntaje_alumno(alumno)
+                    if clase_virtual.es_corregida_alumno(alumno):
+                        alumno.corregido = True
+                    else:
+                        alumno.corregido = False
+                else:
+                    alumno.resuelto = False
+                    alumno.corregido = False
+                    alumno.nota_actual = None
+            if alumno.corregido:
+                alumnos_corregida_list.append(alumno)
+            elif alumno.resuelto:
+                alumnos_no_corregida_list.append(alumno)
+            else:
+                alumnos_no_resuelta_list.append(alumno)
+        show_corregidos = len(alumnos_corregida_list) > 0
+        show_pendientes_correccion = len(alumnos_no_corregida_list) > 0
+        show_no_resueltos = len(alumnos_no_resuelta_list) > 0
         return render(request, self.template_name, {
+                            'alumnos_corregida_list': alumnos_corregida_list,
+                            'alumnos_no_corregida_list': alumnos_no_corregida_list,
+                            'alumnos_no_resuelta_list': alumnos_no_resuelta_list,
+                            'show_corregidos': show_corregidos,
+                            'show_pendientes_correccion': show_pendientes_correccion,
+                            'show_no_resueltos': show_no_resueltos,
                             'clase_virtual': clase_virtual,
-                            'alumnos': alumnos,
                         })
 
 
@@ -124,9 +178,8 @@ class ClaseVirtualCorreccionResultadosView(View):
 
     def update_resultados(self, clase_virtual, alumno, respuestas):
         if clase_virtual.tipo == models.ClaseVirtual.EVALUACION:
-            total = len(respuestas)
-            correctas = len(respuestas.filter(es_correcta=True))
-            self.update_resultado_evaluacion(clase_virtual, alumno, round((correctas/total)*10, 2))
+            nota_final = respuestas.aggregate(Sum("puntaje_obtenido"))["puntaje_obtenido__sum"]
+            self.update_resultado_evaluacion(clase_virtual, alumno, nota_final)
 
     def post(self, request, *args, **kwargs):
         clase_virtual = models.ClaseVirtual.objects.filter(pk=self.kwargs['pk']).first()
@@ -159,7 +212,7 @@ class ClaseVirtualCorreccionResultadosView(View):
 def obtener_siguiente_ejercicio_a_resolver(clase_virtual):
     ejercicios = clase_virtual.ejercicios.all()
     for ejercicio in ejercicios:
-        if not ejercicio.ejercicio_instance().respuestas.all().exists():
+        if not ejercicio.respuestas.all().exists():
             return ejercicio
     return None
 
@@ -172,27 +225,30 @@ class ClaseVirtualResolverEjercicioView(View):
         template_to_render = None
         ejercicio_to_render = None
         tipoPreguntaToRender = None
-        es_correcta = None
+        puntaje_obtenido = None
         if('ejercicioId' in request.POST and 'tipoPregunta' in request.POST):
             form = None
             ejercicio_resuelto = None
             if(request.POST['tipoPregunta'] == 'texto'):
                 form = RespuestaEjercicioVirtualTextoForm(request.POST, request.FILES)
-                ejercicio_resuelto = models.EjercicioVirtualTexto.objects.filter(id=request.POST['ejercicioId']).first()
+                ejercicio_resuelto = models.EjercicioVirtual.objects.filter(id=request.POST['ejercicioId']).first()
                 template_to_render = 'ejercicio_virtual/texto/resolver_ejercicio_virtual_form.html'
                 tipoPreguntaToRender = 'texto'
-                es_correcta = None
+                puntaje_obtenido = None
             elif(request.POST['tipoPregunta'] == 'multiple_choice'):
                 template_to_render = 'ejercicio_virtual/multiple_choice/resolver_ejercicio_virtual_form.html'
                 tipoPreguntaToRender = 'multiple_choice'
                 form = RespuestaEjercicioVirtualMultipleChoiceForm(request.POST, request.FILES)
-                ejercicio_resuelto = models.EjercicioVirtualMultipleChoice.objects.filter(id=request.POST['ejercicioId']).first()
-                es_correcta = form.instance.opcion_seleccionada.opcion_correcta
+                ejercicio_resuelto = models.EjercicioVirtual.objects.filter(id=request.POST['ejercicioId']).first()
+                if form.instance.opcion_seleccionada.opcion_correcta:
+                    puntaje_obtenido = ejercicio_resuelto.puntaje
+                else:
+                    puntaje_obtenido = 0
             if form.is_valid():
                 form.instance.alumno = self.request.user.alumno
                 form.instance.ejercicio = ejercicio_resuelto
                 form.instance.clase_virtual = clase_virtual
-                form.instance.es_correcta = es_correcta
+                form.instance.puntaje_obtenido = puntaje_obtenido
                 nueva_respuesta = form.save()
                 obtener_siguiente_ejercicio_a_resolver(clase_virtual)
                 ejercicio_a_resolver = obtener_siguiente_ejercicio_a_resolver(clase_virtual)
@@ -200,29 +256,28 @@ class ClaseVirtualResolverEjercicioView(View):
                 return render(request, template_to_render, {
                                             'form':form_to_render,
                                             'ejercicio': ejercicio_resuelto,
-                                            'tipoPregunta': tipoPreguntaToRender,
-                                            'user': self.request.user
+                                            'tipoPregunta': tipoPreguntaToRender
                                             })
         else:
             ejercicio_a_resolver = obtener_siguiente_ejercicio_a_resolver(clase_virtual)
         if(ejercicio_a_resolver == None):
             return redirect('aula_virtual:resultados_clase_virtual', pk=clase_virtual.id)
-        elif(ejercicio_a_resolver.is_ejercicio_virtual_multiple_choice()):
+        elif(ejercicio_a_resolver.tipo_ejercicio == models.EjercicioVirtual.MULTIPLE_CHOICE):
             form_to_render = RespuestaEjercicioVirtualMultipleChoiceForm()
             template_to_render = 'ejercicio_virtual/multiple_choice/resolver_ejercicio_virtual_form.html'
-            ejercicio_to_render = ejercicio_a_resolver.ejercicio_instance()
+            ejercicio_to_render = ejercicio_a_resolver
             tipoPreguntaToRender = 'multiple_choice'
-        elif(ejercicio_a_resolver.is_ejercicio_virtual_texto()):
+        elif(ejercicio_a_resolver.tipo_ejercicio == models.EjercicioVirtual.TEXTO):
             form_to_render = RespuestaEjercicioVirtualTextoForm()
             template_to_render = 'ejercicio_virtual/texto/resolver_ejercicio_virtual_form.html'
-            ejercicio_to_render = ejercicio_a_resolver.ejercicio_instance()
+            ejercicio_to_render = ejercicio_a_resolver
             tipoPreguntaToRender = 'texto'
         return render(request, template_to_render, {
-                                            'form':form_to_render,
-                                            'ejercicio': ejercicio_to_render,
-                                            'tipoPregunta': tipoPreguntaToRender,
-                                            'user': self.request.user
-                                            } )
+                        'form':form_to_render,
+                        'ejercicio': ejercicio_to_render,
+                        'tipoPregunta': tipoPreguntaToRender,
+                        'user': self.request.user
+                        })
 
 
 class ClaseVirtualUpdateView(UpdateView):
@@ -245,28 +300,15 @@ class ClaseVirtualDeleteView(ProtectedDeleteView):
     template_name = 'clase_virtual/clase_virtual_confirm_delete.html'
 
 
-class EjercicioVirtualCreateView(CreateView):
-    model = models.EjercicioVirtual
-    form_class = forms.EjercicioVirtualForm
-    template_name = 'ejercicio_virtual/ejercicio_virtual_form.html'
-
-    def form_valid(self, form):
-        clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['clase_id'])
-        form.instance.clase_virtual = clase_virtual
-        return super(EjercicioVirtualCreateView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.clase_virtual.id})
-
-
 class EjercicioVirtualTextoCreateView(CreateView):
-    model = models.EjercicioVirtualTexto
+    model = models.EjercicioVirtual
     form_class = forms.EjercicioVirtualTextoForm
     template_name = 'ejercicio_virtual/texto/ejercicio_virtual_form.html'
 
     def form_valid(self, form):
         clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['clase_id'])
         form.instance.clase_virtual = clase_virtual
+        form.instance.tipo_ejercicio = form.instance.TEXTO
         return super(EjercicioVirtualTextoCreateView, self).form_valid(form)
 
     def get_success_url(self):
@@ -274,16 +316,20 @@ class EjercicioVirtualTextoCreateView(CreateView):
 
 
 class EjercicioVirtualTextoUpdateView(UpdateView):
-    model = models.EjercicioVirtualTexto
+    model = models.EjercicioVirtual
     form_class=forms.EjercicioVirtualTextoForm
     template_name = 'ejercicio_virtual/texto/ejercicio_virtual_form.html'
+
+    def form_valid(self, form):
+        form.instance.tipo_ejercicio = form.instance.TEXTO
+        return super(EjercicioVirtualTextoUpdateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.clase_virtual.id})
 
 
 class EjercicioVirtualMultipleChoiceCreateView(CreateView):
-    model = models.EjercicioVirtualMultipleChoice
+    model = models.EjercicioVirtual
     form_class = forms.EjercicioVirtualMultipleChoiceForm
     template_name = 'ejercicio_virtual/multiple_choice/ejercicio_virtual_form.html'
 
@@ -312,6 +358,7 @@ class EjercicioVirtualMultipleChoiceCreateView(CreateView):
     def form_valid(self, form, opcion_formset):
         clase_virtual = models.ClaseVirtual.objects.get(pk=self.kwargs['clase_id'])
         form.instance.clase_virtual = clase_virtual
+        form.instance.tipo_ejercicio = form.instance.MULTIPLE_CHOICE
         self.object = form.save()
         opcion_formset.instance = self.object
         opcion_formset.save()
@@ -324,7 +371,7 @@ class EjercicioVirtualMultipleChoiceCreateView(CreateView):
 
 
 class EjercicioVirtualMultipleChoiceUpdateView(UpdateView):
-    model = models.EjercicioVirtualMultipleChoice
+    model = models.EjercicioVirtual
     form_class = forms.EjercicioVirtualMultipleChoiceForm
     template_name = 'ejercicio_virtual/multiple_choice/ejercicio_virtual_form.html'
 
@@ -345,6 +392,7 @@ class EjercicioVirtualMultipleChoiceUpdateView(UpdateView):
         clase_virtual = models.ClaseVirtual.objects.get(pk= self.object.clase_virtual.id)
         form_class = self.get_form_class()
         form = self.get_form(form_class)
+        form.instance.tipo_ejercicio = form.instance.MULTIPLE_CHOICE
         form.instance.clase_virtual = clase_virtual
         opcion_formset = OpcionEjercicioVirtualFormSet(self.request.POST, instance = self.object)
         if (form.is_valid() and opcion_formset.is_valid()):
@@ -363,18 +411,25 @@ class EjercicioVirtualMultipleChoiceUpdateView(UpdateView):
                                   opcion_formset=opcion_formset))
 
 
-class EjercicioVirtualUpdateView(UpdateView):
-    model = models.EjercicioVirtual
-    form_class = forms.EjercicioVirtualForm
-    template_name = 'ejercicio_virtual/ejercicio_virtual_form.html'
-
-    def get_success_url(self):
-        return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.clase_virtual.id})
-
-
 class EjercicioVirtualDeleteView(ProtectedDeleteView):
     model = models.EjercicioVirtual
     template_name = 'ejercicio_virtual/ejercicio_virtual_confirm_delete.html'
 
     def get_success_url(self):
         return reverse_lazy('aula_virtual:ver_clase_virtual', kwargs={'pk': self.object.clase_virtual.id})
+
+
+class ClaseVirtualAyudaTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_list.html'
+
+class ClaseVirtualAyudaVerTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_ver.html'
+
+class ClaseVirtualAyudaNuevoTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_nuevo.html'
+
+class ClaseVirtualAyudaEditarTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_editar.html'
+
+class ClaseVirtualAyudaEliminarTemplateView(TemplateView):
+    template_name = 'clase_virtual/clase_virtual_ayuda_eliminar.html'

@@ -111,6 +111,21 @@ class AlumnosInscripcionesView(View):
         else:
             return render(request, self.template_name, context)
 
+
+class AlumnosAyudaTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_list.html'
+
+class AlumnosAyudaNuevoTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_nuevo.html'
+
+class AlumnosAyudaEditarTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_editar.html'
+
+class AlumnosAyudaEliminarTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_eliminar.html'
+
+class AlumnosAyudaInscripcionesTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_inscripciones.html'
 #endregion
 
 
@@ -140,6 +155,18 @@ class ResponsablesDeleteView(ProtectedDeleteView):
     model = models.Responsable
     success_url = reverse_lazy('administracion:responsables')
     template_name = 'alumnos/responsables/responsables_confirm_delete.html'
+
+class ResponsablesAyudaTemplateView(TemplateView):
+    template_name = 'alumnos/responsables/responsables_ayuda_list.html'
+
+class ResponsablesAyudaNuevoTemplateView(TemplateView):
+    template_name = 'alumnos/responsables/responsables_ayuda_nuevo.html'
+
+class ResponsablesAyudaEditarTemplateView(TemplateView):
+    template_name = 'alumnos/responsables/responsables_ayuda_editar.html'
+
+class ResponsablesAyudaEliminarTemplateView(TemplateView):
+    template_name = 'alumnos/responsables/responsables_ayuda_eliminar.html'
 #endregion
 
 

@@ -20,7 +20,7 @@
         });
     </script>
 
-    <h3>Tutoria</h3>
+    <h3 class="inline-title">Tutoria</h3> <span class=""><a href="{% url 'administracion:ayuda_ver_tutoria' %}" onclick="window.open('{% url 'administracion:ayuda_ver_tutoria' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <div class="row">
         <div class="col-sm-3 col-md-2">
             <h5><strong>Año: </strong> {{ object.anio }}</h5>

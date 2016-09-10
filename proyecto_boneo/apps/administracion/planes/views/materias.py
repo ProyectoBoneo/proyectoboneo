@@ -35,6 +35,22 @@ class MateriasDeleteView(ProtectedDeleteView):
     template_name = 'planes/materias/materias_confirm_delete.html'
 
 
+class MateriasAyudaTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_list.html'
+
+
+class MateriasAyudaNuevoTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_nuevo.html'
+
+
+class MateriasAyudaEditarTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_editar.html'
+
+
+class MateriasAyudaEliminarTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_eliminar.html'
+
+
 class ConfigurarProfesoresMateriasView(View):
     template_name = 'planes/profesores_materias/profesores_materias_configurar.html'
     necesario_generar_template_name = 'planes/profesores_materias/necesario_generar_instancias.html'
@@ -82,3 +98,9 @@ class ConfigurarProfesoresMateriasView(View):
                 return redirect(self.success_url)
             else:
                 return render(request, self.template_name, context)
+
+
+class ProfesoresDivisionAyudaTemplateView(TemplateView):
+    template_name = 'planes/profesores_materias/divisiones_ayuda_profesores.html'
+
+

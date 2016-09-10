@@ -1,0 +1,16 @@
+{% extends 'ayuda/base.html' %}
+{% block title %}Listado de clase virtual{% endblock %}
+{% block content %}
+<h4>Listado de clase virtual</h4>
+{% if user.is_staff %}
+    <p>Al ingresar al módulo de clases virtuales, se presenta un listado con las clases virtuales a las que usted tiene acceso.</p>
+{% endif %}
+{% if user.is_profesor %}
+    <p>Al ingresar al módulo de clases virtuales, se presenta un listado con las clases virtuales del sistema. Desde esta pantalla se puede acceder a la pantalla de creación de nueva clase virtual, haciendo clic en el botón de nueva clase virtual, así como ir a las pantallas de edición o eliminación de una clase virtual determinada mediante los botones correspondientes presentes en el listado. Además, es posible acceder a la clase virtual para a través del botón corregir.</p>
+{% endif %}
+{% if user.is_alumno %}
+    <p>Al ingresar al módulo de clases virtuales, se presenta un listado con las clases virtuales a las que usted tiene acceso. </p>
+    <p>Desde esta pantalla se puede acceder a las pantallas para resolver las clases virtuales mediante los botones correspondientes presentes en el listado.</p>
+{% endif %}
+
+{% endblock %}

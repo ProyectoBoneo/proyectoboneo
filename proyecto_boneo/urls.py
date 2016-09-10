@@ -5,7 +5,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from gutils.django.forms.typeahead.views import TypeaheadAddModelView, TypeaheadView
 
-from .views import home_redirect_router
+from .views import home_redirect_router, IndiceView
 
 typeahead_patterns = [
     url(r'^typeahead/$', TypeaheadView.as_view(), name='typeahead'),
@@ -27,9 +27,9 @@ auth_patterns = [
 
 project_patterns = [
     url(r'^$', login_required(home_redirect_router), name='home'),
-    url(r'administracion/', include('proyecto_boneo.apps.administracion.urls',
-                                    namespace='administracion')),
-    url(r'aula_virtual/', include('proyecto_boneo.apps.aula_virtual.urls', namespace='aula_virtual'))
+    url(r'administracion/', include('proyecto_boneo.apps.administracion.urls', namespace='administracion')),
+    url(r'aula_virtual/', include('proyecto_boneo.apps.aula_virtual.urls', namespace='aula_virtual')),
+    url(r'^indice/$', IndiceView.as_view(), name='indice'),
 ]
 
 media_patterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

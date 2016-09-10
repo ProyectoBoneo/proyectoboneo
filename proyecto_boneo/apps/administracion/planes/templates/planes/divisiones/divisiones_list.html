@@ -2,7 +2,7 @@
 {% block title %}Divisiones{% endblock %}
 {% block content %}
     <div class="col-md-offset-1 col-md-10">
-        <h3>Divisiones</h3>
+        <h3 class="inline-title">Divisiones</h3>  <span class=""><a href="{% url 'administracion:ayuda_divisiones' %}" onclick="window.open('{% url 'administracion:ayuda_divisiones' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
         <div class="margin-top margin-bottom">
             <label for="anio_lectivo" class="margin-right">Año lectivo</label>
             {% if anio_lectivo %}

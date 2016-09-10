@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Materia{% endblock %}
 {% block content %}
-    <h3>Materia</h3>
+    <h3 class="inline-title">Materia</h3> <span class=""><a href="{% url 'administracion:ayuda_nuevo_materia' %}" onclick="window.open('{% url 'administracion:ayuda_nuevo_materia' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action=".">
         {% csrf_token %}
         <div class="form-group">
