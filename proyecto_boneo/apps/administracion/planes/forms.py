@@ -1,12 +1,11 @@
 from django import forms
-from django.forms import modelformset_factory, BaseModelFormSet, ModelForm
+from django.forms import modelformset_factory, ModelForm
 from django.forms.formsets import formset_factory
 
-from gutils.django.forms import BaseModelForm, BaseFilterForm, BaseFormsetForm, BaseForm
+from gutils.django.forms import BaseModelForm, BaseFilterReportForm, BaseFormsetForm, BaseForm
 from gutils.django.forms.typeahead.widgets import TypeaheadDropDownModelWidget
 
 from . import models
-from proyecto_boneo.apps.administracion.personal.models import Profesor
 from proyecto_boneo.apps.administracion.personal.lookups import ProfesorLookup
 from proyecto_boneo.apps.administracion.planes.models import Materia, InstanciaCursado
 
@@ -28,7 +27,7 @@ class MateriaForm(BaseModelForm):
         self.fields['anio'].widget.choices = choices
 
 
-class MateriaFilterForm(BaseFilterForm):
+class MateriaFilterForm(BaseFilterReportForm):
     descripcion = forms.CharField(max_length=150, required=False, label='Descripción')
 
     class Meta:

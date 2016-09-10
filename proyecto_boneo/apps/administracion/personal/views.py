@@ -1,7 +1,7 @@
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, TemplateView
+from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredReportListView,TemplateView
 from django.core.urlresolvers import reverse_lazy
 
-from . import forms, models
+from . import forms, models, reports
 
 
 class PersonaCreateView(CreateView):
@@ -23,10 +23,11 @@ class PersonaUpdateView(UpdateView):
 
 
 #region Profesores
-class ProfesoresFilteredListView(FilteredListView):
+class ProfesoresFilteredListView(FilteredReportListView):
     form_class = forms.ProfesorFilterForm
     model = models.Profesor
     template_name = 'personal/profesores/profesores_list.html'
+    report = reports.ProfesoresReport
     
     
 class ProfesoresCreateView(PersonaCreateView):

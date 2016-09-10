@@ -1,17 +1,18 @@
 import datetime
 
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, View, TemplateView
+from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredReportListView, View
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, render
 
-from .. import forms, models
+from .. import forms, models, reports
 from proyecto_boneo.apps.administracion.planes.forms import ConfigurarMateriasProfesoresFormset
 
 
-class MateriasFilteredListView(FilteredListView):
+class MateriasFilteredListView(FilteredReportListView):
     form_class = forms.MateriaFilterForm
     model = models.Materia
     template_name = 'planes/materias/materias_list.html'
+    report = reports.MateriasReport
 
 
 class MateriasCreateView(CreateView):
@@ -85,7 +86,7 @@ class ConfigurarProfesoresMateriasView(View):
 
     def save_formsets(self, context):
         formset = context['formset']
-        instances = formset.save()
+        formset.save()
 
     def post(self, request, *args, **kwargs):
         if models.InstanciaCursado.objects.necesario_generar():
