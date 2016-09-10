@@ -1,24 +1,22 @@
-from datetime import date, datetime, timedelta
-from gutils.django.views import ProtectedDeleteView, FilteredListView, ModelFormsetView, View
+from datetime import datetime
+from gutils.django.views import ProtectedDeleteView, FilteredReportListView, View, TemplateView
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 
 from proyecto_boneo.apps.administracion.personal.views import PersonaCreateView, PersonaUpdateView
 
 from proyecto_boneo.apps.administracion.alumnos.models import InscripcionAlumno, Asistencia, Alumno
 
-from . import forms, models
+from . import forms, models, reports
 
 
 #region Alumnos
-from proyecto_boneo.apps.administracion.planes.models import Horario, ClaseReal
-
-
-class AlumnosFilteredListView(FilteredListView):
+class AlumnosFilteredListView(FilteredReportListView):
     form_class = forms.AlumnoFilterForm
     model = models.Alumno
     template_name = 'alumnos/alumnos/alumnos_list.html'
-    
+    report = reports.AlumnosReport
+
     
 class AlumnosCreateView(PersonaCreateView):
     model = models.Alumno
@@ -39,28 +37,6 @@ class AlumnosDeleteView(ProtectedDeleteView):
     success_url = reverse_lazy('administracion:alumnos')
     template_name = 'alumnos/alumnos/alumnos_confirm_delete.html'
 
-
-# class AlumnosInscripcionesView(ModelFormsetView):
-#     template_name = 'alumnos/alumnos/alumnos_inscripciones.html'
-#     formset = forms.InscripcionesFormset
-#
-#     def __init__(self, **kwargs):
-#         self._alumno = None
-#         super(AlumnosInscripcionesView, self).__init__(**kwargs)
-#
-#     @property
-#     def alumno(self):
-#         if not self._alumno:
-#             self._alumno = get_object_or_404(models.Alumno, pk=self.kwargs['pk'])
-#         return self._alumno
-#
-#     def get_context_data(self, *args, **kwargs):
-#         context = super(AlumnosInscripcionesView, self).get_context_data(*args, **kwargs)
-#         context['alumno'] = self.alumno
-#         return context
-#
-#     def get_queryset(self):
-#         return InscripcionAlumno.objects.filter(alumno=self.alumno)
 
 class AlumnosInscripcionesView(View):
     template_name = 'alumnos/alumnos/alumnos_inscripciones.html'
@@ -135,14 +111,30 @@ class AlumnosInscripcionesView(View):
         else:
             return render(request, self.template_name, context)
 
+
+class AlumnosAyudaTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_list.html'
+
+class AlumnosAyudaNuevoTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_nuevo.html'
+
+class AlumnosAyudaEditarTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_editar.html'
+
+class AlumnosAyudaEliminarTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_eliminar.html'
+
+class AlumnosAyudaInscripcionesTemplateView(TemplateView):
+    template_name = 'alumnos/alumnos/alumnos_ayuda_inscripciones.html'
 #endregion
 
 
 #region Responsables
-class ResponsablesFilteredListView(FilteredListView):
+class ResponsablesFilteredListView(FilteredReportListView):
     form_class = forms.ResponsableFilterForm
     model = models.Responsable
     template_name = 'alumnos/responsables/responsables_list.html'
+    report = reports.ResponsablesReport
 
 
 class ResponsablesCreateView(PersonaCreateView):
@@ -163,6 +155,18 @@ class ResponsablesDeleteView(ProtectedDeleteView):
     model = models.Responsable
     success_url = reverse_lazy('administracion:responsables')
     template_name = 'alumnos/responsables/responsables_confirm_delete.html'
+
+class ResponsablesAyudaTemplateView(TemplateView):
+    template_name = 'alumnos/responsables/responsables_ayuda_list.html'
+
+class ResponsablesAyudaNuevoTemplateView(TemplateView):
+    template_name = 'alumnos/responsables/responsables_ayuda_nuevo.html'
+
+class ResponsablesAyudaEditarTemplateView(TemplateView):
+    template_name = 'alumnos/responsables/responsables_ayuda_editar.html'
+
+class ResponsablesAyudaEliminarTemplateView(TemplateView):
+    template_name = 'alumnos/responsables/responsables_ayuda_eliminar.html'
 #endregion
 
 

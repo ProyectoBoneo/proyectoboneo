@@ -5,6 +5,7 @@ from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 from proyecto_boneo.apps.administracion.personal.models import Profesor
 
 
+
 class Tutoria(models.Model):
     profesor = models.ForeignKey(Profesor)
     alumno = models.ForeignKey(Alumno)
@@ -14,7 +15,8 @@ class Tutoria(models.Model):
         return '{} - {} - {}'.format(self.anio, self.profesor, self.alumno)
 
 class EncuentroTutoria(models.Model):
-    fecha = models.DateTimeField()
+    fecha = models.DateField()
+    hora = models.TimeField()
     tutoria = models.ForeignKey(Tutoria)
     # lugar_de_encuentro = models.TextField(null=True, blank=True)
     resumen = models.TextField(null=True, blank=True)

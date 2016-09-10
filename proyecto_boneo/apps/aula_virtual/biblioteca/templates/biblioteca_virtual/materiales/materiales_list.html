@@ -19,7 +19,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Descripción</th>
                     <th>Observaciones</th>
                     <th></th>
@@ -29,7 +28,6 @@
             <tbody>
                 {% for material in object_list %}
                     <tr>
-                        <td>{{ material.id }}</td>
                         <td>{{ material.descripcion }}</td>
                         <td>{{ material.observaciones }}</td>
                         <td>

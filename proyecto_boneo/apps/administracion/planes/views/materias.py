@@ -1,17 +1,18 @@
 import datetime
 
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, View
+from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredReportListView, View, TemplateView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, render
 
-from .. import forms, models
+from .. import forms, models, reports
 from proyecto_boneo.apps.administracion.planes.forms import ConfigurarMateriasProfesoresFormset
 
 
-class MateriasFilteredListView(FilteredListView):
+class MateriasFilteredListView(FilteredReportListView):
     form_class = forms.MateriaFilterForm
     model = models.Materia
     template_name = 'planes/materias/materias_list.html'
+    report = reports.MateriasReport
 
 
 class MateriasCreateView(CreateView):
@@ -32,6 +33,22 @@ class MateriasDeleteView(ProtectedDeleteView):
     model = models.Materia
     success_url = reverse_lazy('administracion:materias')
     template_name = 'planes/materias/materias_confirm_delete.html'
+
+
+class MateriasAyudaTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_list.html'
+
+
+class MateriasAyudaNuevoTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_nuevo.html'
+
+
+class MateriasAyudaEditarTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_editar.html'
+
+
+class MateriasAyudaEliminarTemplateView(TemplateView):
+    template_name = 'planes/materias/materias_ayuda_eliminar.html'
 
 
 class ConfigurarProfesoresMateriasView(View):
@@ -69,7 +86,7 @@ class ConfigurarProfesoresMateriasView(View):
 
     def save_formsets(self, context):
         formset = context['formset']
-        instances = formset.save()
+        formset.save()
 
     def post(self, request, *args, **kwargs):
         if models.InstanciaCursado.objects.necesario_generar():
@@ -81,3 +98,9 @@ class ConfigurarProfesoresMateriasView(View):
                 return redirect(self.success_url)
             else:
                 return render(request, self.template_name, context)
+
+
+class ProfesoresDivisionAyudaTemplateView(TemplateView):
+    template_name = 'planes/profesores_materias/divisiones_ayuda_profesores.html'
+
+
