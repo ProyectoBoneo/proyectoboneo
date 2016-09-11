@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Estadia{% endblock %}
 {% block content %}
-    <h3 class="inline-title">Estadia</h3> <span class=""><a href="{% url 'administracion:ayuda_nuevo_estadia' %}" onclick="window.open('{% url 'administracion:ayuda_nuevo_estadia' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Estadía</h3> <span class=""><a href="{% url 'administracion:ayuda_nuevo_estadia' %}" onclick="window.open('{% url 'administracion:ayuda_nuevo_estadia' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
 
     <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}

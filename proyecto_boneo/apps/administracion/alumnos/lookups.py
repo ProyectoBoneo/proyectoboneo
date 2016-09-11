@@ -32,3 +32,10 @@ class AlumnoLookup(Lookup):
     search_fields = ['nombre', 'apellido']
 
 register_lookup(AlumnoLookup)
+
+
+class ResponsableSearchLookup(Lookup):
+    model = models.Responsable
+    search_fields = ['nombre', 'apellido']
+
+register_lookup(ResponsableSearchLookup)

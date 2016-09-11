@@ -1,8 +1,8 @@
 {% extends 'administracion/base.html' %}
-{% block title %}Estadias{% endblock %}
+{% block title %}Estadías{% endblock %}
 {% block content %}
     <div class="col-md-offset-1 col-md-10">
-    <h3 class="inline-title">Estadias</h3> <span class=""><a href="{% url 'administracion:ayuda_estadias' %}" onclick="window.open('{% url 'administracion:ayuda_estadias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Estadías</h3> <span class=""><a href="{% url 'administracion:ayuda_estadias' %}" onclick="window.open('{% url 'administracion:ayuda_estadias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <div class="row">
              <a class="btn btn-success" href="{% url 'administracion:nuevo_estadia' %}">
                 <i class="fa fa-plus-circle"></i> Nuevo
@@ -60,7 +60,7 @@
             </tbody>
         </table>
     {% else %}
-        <p>No hay estadias que coincidan con el criterio de filtrado</p>
+        <p>No hay estadías que coincidan con el criterio de filtrado</p>
     {% endif %}
     </div>
 
