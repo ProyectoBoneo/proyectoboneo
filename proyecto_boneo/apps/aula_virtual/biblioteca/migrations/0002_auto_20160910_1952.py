@@ -2,23 +2,23 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-from django.conf import settings
 import django.db.models.deletion
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('planes', '0001_initial'),
         ('biblioteca', '0001_initial'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
             model_name='solicitudmaterial',
             name='solicitante',
-            field=models.ForeignKey(default=None, related_name='solicitante', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(default=None, to=settings.AUTH_USER_MODEL, related_name='solicitante'),
         ),
         migrations.AddField(
             model_name='material',

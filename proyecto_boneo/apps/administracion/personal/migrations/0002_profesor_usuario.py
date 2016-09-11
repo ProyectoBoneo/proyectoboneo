@@ -8,14 +8,14 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('personal', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('personal', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='profesor',
             name='usuario',
-            field=models.OneToOneField(related_name='profesor', to=settings.AUTH_USER_MODEL),
+            field=models.OneToOneField(to=settings.AUTH_USER_MODEL, related_name='profesor'),
         ),
     ]

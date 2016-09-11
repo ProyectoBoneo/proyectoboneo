@@ -7,18 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('clases', '0001_initial'),
         ('planes', '0001_initial'),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='clasereal',
-            name='horario',
-        ),
-        migrations.DeleteModel(
-            name='DiasNoHabiles',
-        ),
-        migrations.DeleteModel(
-            name='ClaseReal',
+        migrations.AddField(
+            model_name='clasevirtual',
+            name='materia',
+            field=models.ForeignKey(to='planes.Materia', related_name='clases_virtuales'),
         ),
     ]

@@ -15,9 +15,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='EncuentroTutoria',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
-                ('fecha', models.DateTimeField()),
-                ('resumen', models.TextField(null=True, blank=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('fecha', models.DateField()),
+                ('hora', models.TimeField()),
+                ('resumen', models.TextField(blank=True, null=True)),
             ],
             options={
                 'ordering': ['fecha'],
@@ -26,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Tutoria',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('anio', models.IntegerField()),
                 ('alumno', models.ForeignKey(to='alumnos.Alumno')),
                 ('profesor', models.ForeignKey(to='personal.Profesor')),

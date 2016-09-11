@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Estadia',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fecha_inicio', models.DateField()),
                 ('fecha_fin', models.DateField()),
                 ('alumno', models.ForeignKey(to='alumnos.Alumno')),
