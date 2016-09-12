@@ -41,3 +41,6 @@ class EncuentroTutoriaForTutoriaForm(BaseModelForm):
         model = models.EncuentroTutoria
         exclude = ['tutoria']
         labels = {}
+        widgets = {
+            'hora' : TimeInput()
+        }

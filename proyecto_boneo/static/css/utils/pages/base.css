@@ -4973,6 +4973,9 @@ select.with_errors {
 .inline-title {
   display: inline-block;
 }
+.formset-table > tbody > tr > td {
+  padding: 7px;
+}
 @font-face {
   font-family: "bumblebee";
   src: url("/static/fonts/bumble_bees.ttf");

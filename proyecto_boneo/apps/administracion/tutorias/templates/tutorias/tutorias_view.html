@@ -33,8 +33,6 @@
         </div>
     </div>
 
-
-
     {% if user.is_profesor %}
         <div id="add-encuentrotutoria-button">
             <button type="button" class="btn btn-primary" id="encuentrotutoria-open">
@@ -44,7 +42,7 @@
         <div id="add-encuentrotutoria" class="">
             <form method="post" action="">
                  {% csrf_token %}
-                    <table>
+                    <table class="formset-table">
                         {{ formset }}
                     </table>
                     <button type="submit" class="btn btn-success" id="">
@@ -63,8 +61,10 @@
         <table class="table">
             <thead>
                 <th width="15%">Fecha</th>
-                <th width="10%">Hora</th>
-                <th>Resumen</th>
+                <th width="15%">Hora</th>
+                <th width="40%">Resumen</th>
+                <th width="15%"></th>
+                <th width="15%"></th>
             </thead>
             <tbody>
                 {% for encuentrotutoria in object.encuentrotutoria_set.all %}
