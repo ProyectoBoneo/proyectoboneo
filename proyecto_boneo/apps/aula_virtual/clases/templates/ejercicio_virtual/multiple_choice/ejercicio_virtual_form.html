@@ -18,23 +18,37 @@
             </div>
         </div>
         <div class="form-group">
+            <h4>Opción</h4>
+        </div>
+        <div class="form-group">
             <div class="col-sm-12">
-            <fieldset>
-                <legend>Opcion</legend>
                 {{ opcion_formset.management_form }}
                 {{ opcion_formset.non_form_errors }}
                 {% for opcion_form in opcion_formset %}
                     {{ opcion_form.id }}
                     <div class="inline {{ opcion_form.prefix }}">
-                        {{ opcion_form.texto.errors }}
-                        {{ opcion_form.texto.label_tag }}
-                        {{ opcion_form.texto }}
-                        {{ opcion_form.opcion_correcta.errors }}
-                        {{ opcion_form.opcion_correcta.label_tag }}
-                        {{ opcion_form.opcion_correcta }}
+                        <div class="col-sm-1">
+                            {% if forloop.counter == 1 %}
+                             <p>&nbsp</p>
+                            {% endif %}
+                            {{forloop.counter}}.
+                        </div>
+                        <div class="col-sm-9">
+                            {{ opcion_form.texto.errors }}
+                            {% if forloop.counter == 1 %}
+                             {{ opcion_form.texto.label_tag }}
+                            {% endif %}
+                             {{ opcion_form.texto }}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ opcion_form.opcion_correcta.errors }}
+                            {% if forloop.counter == 1 %}
+                                {{ opcion_form.opcion_correcta.label_tag }}
+                            {% endif %}
+                            {{ opcion_form.opcion_correcta }}
+                        </div>
                     </div>
                 {% endfor %}
-            </fieldset>
             </div>
         </div>
 
@@ -49,17 +63,21 @@
             {{ form.explicacion.errors }}
         </div>
 
-        <button type="submit" class="btn btn-success">
-            <i class="fa fa-plus-circle"></i> Guardar
-        </button>
-        {% if object %}
-        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' object.clase_virtual.id %}">
-            <i class="fa fa-arrow-circle-left"></i>  Volver
-        </a>
-        {% else %}
-        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' kwargs.clase_id %}">
-            <i class="fa fa-arrow-circle-left"></i>  Volver
-        </a>
-        {% endif %}
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-save"></i> Guardar
+                </button>
+                {% if object %}
+                <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' object.clase_virtual.id %}">
+                    <i class="fa fa-arrow-circle-left"></i>  Volver
+                </a>
+                {% else %}
+                <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' kwargs.clase_id %}">
+                    <i class="fa fa-arrow-circle-left"></i>  Volver
+                </a>
+                {% endif %}
+            </div>
+        </div>
     </form>
 {% endblock %}

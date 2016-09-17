@@ -80,12 +80,23 @@
 
         <table class="table">
             <thead>
-                <th>Ejercicio</th>
-                <th>Puntaje</th>
+                <th style="width: 15%;">Tipo</th>
+                <th style="width: 50%;">Ejercicio</th>
+                <th style="width: 5%;">Puntaje</th>
+                <th style="width: 15%;"></th>
+                <th style="width: 15%;"></th>
             </thead>
             <tbody>
                 {% for ejercicio in object.ejercicios.all %}
                     <tr>
+                        <td>
+                            {%  if ejercicio.tipo_ejercicio == 'mch'  %}
+                                Texto
+                            {%  endif %}
+                            {%  if ejercicio.tipo_ejercicio == 'txt'  %}
+                                Multiple Choice
+                            {%  endif %}
+                        </td>
                         <td>
                             {{ ejercicio }}
                         </td>
@@ -93,7 +104,7 @@
                             {{ ejercicio.puntaje }}
                         </td>
                         <td>
-                            <a class="btn btn-default"
+                            <a class="btn btn-default btn-block"
                             {% if ejercicio.tipo_ejercicio == "txt" %}
                                    href="{% url 'aula_virtual:editar_ejercicio_texto' ejercicio.id %}">
                             {% elif ejercicio.tipo_ejercicio == "mch" %}
@@ -104,7 +115,7 @@
 
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="{% url 'aula_virtual:eliminar_ejercicio' ejercicio.id %}">
+                            <a class="btn btn-danger btn-block" href="{% url 'aula_virtual:eliminar_ejercicio' ejercicio.id %}">
                                 <i class="fa fa-trash"></i> Eliminar
                             </a>
                         </td>

@@ -18,23 +18,27 @@
             </div>
         </div>
         <div class="form-group">
-            {{ form.ayuda.label_tag }}
-            {{ form.ayuda }}
-            {{ form.ayuda.errors }}
+            <div class="col-sm-12">
+                {{ form.ayuda.label_tag }}
+                {{ form.ayuda }}
+                {{ form.ayuda.errors }}
+            </div>
         </div>
-
-        <button type="submit" class="btn btn-success">
-            <i class="fa fa-plus-circle"></i> Guardar
-        </button>
-        {% if object %}
-        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' object.clase_virtual.id %}">
-            <i class="fa fa-arrow-circle-left"></i>  Volver
-        </a>
-        {% else %}
-        <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' kwargs.clase_id %}">
-            <i class="fa fa-arrow-circle-left"></i>  Volver
-        </a>
-        {% endif %}
-
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success">
+                <i class="fa fa-save"></i> Guardar
+                </button>
+                {% if object %}
+                <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' object.clase_virtual.id %}">
+                    <i class="fa fa-arrow-circle-left"></i>  Volver
+                </a>
+                {% else %}
+                <a class="btn btn-default" href="{% url 'aula_virtual:ver_clase_virtual' kwargs.clase_id %}">
+                    <i class="fa fa-arrow-circle-left"></i>  Volver
+                </a>
+                {% endif %}
+            </div>
+        </div>
     </form>
 {% endblock %}

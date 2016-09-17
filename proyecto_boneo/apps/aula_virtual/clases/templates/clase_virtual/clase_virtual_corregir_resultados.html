@@ -33,7 +33,7 @@
                                   <small class="pull-right">
 
                                     {% if form.instance.puntaje_obtenido == None %}
-                                        <h4 class="list-group-item-heading text-default text-right">No corregida </h4>
+                                        <h4 class="list-group-item-heading text-default text-right">No corregida / {{ form.instance.ejercicio.puntaje }} </h4>
                                     {% elif form.instance.puntaje_obtenido == form.instance.ejercicio.puntaje %}
                                         <h4 class="list-group-item-heading text-success text-right">
                                             {{ form.instance.puntaje_obtenido }} / {{ form.instance.ejercicio.puntaje }} <i class="fa fa-check-circle"></i>
@@ -113,6 +113,10 @@
                             </div>
                         </div>
                     {% elif form.instance.ejercicio.tipo_ejercicio == 'mch'  %}
+                        <div style="display:none;">
+                              {{ form.puntaje_obtenido.label_tag }}
+                              {{ form.puntaje_obtenido }}
+                        </div>
                     {% else %}
                         <div>
                               {{ form.puntaje_obtenido.label_tag }}

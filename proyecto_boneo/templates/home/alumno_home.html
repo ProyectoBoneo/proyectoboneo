@@ -50,10 +50,11 @@
     <div class="fluid-container margin-top-2x">
         <div class="inline-group">
         <div class="col-md-8">
+            <span class=""><a href="{% url 'ayuda_calendario' %}" onclick="window.open('{% url 'ayuda_calendario' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
             <div id='calendar'></div>
         </div>
         <div class="col-md-4">
-         <h4>Proximos encuentros de tutorías</h4>
+         <h4 class="inline-title">Proximos encuentros de tutorías</h4>  <span class=""><a href="{% url 'ayuda_proximos_encuentros_tutoria' %}" onclick="window.open('{% url 'ayuda_proximos_encuentros_tutoria' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
             <table class="table">
                 <thead>
                 <tr>
@@ -75,7 +76,7 @@
                 {% endfor %}
                 </tbody>
             </table>
-         <h4>Nuevas clases virtuales</h4>
+         <h4 class="inline-title">Nuevas clases virtuales</h4>  <span class=""><a href="{% url 'ayuda_nuevas_clases_virtuales' %}" onclick="window.open('{% url 'ayuda_nuevas_clases_virtuales' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
             <table class="table">
                     <thead>
                     <tr>

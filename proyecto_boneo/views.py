@@ -65,4 +65,13 @@ class ProfesorHomeView(TemplateView):
 
 
 class IndiceView(TemplateView):
-     template_name = 'ayuda/indice.html'
+     template_name = 'ayuda//indice.html'
+
+class ProximosEncuentrosTutoriaAyudaTemplateView(TemplateView):
+    template_name = 'ayuda/home/proximos_encuentros.html'
+
+class NuevasClasesVirtualesAyudaTemplateView(TemplateView):
+    template_name = 'ayuda/home/nuevas_clases_virtuales.html'
+
+class CalendarioAyudaTemplateView(TemplateView):
+    template_name = 'ayuda/home/calendario.html'

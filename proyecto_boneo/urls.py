@@ -5,7 +5,8 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from gutils.django.forms.typeahead.views import TypeaheadAddModelView, TypeaheadView
 
-from .views import home_redirect_router, IndiceView
+from .views import home_redirect_router, IndiceView, CalendarioAyudaTemplateView, NuevasClasesVirtualesAyudaTemplateView, \
+    ProximosEncuentrosTutoriaAyudaTemplateView
 
 typeahead_patterns = [
     url(r'^typeahead/$', TypeaheadView.as_view(), name='typeahead'),
@@ -30,6 +31,9 @@ project_patterns = [
     url(r'administracion/', include('proyecto_boneo.apps.administracion.urls', namespace='administracion')),
     url(r'aula_virtual/', include('proyecto_boneo.apps.aula_virtual.urls', namespace='aula_virtual')),
     url(r'^indice/$', IndiceView.as_view(), name='indice'),
+    url(r'^ayuda/proximos_encuentros_tutoria/$', ProximosEncuentrosTutoriaAyudaTemplateView.as_view(), name='ayuda_proximos_encuentros_tutoria'),
+    url(r'^ayuda/nuevas_clases_virtuales/$', NuevasClasesVirtualesAyudaTemplateView.as_view(), name='ayuda_nuevas_clases_virtuales'),
+    url(r'^ayuda/calendario/$', CalendarioAyudaTemplateView.as_view(), name='ayuda_calendario')
 ]
 
 media_patterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
