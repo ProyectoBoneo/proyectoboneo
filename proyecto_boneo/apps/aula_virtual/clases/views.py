@@ -209,12 +209,12 @@ class ClaseVirtualCorreccionResultadosView(View):
                     })
 
 
-    def obtener_siguiente_ejercicio_a_resolver(clase_virtual):
-        ejercicios = clase_virtual.ejercicios.all()
-        for ejercicio in ejercicios:
-            if not ejercicio.respuestas.all().exists():
-                return ejercicio
-        return None
+def obtener_siguiente_ejercicio_a_resolver(clase_virtual):
+    ejercicios = clase_virtual.ejercicios.all()
+    for ejercicio in ejercicios:
+        if not ejercicio.respuestas.all().exists():
+            return ejercicio
+    return None
 
 
 class ClaseVirtualResolverEjercicioView(View):
