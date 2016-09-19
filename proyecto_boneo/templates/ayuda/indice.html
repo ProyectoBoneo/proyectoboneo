@@ -2,16 +2,140 @@
 {% block title %}Indice{% endblock %}
 {% block content %}
 <h4>Indice</h4>
-        <ul>
-            <li><a href="{% url 'indice' %}">Índice</a></li>
-            <li><a href="{% url 'administracion:ayuda_alumnos' %}">Alumno.Listado</a></li>
-            <li><a href="{% url 'administracion:ayuda_nuevo_alumno' %}">Alumno.Nuevo.</a></li>
-            <li><a href="{% url 'administracion:ayuda_editar_alumno' %}">Alumno.Editar.</a></li>
-            <li><a href="{% url 'administracion:ayuda_eliminar_alumno' %}">Alumno.Eliminar.</a></li>
-            <li><a href="{% url 'administracion:ayuda_inscripciones_alumno' %}">Alumno.Inscripciones.</a></li>
-            <li><a href="{% url 'administracion:ayuda_responsables' %}">Responsable.Listado</a></li>
-            <li><a href="{% url 'administracion:ayuda_nuevo_responsable' %}">Responsable.Nuevo.</a></li>
-            <li><a href="{% url 'administracion:ayuda_editar_responsable' %}">Responsable.Editar.</a></li>
-            <li><a href="{% url 'administracion:ayuda_eliminar_responsable' %}">Responsable.Eliminar.</a></li>
-        </ul>
+
+<table class="table">
+    <thead>
+        <tr><th>Alumnos</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'administracion:ayuda_alumnos' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'administracion:ayuda_nuevo_alumno' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'administracion:ayuda_editar_alumno' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'administracion:ayuda_eliminar_alumno' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Inscripciones<td width="10%"><a href="{% url 'administracion:ayuda_inscripciones_alumno' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr><th>Responsables</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'administracion:ayuda_responsables' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'administracion:ayuda_nuevo_responsable' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'administracion:ayuda_editar_responsable' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'administracion:ayuda_eliminar_responsable' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr><th>Estadías</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'administracion:ayuda_estadias' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'administracion:ayuda_nuevo_estadia' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'administracion:ayuda_editar_estadia' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'administracion:ayuda_eliminar_estadia' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr><th>Profesores</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'administracion:ayuda_profesores' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'administracion:ayuda_nuevo_profesor' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'administracion:ayuda_editar_profesor' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'administracion:ayuda_eliminar_profesor' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+ <table class="table">
+    <thead>
+        <tr><th>Materias</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'administracion:ayuda_materias' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'administracion:ayuda_nuevo_materia' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'administracion:ayuda_editar_materia' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'administracion:ayuda_eliminar_materia' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr><th>Divisiones</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'administracion:ayuda_divisiones' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Horarios<td width="10%"><a href="{% url 'administracion:ayuda_horarios_division' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+ <table class="table">
+    <thead>
+        <tr><th>Tutorías</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'administracion:ayuda_tutorias' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Ver<td width="10%"><a href="{% url 'administracion:ayuda_ver_tutoria' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'administracion:ayuda_nuevo_tutoria' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'administracion:ayuda_editar_tutoria' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'administracion:ayuda_eliminar_tutoria' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+ <table class="table">
+    <thead>
+        <tr><th>Encuentros Tutoría</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'administracion:ayuda_encuentrotutorias' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'administracion:ayuda_nuevo_encuentrotutoria' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'administracion:ayuda_editar_encuentrotutoria' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'administracion:ayuda_eliminar_encuentrotutoria' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+ <table class="table">
+    <thead>
+        <tr><th>Clases Virtuales</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'aula_virtual:ayuda_clase_virtual' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Ver<td width="10%"><a href="{% url 'aula_virtual:ayuda_ver_clase_virtual' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'aula_virtual:ayuda_nuevo_clase_virtual' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'aula_virtual:ayuda_editar_clase_virtual' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'aula_virtual:ayuda_eliminar_clase_virtual' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr><th>Materiales</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'aula_virtual:ayuda_materiales' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Ver<td width="10%"><a href="{% url 'aula_virtual:ayuda_ver_material' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'aula_virtual:ayuda_nuevo_material' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'aula_virtual:ayuda_editar_material' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'aula_virtual:ayuda_eliminar_material' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Buscar<td width="10%"><a href="{% url 'aula_virtual:ayuda_buscar_material' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr><th>Solicitud de Materiales</th></tr>
+    </thead>
+    <tbody>
+        <tr><td width="90%">Listado<td width="10%"><a href="{% url 'aula_virtual:ayuda_solicitudes_materiales' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Ver<td width="10%"><a href="{% url 'aula_virtual:ayuda_solicitudes_materiales_pendientes' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Nuevo<td width="10%"><a href="{% url 'aula_virtual:ayuda_nuevo_solicitud_material' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Editar<td width="10%"><a href="{% url 'aula_virtual:ayuda_editar_solicitud_material' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+        <tr><td width="90%">Eliminar<td width="10%"><a href="{% url 'aula_virtual:ayuda_eliminar_solicitud_material' %}"> <span class="fa fa-fw fa-share-square-o"></span> </a></td></tr>
+    </tbody>
+</table>
 {% endblock %}

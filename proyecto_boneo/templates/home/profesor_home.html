@@ -57,10 +57,10 @@
          <h4 class="inline-title">Proximos encuentros de tutorías</h4>  <span class=""><a href="{% url 'ayuda_proximos_encuentros_tutoria' %}" onclick="window.open('{% url 'ayuda_proximos_encuentros_tutoria' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
             <table class="table">
                 <thead>
-                <tr>
-                    <th width="50%">Fecha</th>
-                    <th width="30%">Alumno</th>
-                </tr>
+                    <tr>
+                        <th width="50%">Fecha</th>
+                        <th width="30%">Alumno</th>
+                    </tr>
                 </thead>
                 <tbody>
                 {% for encuentro_tutoria in proximos_encuentros_tutorias %}
