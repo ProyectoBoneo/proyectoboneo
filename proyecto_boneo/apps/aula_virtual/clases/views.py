@@ -26,6 +26,8 @@ class ClaseVirtualListView(ListView):
             self.template_name = 'clase_virtual/clase_virtual_list_alumno.html'
         if(self.request.user.is_profesor):
             clase_virtual_list = models.ClaseVirtual.objects.filter(materia__instancias_cursado__profesor_titular=self.request.user.profesor).distinct()
+
+        clase_virtual_list = clase_virtual_list.exclude(tipo='esc')
         clase_virtual_no_resueltas = []
         clase_virtual_no_corregidas = []
         clase_virtual_corregidas = []
