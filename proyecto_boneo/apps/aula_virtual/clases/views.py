@@ -24,10 +24,11 @@ class ClaseVirtualListView(ListView):
         if(self.request.user.is_alumno):
             clase_virtual_list = models.ClaseVirtual.objects.filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
             self.template_name = 'clase_virtual/clase_virtual_list_alumno.html'
+            clase_virtual_list = clase_virtual_list.exclude(tipo='esc')
         if(self.request.user.is_profesor):
             clase_virtual_list = models.ClaseVirtual.objects.filter(materia__instancias_cursado__profesor_titular=self.request.user.profesor).distinct()
 
-        clase_virtual_list = clase_virtual_list.exclude(tipo='esc')
+
         clase_virtual_no_resueltas = []
         clase_virtual_no_corregidas = []
         clase_virtual_corregidas = []

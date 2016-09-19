@@ -38,5 +38,4 @@ project_patterns = [
 
 media_patterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
 urlpatterns = auth_patterns + typeahead_patterns + project_patterns + media_patterns

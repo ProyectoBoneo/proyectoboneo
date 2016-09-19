@@ -33,7 +33,7 @@ class AlumnoHomeView(TemplateView):
             .filter(instancia_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
         context['clases_no_respondidas'] = ClaseVirtual.objects\
             .filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno)\
-            .exclude(respuestas__alumno=self.request.user.alumno).distinct()
+            .exclude(tipo='esc').exclude(respuestas__alumno=self.request.user.alumno).distinct()
         context['ultimos_materiales'] = Material.objects\
             .filter(materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno).distinct()
         context['encuentros_tutorias'] = EncuentroTutoria.objects\
