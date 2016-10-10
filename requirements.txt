@@ -16,5 +16,6 @@ requests==2.6.0
 simplegeneric==0.8.1
 six==1.9.0
 traitlets==4.0.0
+unidecode==0.4.19
 xlwt==1.1.2
 -e git://github.com/alvarotuso/gutils.git#egg=gutils

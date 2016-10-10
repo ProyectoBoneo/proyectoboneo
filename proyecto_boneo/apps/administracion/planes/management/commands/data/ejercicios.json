@@ -1,0 +1,156 @@
+{
+  "lengua": [
+    {
+      "consigna": "¿Qué es una palabra esdrújula?",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "¿Qué es una palabra aguda?",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "Escribe esta oración en futuro perfecto: Fui a comprar un libro",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "Escribe esta oración en pasado perfecto: Iré al parque con Juan",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "¿Cuál de las siguientes palabras contiene un diptongo?",
+      "tipo": "mch",
+      "opciones": [
+        {
+          "texto": "bien",
+          "opcion_correcta": true
+        },
+        {
+          "texto": "camello",
+          "opcion_correcta": false
+        },
+        {
+          "texto": "carro",
+          "opcion_correcta": false
+        }
+      ],
+      "puntaje": 2
+    }
+  ],
+  "música": [
+    {
+      "consigna": "¿Cuál de estas notas tiene una duración de 1/2 blanca?",
+      "tipo": "mch",
+      "opciones": [
+        {
+          "texto": "redonda",
+          "opcion_correcta": false
+        },
+        {
+          "texto": "fusa",
+          "opcion_correcta": false
+        },
+        {
+          "texto": "negra",
+          "opcion_correcta": true
+        }
+      ],
+      "puntaje": 2
+    },
+    {
+      "consigna": "¿Qué instrumentos se utilizan en el noroeste? Nombre al menos 5",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "¿Cuáles son las duraciones de las notas? Conteste incluyendo la relación entre ellas",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "Nombre al menos 4 instrumentos de viento",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "Seleccione la afirmación correcta",
+      "tipo": "mch",
+      "opciones": [
+        {
+          "texto": "El Jazz se originó en Europa",
+          "opcion_correcta": false
+        },
+        {
+          "texto": "El shamisen es un instrumento de cuerdas",
+          "opcion_correcta": true
+        },
+        {
+          "texto": "Hay 8 semifusas en una redonda",
+          "opcion_correcta": false
+        }
+      ],
+      "puntaje": 2
+    }
+  ],
+  "ciencias naturales": [
+    {
+      "consigna": "¿En qué región se encuentra el Pudú?",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "¿Cuántos pares de cromosomas tiene el ser humano?",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "¿Cuál es la diferencia entre comunidad, población y ecosistema?",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "Describa las diferencias entre las células animales y vegetales",
+      "tipo": "txt",
+      "puntaje": 2
+    },
+    {
+      "consigna": "¿Cuál de los siguientes es un mamífero?",
+      "tipo": "mch",
+      "opciones": [
+        {
+          "texto": "Ornitorrinco",
+          "opcion_correcta": true
+        },
+        {
+          "texto": "Tortuga",
+          "opcion_correcta": false
+        },
+        {
+          "texto": "Calamar",
+          "opcion_correcta": false
+        },
+        {
+          "texto": "Escorpión",
+          "opcion_correcta": false
+        }
+
+      ],
+      "puntaje": 2
+    }
+  ],
+  "ciencias sociales": [
+    {
+      "consigna": "Escriba un breve párrafo sobre lo que representa el día de la escarapela",
+      "tipo": "txt",
+      "puntaje": 5
+    },
+    {
+      "consigna": "Comente brevemente sobre el cruce de los Andes",
+      "tipo": "txt",
+      "puntaje": 5
+    }
+  ]
+}

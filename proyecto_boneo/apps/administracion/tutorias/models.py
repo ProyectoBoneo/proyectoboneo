@@ -7,8 +7,8 @@ from proyecto_boneo.apps.administracion.personal.models import Profesor
 
 
 class Tutoria(models.Model):
-    profesor = models.ForeignKey(Profesor)
-    alumno = models.ForeignKey(Alumno)
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
+    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     anio = models.IntegerField()
 
     def __str__(self):
@@ -17,17 +17,11 @@ class Tutoria(models.Model):
 class EncuentroTutoria(models.Model):
     fecha = models.DateField()
     hora = models.TimeField()
-    tutoria = models.ForeignKey(Tutoria)
-    # lugar_de_encuentro = models.TextField(null=True, blank=True)
+    tutoria = models.ForeignKey(Tutoria, on_delete=models.CASCADE)
     resumen = models.TextField(null=True, blank=True)
-    # observaciones_profesor = models.TextField(null=True, blank=True)
-    # retroalimentacion_alumno = models.TextField(null=True, blank=True)
-    # TODO: observacionesProfesor (privada para el)
-    # TODO:Agregar lugar punto de encuentro
-    # TODO: retroalimentacionAlumno (el alumno puede ingresar solo este dato) nullable
 
     def __str__(self):
-        return '{}'.format(self.fecha.date())
+        return '{}'.format(self.fecha)
 
     class Meta:
         ordering = ['fecha']

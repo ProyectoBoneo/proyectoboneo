@@ -9,7 +9,7 @@ from proyecto_boneo.apps.administracion.planes.models import Materia
 def material_location(material, filename):
     return 'aula_virtual/biblioteca/material/{}-{}/{}'.format(material.materia.id,
                                                               material.materia.descripcion,
-                                                              filename)
+                                                              os.path.split(filename)[-1])
 
 
 class BaseMaterial(models.Model):
@@ -31,7 +31,7 @@ class Material(BaseMaterial):
     objects = MaterialManager()
 
     archivo = models.FileField(upload_to=material_location, null=True, blank=True)
-    materia = models.ForeignKey(Materia, on_delete=models.PROTECT)
+    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     publicado = models.BooleanField(null=False, default=True)
 
     @property

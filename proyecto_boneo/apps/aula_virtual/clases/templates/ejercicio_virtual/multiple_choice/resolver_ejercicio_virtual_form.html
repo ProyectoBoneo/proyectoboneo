@@ -2,8 +2,7 @@
 {% block title %}Resolver Ejercicio Virtual{% endblock %}
 {% block content %}
     <h3>Ejercicio Virtual</h3>
-    <p>{{ ejercicio.pregunta }}</p>
-
+    <p>{{ ejercicio.consigna }}</p>
     <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="ejercicioId" value="{{ ejercicio.id }}"/>
