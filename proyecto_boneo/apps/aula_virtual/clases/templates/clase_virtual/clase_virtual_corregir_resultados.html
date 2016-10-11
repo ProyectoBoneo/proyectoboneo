@@ -123,6 +123,12 @@
                               {{ form.puntaje_obtenido }}
                         </div>
                     {% endif %}
+                    <div class="row">
+                        <div class="col-xs-12">
+                          {{ form.observaciones.label_tag }}
+                          {{ form.observaciones }}
+                        </div>
+                    </div>
                     </li>
                     </div>
                     {% if forloop.counter|divisibleby:2 %}

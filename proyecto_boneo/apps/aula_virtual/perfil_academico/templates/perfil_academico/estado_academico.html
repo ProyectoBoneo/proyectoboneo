@@ -29,6 +29,13 @@
             <tr>
                 <td>{{ inscripcion.instancia_cursado.materia.descripcion }}</td>
                 <td>{{ inscripcion.promedio }}</td>
+                <td>
+                    {% for evaluacion in inscripcion.get_evaluaciones %}
+                        <ul>
+                            <li>{{ evaluacion.clase_virtual.nombre }}: {{ evaluacion.nota }}</li>
+                        </ul>
+                    {% endfor %}
+                </td>
             </tr>
         {% endfor %}
     </table>

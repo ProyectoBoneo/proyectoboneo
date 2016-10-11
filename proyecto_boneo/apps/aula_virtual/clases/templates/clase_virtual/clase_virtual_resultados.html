@@ -96,6 +96,23 @@
                 </div>
             </div>
         {% endif %}
+        {% if respuesta.observaciones != None  %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="list-group">
+                        <li class="list-group-item-divider list-group-item">
+                          <h6 class="list-group-item-heading"><strong>Observaciones</strong></h6>
+                        </li>
+                        <li class="list-group-item borderless">
+
+                          <p class="list-group-item-text">
+                              {{ respuesta.observaciones|default_if_none:"" }}
+                          </p>
+                        </li>
+                      </ul>
+                </div>
+            </div>
+        {% endif %}
         </li>
         </div>
         {% if forloop.counter|divisibleby:2 %}

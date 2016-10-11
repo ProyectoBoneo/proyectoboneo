@@ -59,5 +59,3 @@ class SolicitudMaterial(BaseMaterial):
 #     usuario = models.ForeignKey(UsuarioBoneo, related_name='materialpersonas')
 #     material = models.ForeignKey(Material, related_name='materialpersonas')
 #     marked_as_pinned = models.BooleanField()
-
-# //TODO:Desplegar por ano en la barra lateral de la biblioteca

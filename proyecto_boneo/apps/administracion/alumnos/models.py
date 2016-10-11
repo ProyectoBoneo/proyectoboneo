@@ -58,6 +58,13 @@ class InscripcionAlumno(models.Model):
         self.last_promedio_date = datetime.datetime.now()
         self.save()
 
+    def get_evaluaciones(self):
+        from proyecto_boneo.apps.aula_virtual.clases.models import ClaseVirtual, ResultadoEvaluacion
+        return ResultadoEvaluacion.objects.filter(alumno=self.alumno,
+                                                          clase_virtual__materia=self.instancia_cursado.materia,
+                                                          clase_virtual__tipo__in=[ClaseVirtual.EVALUACION,
+                                                                                   ClaseVirtual.EVALUACION_ESCRITA])
+
     @property
     def promedio(self):
         if (not self.last_promedio_date or

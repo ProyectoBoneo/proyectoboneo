@@ -80,7 +80,7 @@ class RespuestaEjercicioVirtualMultipleChoiceForm(BaseModelForm):
 class RespuestaEjercicioVirtualCorreccionForm(BaseModelForm):
     class Meta:
         model = models.RespuestaEjercicioVirtual
-        fields = ['puntaje_obtenido', 'id']
+        fields = ['puntaje_obtenido', 'id', 'observaciones']
         labels = {}
         widgets = {'id': forms.HiddenInput()}
 

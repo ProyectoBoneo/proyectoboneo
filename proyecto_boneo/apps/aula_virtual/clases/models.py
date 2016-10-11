@@ -35,7 +35,10 @@ class ClaseVirtual(models.Model):
 
     def es_corregida_alumno(self, alumno):
         respuesta_list = RespuestaEjercicioVirtual.objects.filter(clase_virtual=self).filter(alumno=alumno)
-        return any(respuesta.puntaje_obtenido is None for respuesta in respuesta_list)
+        for respuesta in respuesta_list:
+            if respuesta.puntaje_obtenido == None:
+                return False
+        return True
 
     def obtener_puntaje_alumno(self, alumno):
         return RespuestaEjercicioVirtual.objects.filter(clase_virtual=self).filter(
@@ -82,6 +85,7 @@ class RespuestaEjercicioVirtual(models.Model):
     texto = models.TextField(null=True,default=None)
     opcion_seleccionada = models.ForeignKey(OpcionEjercicio, related_name='+', null=True)
     puntaje_obtenido = models.FloatField(null=True, blank=True)
+    observaciones = models.TextField(null=True,default=None, blank=True)
 
 
 class ResultadoEvaluacion(models.Model):

@@ -44,7 +44,6 @@
                                     <li><a href="{% url 'aula_virtual:ver_solicitudes_pendientes_admin' %}">Solicitudes de Material</a></li>
                                 {% endif %}
 
-
                             </ul>
                         </nav>
                     {% endblock %}
@@ -60,34 +59,34 @@
         </div>
     </div>
     <div id="content" class="fluid-container">
+        {% block sidebar %}
+             <!-- Sidebar -->
+            {% if materia_dict %}
+            <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="{% url 'aula_virtual:biblioteca_home' %}">
+                        Biblioteca
+                    </a>
+                </li>
 
+            {% for key, value_list  in materia_dict.items %}
+                <p>Año: {{ key }}</p>
+            {% for materia in value_list %}
+                <li {% if current_materia.id == materia.id %} class="bg-primary" {% endif %}>
+                    <a href="{% url 'aula_virtual:materiales_by_materia' materia.id %}">{{ materia.descripcion }}</a>
+                </li>
+            {% endfor %}
+            {% endfor %}
+
+            </ul>
+            </div>
+            {% endif %}
+            <!-- /#sidebar-wrapper -->
+        {% endblock %}
         <div {% if materia_dict %}id="wrapper"{% endif %}>
 
-            {% block sidebar %}
-                 <!-- Sidebar -->
-                {% if materia_dict %}
-                <div id="sidebar-wrapper">
-                <ul class="sidebar-nav">
-                    <li class="sidebar-brand">
-                        <a href="{% url 'aula_virtual:biblioteca_home' %}">
-                            Biblioteca
-                        </a>
-                    </li>
 
-                {% for key, value_list  in materia_dict.items %}
-                    <p>Año: {{ key }}</p>
-                {% for materia in value_list %}
-                    <li {% if current_materia.id == materia.id %} class="bg-primary" {% endif %}>
-                        <a href="{% url 'aula_virtual:materiales_by_materia' materia.id %}">{{ materia.descripcion }}</a>
-                    </li>
-                {% endfor %}
-                {% endfor %}
-
-                </ul>
-                </div>
-                {% endif %}
-                <!-- /#sidebar-wrapper -->
-            {% endblock %}
             <div id="page-content-wrapper">
                 {% block content %}
                 {%  endblock %}
