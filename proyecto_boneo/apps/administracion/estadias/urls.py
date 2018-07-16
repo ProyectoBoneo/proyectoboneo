@@ -3,10 +3,11 @@ from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from . import views
-from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_not_alumno, user_is_alumno, user_is_staff, \
-    user_is_profesor, user_is_not_profesor
+from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_staff
 
-estadias_patterns = [
+app_name = 'estadias'
+
+urlpatterns = [
    url(r'^$', user_is_staff(views.EstadiasListView.as_view()),
        name='estadias'),
 
@@ -39,5 +40,3 @@ estadias_patterns = [
        name='ayuda_eliminar_estadia'),
 
 ]
-
-urlpatterns = estadias_patterns

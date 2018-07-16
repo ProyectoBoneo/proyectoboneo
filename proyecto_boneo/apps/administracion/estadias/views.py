@@ -1,7 +1,7 @@
 from . import forms, models
 
-from django.core.urlresolvers import reverse_lazy
-from gutils.django.views import ListView, CreateView, DetailView, UpdateView, ProtectedDeleteView, TemplateView
+from django.urls import reverse_lazy
+from proyecto_boneo.apps.gutils.django.views import ListView, CreateView, DetailView, UpdateView, ProtectedDeleteView, TemplateView
 
 
 class EstadiasListView(ListView):

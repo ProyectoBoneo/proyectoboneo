@@ -1,4 +1,4 @@
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import TemplateView
+from proyecto_boneo.apps.administracion.usuarios.custom_views.views import TemplateView
 
 
 class AulaVirtualHomeView(TemplateView):

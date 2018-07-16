@@ -114,9 +114,9 @@ class InstanciaCursado(models.Model):
     objects = InstanciaCursadoManager()
 
     anio_cursado = models.IntegerField()
-    materia = models.ForeignKey(Materia, related_name='instancias_cursado')
-    division = models.ForeignKey(Division, related_name='instancias_cursado')
-    profesor_titular = models.ForeignKey(Profesor, null=True, blank=True)
+    materia = models.ForeignKey(Materia, related_name='instancias_cursado', on_delete=models.CASCADE)
+    division = models.ForeignKey(Division, related_name='instancias_cursado', on_delete=models.CASCADE)
+    profesor_titular = models.ForeignKey(Profesor, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return '{} - {} - {}'.format(self.materia.descripcion, self.division, self.anio_cursado)
@@ -131,7 +131,7 @@ class HorarioManager(models.Manager):
 class Horario(models.Model):
     objects = HorarioManager()
 
-    instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='horarios')
+    instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='horarios', on_delete=models.CASCADE)
     dia_semana = models.IntegerField()
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()

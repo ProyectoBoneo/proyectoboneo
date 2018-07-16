@@ -1,4 +1,4 @@
-from gutils.django.forms.typeahead.lookups import Lookup, register_lookup
+from proyecto_boneo.apps.gutils.django.forms.typeahead.lookups import Lookup, register_lookup
 from proyecto_boneo.apps.administracion.personal.forms import PersonaForm
 
 from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo

@@ -8,14 +8,14 @@ from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
 
 
 class Responsable(Persona):
-    usuario = models.OneToOneField(UsuarioBoneo, related_name='responsable')
+    usuario = models.OneToOneField(UsuarioBoneo, related_name='responsable', on_delete=models.PROTECT)
 
 
 class Alumno(PersonaLegajo):
     PROMEDIO_UPDATE_THRESHOLD = 30
-    usuario = models.OneToOneField(UsuarioBoneo, related_name='alumno')
+    usuario = models.OneToOneField(UsuarioBoneo, related_name='alumno', on_delete=models.PROTECT)
     responsable = models.ForeignKey(Responsable, related_name='alumnos', on_delete=models.PROTECT)
-    division = models.ForeignKey(Division, related_name='alumnos', null=True, blank=True)
+    division = models.ForeignKey(Division, related_name='alumnos', null=True, blank=True, on_delete=models.PROTECT)
     _promedio = models.FloatField(null=True, blank=True)
     last_promedio_date = models.DateTimeField(null=True, blank=True)
 
@@ -40,8 +40,8 @@ class Alumno(PersonaLegajo):
 
 class InscripcionAlumno(models.Model):
     PROMEDIO_UPDATE_THRESHOLD = 30
-    alumno = models.ForeignKey(Alumno, related_name='inscripciones')
-    instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='inscripciones')
+    alumno = models.ForeignKey(Alumno, related_name='inscripciones', on_delete=models.CASCADE)
+    instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='inscripciones', on_delete=models.CASCADE)
     _promedio = models.FloatField(null=True, blank=True)
     last_promedio_date = models.DateTimeField(null=True, blank=True)
 
@@ -61,9 +61,9 @@ class InscripcionAlumno(models.Model):
     def get_evaluaciones(self):
         from proyecto_boneo.apps.aula_virtual.clases.models import ClaseVirtual, ResultadoEvaluacion
         return ResultadoEvaluacion.objects.filter(alumno=self.alumno,
-                                                          clase_virtual__materia=self.instancia_cursado.materia,
-                                                          clase_virtual__tipo__in=[ClaseVirtual.EVALUACION,
-                                                                                   ClaseVirtual.EVALUACION_ESCRITA])
+                                                  clase_virtual__materia=self.instancia_cursado.materia,
+                                                  clase_virtual__tipo__in=[ClaseVirtual.EVALUACION,
+                                                                           ClaseVirtual.EVALUACION_ESCRITA])
 
     @property
     def promedio(self):
@@ -75,6 +75,6 @@ class InscripcionAlumno(models.Model):
 
 class Asistencia(models.Model):
     fecha = models.DateField()
-    alumno = models.ForeignKey(Alumno, related_name='asistencias')
-    division = models.ForeignKey(Division, related_name='asistentes')
+    alumno = models.ForeignKey(Alumno, related_name='asistencias', on_delete=models.CASCADE)
+    division = models.ForeignKey(Division, related_name='asistentes', on_delete=models.CASCADE)
     asistio = models.BooleanField(default=False)

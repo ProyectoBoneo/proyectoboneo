@@ -3,10 +3,10 @@ from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView, \
+from proyecto_boneo.apps.administracion.usuarios.custom_views.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView, \
     TemplateView
-from gutils.django.views import View
-from django.core.urlresolvers import reverse_lazy
+from proyecto_boneo.apps.gutils.django.views import View
+from django.urls import reverse_lazy
 
 from . import forms, models
 from proyecto_boneo.apps.aula_virtual.clases.forms import TipoEjercicioForm, OpcionEjercicioVirtualFormSet, \

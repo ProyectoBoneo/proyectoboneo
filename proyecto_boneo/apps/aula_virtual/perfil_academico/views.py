@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import PermissionDenied
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import View
+from proyecto_boneo.apps.administracion.usuarios.custom_views.views import View
 
 from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 

@@ -1,10 +1,10 @@
 import datetime
 import json
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import redirect, render, HttpResponse
 from django.views.generic import View
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import ListView, CreateView, DetailView
+from proyecto_boneo.apps.administracion.usuarios.custom_views.views import ListView, CreateView, DetailView
 
 from proyecto_boneo.apps.aula_virtual.comunicados.models import Comunicado, DestinatarioComunicado
 from . import forms, models

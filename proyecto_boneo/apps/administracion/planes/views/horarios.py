@@ -1,9 +1,9 @@
 from datetime import datetime
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-from gutils.django.views import View, TemplateView
+from proyecto_boneo.apps.gutils.django.views import View, TemplateView
 from .. import forms, models
 from proyecto_boneo.apps.administracion.planes.forms import ConfigurarHorariosMateriasForm, HorarioFechaForm
 from proyecto_boneo.apps.administracion.planes.models import Horario

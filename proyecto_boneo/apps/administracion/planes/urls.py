@@ -5,9 +5,11 @@ from . import views
 from proyecto_boneo.apps.administracion.planes.views import horarios
 from proyecto_boneo.apps.administracion.planes.views.materias import ProfesoresDivisionAyudaTemplateView
 from proyecto_boneo.apps.administracion.planes.views.plan import DivisionesAyudaTemplateView
-from .views import materias, plan
+from .views import materias
 from proyecto_boneo.apps.administracion.planes.views.horarios import HorarioPorFechaView, HorarioIrAFechaView
 from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_staff
+
+app_name = 'planes'
 
 materias_patterns = [
    url(r'^materias/$', user_is_staff(views.MateriasFilteredListView.as_view()),

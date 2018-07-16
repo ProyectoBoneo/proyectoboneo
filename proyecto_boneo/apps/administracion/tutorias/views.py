@@ -1,15 +1,15 @@
 from . import forms, models
 
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.forms import formset_factory
 from django.shortcuts import render
-from gutils.django.views import View, TemplateView
+from proyecto_boneo.apps.gutils.django.views import View, TemplateView
 from django.views.generic import View,ListView, CreateView, DetailView, UpdateView
 from proyecto_boneo.apps.administracion.alumnos.models import Alumno
 from proyecto_boneo.apps.administracion.personal.models import Profesor
 from proyecto_boneo.apps.administracion.tutorias.forms import EncuentroTutoriaForTutoriaForm
-from gutils.django.views import ProtectedDeleteView
+from proyecto_boneo.apps.gutils.django.views import ProtectedDeleteView
 
 
 class TutoriasListView(ListView):

@@ -1,5 +1,5 @@
-from gutils.django.views import View, ListView, TemplateView
-from django.core.urlresolvers import reverse_lazy
+from proyecto_boneo.apps.gutils.django.views import View, ListView, TemplateView
+from django.urls import reverse_lazy
 
 from django.shortcuts import render, redirect
 

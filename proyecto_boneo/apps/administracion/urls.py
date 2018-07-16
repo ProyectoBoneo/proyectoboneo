@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 
 from . import views
 
+app_name = 'administracion'
+
 urlpatterns = [
     url(r'^$', login_required(views.AdministracionHomeView.as_view()), name='home'),
     url(r'^alumnos/', include('proyecto_boneo.apps.administracion.alumnos.urls')),

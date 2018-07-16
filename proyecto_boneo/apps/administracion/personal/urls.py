@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from . import views
 from proyecto_boneo.apps.administracion.usuarios.decorators import user_is_staff
 
+app_name = 'personal'
+
 urlpatterns = [
    url(r'^profesores/$',
        user_is_staff(views.ProfesoresFilteredListView.as_view()),

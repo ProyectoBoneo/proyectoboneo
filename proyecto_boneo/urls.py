@@ -3,10 +3,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
-from gutils.django.forms.typeahead.views import TypeaheadAddModelView, TypeaheadView
+from proyecto_boneo.apps.gutils.django.forms.typeahead.views import TypeaheadAddModelView, TypeaheadView
 
-from .views import home_redirect_router, IndiceView, CalendarioAyudaTemplateView, NuevasClasesVirtualesAyudaTemplateView, \
-    ProximosEncuentrosTutoriaAyudaTemplateView
+from .views import (home_redirect_router, IndiceView,
+                    CalendarioAyudaTemplateView, NuevasClasesVirtualesAyudaTemplateView,
+                    ProximosEncuentrosTutoriaAyudaTemplateView)
 
 typeahead_patterns = [
     url(r'^typeahead/$', TypeaheadView.as_view(), name='typeahead'),

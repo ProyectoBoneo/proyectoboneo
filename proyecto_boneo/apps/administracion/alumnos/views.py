@@ -1,6 +1,6 @@
 from datetime import datetime
-from gutils.django.views import ProtectedDeleteView, FilteredReportListView, View, TemplateView
-from django.core.urlresolvers import reverse_lazy
+from proyecto_boneo.apps.gutils.django.views import ProtectedDeleteView, FilteredReportListView, View, TemplateView
+from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 
 from proyecto_boneo.apps.administracion.personal.views import PersonaCreateView, PersonaUpdateView
@@ -17,7 +17,7 @@ class AlumnosFilteredListView(FilteredReportListView):
     template_name = 'alumnos/alumnos/alumnos_list.html'
     report = reports.AlumnosReport
 
-    
+
 class AlumnosCreateView(PersonaCreateView):
     model = models.Alumno
     success_url = reverse_lazy('administracion:alumnos')

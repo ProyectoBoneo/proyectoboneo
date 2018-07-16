@@ -36,7 +36,7 @@ class ClaseVirtual(models.Model):
     def es_corregida_alumno(self, alumno):
         respuesta_list = RespuestaEjercicioVirtual.objects.filter(clase_virtual=self).filter(alumno=alumno)
         for respuesta in respuesta_list:
-            if respuesta.puntaje_obtenido == None:
+            if respuesta.puntaje_obtenido is None:
                 return False
         return True
 
@@ -55,7 +55,7 @@ class EjercicioVirtual(models.Model):
     )
 
     tipo_ejercicio = models.CharField(max_length=3, choices=TIPO_CHOICES)
-    clase_virtual = models.ForeignKey(ClaseVirtual, related_name='ejercicios')
+    clase_virtual = models.ForeignKey(ClaseVirtual, related_name='ejercicios', on_delete=models.CASCADE)
     puntaje = models.FloatField(null=True, blank=True)
     orden_prioridad = models.IntegerField(null=True, blank=True)
 
@@ -78,14 +78,14 @@ class OpcionEjercicio(models.Model):
 
 
 class RespuestaEjercicioVirtual(models.Model):
-    alumno = models.ForeignKey(Alumno, related_name='respuestas')
-    clase_virtual = models.ForeignKey(ClaseVirtual, related_name='respuestas')
+    alumno = models.ForeignKey(Alumno, related_name='respuestas', on_delete=models.CASCADE)
+    clase_virtual = models.ForeignKey(ClaseVirtual, related_name='respuestas', on_delete=models.CASCADE)
     ejercicio = models.ForeignKey(EjercicioVirtual, related_name='respuestas', on_delete=models.CASCADE)
 
     texto = models.TextField(null=True,default=None)
-    opcion_seleccionada = models.ForeignKey(OpcionEjercicio, related_name='+', null=True)
+    opcion_seleccionada = models.ForeignKey(OpcionEjercicio, related_name='+', null=True, on_delete=models.CASCADE)
     puntaje_obtenido = models.FloatField(null=True, blank=True)
-    observaciones = models.TextField(null=True,default=None, blank=True)
+    observaciones = models.TextField(null=True, default=None, blank=True)
 
 
 class ResultadoEvaluacion(models.Model):

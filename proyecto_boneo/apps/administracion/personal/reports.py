@@ -1,4 +1,4 @@
-from gutils.reports import BaseModelReport
+from proyecto_boneo.apps.gutils.reports import BaseModelReport
 from proyecto_boneo.apps.administracion.personal.models import Profesor
 
 

@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import formset_factory
 from django.forms.models import modelformset_factory
-from gutils.django.forms import BaseFormsetModelForm, BaseFormsetForm, BaseFilterReportForm
-from gutils.django.forms.typeahead.widgets import TypeaheadDropDownAddModelWidget, TypeaheadDropDownModelWidget
+from proyecto_boneo.apps.gutils.django.forms import BaseFormsetModelForm, BaseFormsetForm, BaseFilterReportForm
+from proyecto_boneo.apps.gutils.django.forms.typeahead.widgets import TypeaheadDropDownAddModelWidget, TypeaheadDropDownModelWidget
 from proyecto_boneo.apps.administracion.alumnos.lookups import AlumnoLookup
 
 from proyecto_boneo.apps.administracion.personal.forms import PersonaForm

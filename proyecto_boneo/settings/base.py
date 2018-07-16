@@ -32,9 +32,9 @@ DJANGO_APPS = ('django.contrib.admin',
 
 THIRD_PARTY_APPS = ('django_extensions', )
 
-PROJECT_APPS = ('gutils',
-                'gutils.django.forms.typeahead',
-                'gutils.django.apps.utils',
+PROJECT_APPS = ('proyecto_boneo.apps.gutils',
+                'proyecto_boneo.apps.gutils.django.forms.typeahead',
+                'proyecto_boneo.apps.gutils.django.apps.utils',
                 'proyecto_boneo.apps.administracion.alumnos',
                 'proyecto_boneo.apps.administracion.personal',
                 'proyecto_boneo.apps.administracion.planes',

@@ -15,6 +15,6 @@ class Comunicado(models.Model):
 
 
 class DestinatarioComunicado(models.Model):
-    comunicado = models.ForeignKey(Comunicado)
-    destinatario = models.ForeignKey(UsuarioBoneo)
+    comunicado = models.ForeignKey(Comunicado, on_delete=models.CASCADE)
+    destinatario = models.ForeignKey(UsuarioBoneo, on_delete=models.CASCADE)
     fecha_leido = models.DateTimeField(null=True, blank=True)

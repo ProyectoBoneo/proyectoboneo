@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from . import forms, models
 from django.views.generic import View
 from proyecto_boneo.apps.administracion.planes.models import Materia
 from collections import defaultdict
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import CreateView, UpdateView, ProtectedDeleteView, \
+from proyecto_boneo.apps.administracion.usuarios.custom_views.views import CreateView, UpdateView, ProtectedDeleteView, \
     DetailView, ListView, FilteredListView, TemplateView
 from proyecto_boneo.apps.aula_virtual.biblioteca.forms import MaterialForm, SolicitudMaterialRechazoForm
 

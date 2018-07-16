@@ -1,7 +1,7 @@
 import datetime
 
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredReportListView, View, TemplateView
-from django.core.urlresolvers import reverse_lazy
+from proyecto_boneo.apps.gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredReportListView, View, TemplateView
+from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 
 from .. import forms, models, reports

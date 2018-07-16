@@ -1,8 +1,8 @@
 import datetime
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import redirect
-from django.views.generic import View, TemplateView
+from django.views.generic import TemplateView
 from proyecto_boneo.apps.administracion.planes.models import Horario
 from proyecto_boneo.apps.administracion.tutorias.models import EncuentroTutoria
 from proyecto_boneo.apps.aula_virtual.biblioteca.models import Material

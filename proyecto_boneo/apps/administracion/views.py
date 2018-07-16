@@ -1,4 +1,4 @@
-from gutils.django.views import TemplateView
+from proyecto_boneo.apps.gutils.django.views import TemplateView
 
 
 class AdministracionHomeView(TemplateView):

@@ -1,6 +1,6 @@
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from proyecto_boneo.apps.administracion.usuarios import models
-from proyecto_boneo.apps.administracion.usuarios.customViews.views import DetailView, UpdateView
+from proyecto_boneo.apps.administracion.usuarios.custom_views.views import DetailView, UpdateView
 from proyecto_boneo.apps.administracion.usuarios.forms import CustomUserCreationForm, CustomUserChangeForm
 
 

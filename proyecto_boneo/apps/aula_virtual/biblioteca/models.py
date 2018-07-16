@@ -46,16 +46,8 @@ class SolicitudMaterial(BaseMaterial):
     motivo_rechazo = models.TextField(null=True, blank=True)
     aceptada = models.BooleanField(default=False)
     pendiente_de_respuesta = models.BooleanField(default=True)
-    solicitante = models.ForeignKey(UsuarioBoneo, related_name='solicitante', default=None)
-    material = models.ForeignKey(Material, null=True, blank=True, default=None)
+    solicitante = models.ForeignKey(UsuarioBoneo, related_name='solicitante', default=None, on_delete=models.CASCADE)
+    material = models.ForeignKey(Material, null=True, blank=True, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.descripcion
-# TODO: Ver las solicitudes que puedan aceptarse sin subir el material. Hacer una vista de
-# solicitudes aceptadas sin material
-
-
-# class MaterialAlumno(models.Model):
-#     usuario = models.ForeignKey(UsuarioBoneo, related_name='materialpersonas')
-#     material = models.ForeignKey(Material, related_name='materialpersonas')
-#     marked_as_pinned = models.BooleanField()

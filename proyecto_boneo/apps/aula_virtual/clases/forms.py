@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory, modelformset_factory
 
-from gutils.django.forms import BaseModelForm, BaseFilterForm, BaseForm
+from proyecto_boneo.apps.gutils.django.forms import BaseModelForm, BaseFilterForm, BaseForm
 
 from . import models
 from proyecto_boneo.apps.aula_virtual.clases.models import EjercicioVirtual,OpcionEjercicio

@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView
-from django.core.urlresolvers import reverse_lazy
+from proyecto_boneo.apps.gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredListView, ListView, DetailView
+from django.urls import reverse_lazy
 
 from . import forms, models
 from django.views.generic import TemplateView

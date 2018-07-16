@@ -1,8 +1,8 @@
 beautifulsoup4==4.3.2
 decorator==4.0.4
-Django==1.8.1
+Django==2.0.7
 django-cors-headers==1.1.0
-django-extensions==1.5.7
+django-extensions==2.1.0
 djangorestframework==3.1.0
 ipython==4.0.0
 ipython-genutils==0.1.0
@@ -17,5 +17,4 @@ simplegeneric==0.8.1
 six==1.9.0
 traitlets==4.0.0
 unidecode==0.4.19
-xlwt==1.1.2
--e git://github.com/alvarotuso/gutils.git#egg=gutils
+xlwt==1.3.0

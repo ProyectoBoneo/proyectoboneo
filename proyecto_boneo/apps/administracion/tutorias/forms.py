@@ -4,8 +4,8 @@ from . import models
 
 # place form definition here
 from django.forms import ModelForm, NumberInput
-from gutils.django.forms import BaseModelForm
-from gutils.django.forms.typeahead.widgets import TypeaheadDropDownModelWidget
+from proyecto_boneo.apps.gutils.django.forms import BaseModelForm
+from proyecto_boneo.apps.gutils.django.forms.typeahead.widgets import TypeaheadDropDownModelWidget
 from proyecto_boneo.apps.administracion.alumnos.lookups import AlumnoLookup
 from proyecto_boneo.apps.administracion.personal.lookups import ProfesorLookup
 

@@ -1,6 +1,6 @@
 from django.db import models
 
-from gutils.generic.datetime import calculate_age
+from proyecto_boneo.apps.gutils.generic.datetime import calculate_age
 
 from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
 
@@ -55,7 +55,7 @@ class PersonaLegajo(Persona):
 
 
 class Profesor(PersonaLegajo):
-    usuario = models.OneToOneField(UsuarioBoneo, related_name='profesor')
+    usuario = models.OneToOneField(UsuarioBoneo, related_name='profesor', on_delete=models.PROTECT)
 
     def crear_usuario(self, email):
         super(Profesor, self).crear_usuario(email)

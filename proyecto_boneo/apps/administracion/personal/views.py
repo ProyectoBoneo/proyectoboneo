@@ -1,5 +1,5 @@
-from gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredReportListView,TemplateView
-from django.core.urlresolvers import reverse_lazy
+from proyecto_boneo.apps.gutils.django.views import CreateView, UpdateView, ProtectedDeleteView, FilteredReportListView,TemplateView
+from django.urls import reverse_lazy
 
 from . import forms, models, reports
 
@@ -28,8 +28,8 @@ class ProfesoresFilteredListView(FilteredReportListView):
     model = models.Profesor
     template_name = 'personal/profesores/profesores_list.html'
     report = reports.ProfesoresReport
-    
-    
+
+
 class ProfesoresCreateView(PersonaCreateView):
     model = models.Profesor
     success_url = reverse_lazy('administracion:profesores')

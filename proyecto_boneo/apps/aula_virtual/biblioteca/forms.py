@@ -1,6 +1,6 @@
 from django import forms
 
-from gutils.django.forms import BaseModelForm, BaseFilterForm
+from proyecto_boneo.apps.gutils.django.forms import BaseModelForm, BaseFilterForm
 
 from . import models
 
