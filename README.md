@@ -1,6 +1,6 @@
-#Proyecto boneo
+# Proyecto boneo
 
-##Instrucciones para desarrollo:
+## Instrucciones para desarrollo:
 
 1. Clonar el repositorio
     ```
@@ -21,8 +21,8 @@ Crear base de datos PostgreSQL, llamada `proyecto_boneo`, cuyo owner es `boneo` 
 5. Correr migraciones
     ```
     python manage.py migrate
-    ```    
-    
+    ```
+
 6. Carga de datos iniciales
 Este paso cargará los datos iniciales de prueba del sistema y creará el superuser `boneo` / `boneo`
     ```
