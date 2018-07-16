@@ -29,7 +29,7 @@ class TutoriasListView(ListView):
 
 class TutoriaCreateView(CreateView):
     model = models.Tutoria
-    success_url = reverse_lazy('administracion:tutorias')
+    success_url = reverse_lazy('administracion:tutorias:tutorias')
     form_class = forms.TutoriaForm
     template_name = 'tutorias/tutorias_form.html'
 
@@ -69,14 +69,14 @@ class TutoriaDetailView(View):
 
 class TutoriaUpdateView(UpdateView):
     model = models.Tutoria
-    success_url = reverse_lazy('administracion:tutorias')
+    success_url = reverse_lazy('administracion:tutorias:tutorias')
     form_class = forms.TutoriaForm
     template_name = 'tutorias/tutorias_form.html'
 
 
 class TutoriaDeleteView(ProtectedDeleteView):
     model = models.Tutoria
-    success_url = reverse_lazy('administracion:tutorias')
+    success_url = reverse_lazy('administracion:tutorias:tutorias')
     template_name = 'tutorias/tutorias_confirm_delete.html'
 
 
@@ -106,7 +106,7 @@ class EncuentroTutoriaUpdateView(UpdateView):
 
     def get_success_url(self):
         encuentro_tutoria = models.EncuentroTutoria.objects.filter(pk=self.kwargs['pk']).first()
-        return reverse_lazy('administracion:ver_tutoria', kwargs={'pk': encuentro_tutoria.tutoria.pk})
+        return reverse_lazy('administracion:tutorias:ver_tutoria', kwargs={'pk': encuentro_tutoria.tutoria.pk})
 
 
 class EncuentroTutoriaDeleteView(ProtectedDeleteView):

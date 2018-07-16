@@ -49,15 +49,15 @@ PROJECT_APPS = ('proyecto_boneo.apps.gutils',
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'gutils.django.middleware.ThreadLocalMiddleware',
-)
+]
 
 TEMPLATE_CONTEXTS_PROCESSORS = [
     'django.template.context_processors.debug',

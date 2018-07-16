@@ -41,17 +41,17 @@
                                         <li><a href="{% url 'administracion:divisiones' %}">Divisiones</a></li>
                                         <li><a href="{% url 'administracion:horario_hoy' %}">Asistencia</a></li>
                                         <li><a href="{% url 'administracion:materias' %}">Materias</a></li>
-                                        <li><a href="{% url 'administracion:tutorias' %}">Tutorías</a></li>
+                                        <li><a href="{% url 'administracion:tutorias:tutorias' %}">Tutorías</a></li>
                                         <li><a href="{% url 'administracion:estadias' %}">Estadías</a></li>
                                     {% endif %}
                                     {% if user.is_alumno %}
                                         <li><a href="{% url 'home' %}">Home</a></li>
-                                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
+                                        <li><a href="{% url 'administracion:tutorias:tutorias' %}">Mis Tutorías</a></li>
                                         <li><a href="{% url 'aula_virtual:estado_academico' alumno_pk=user.alumno.id %}">Estado académico</a></li>
                                     {% endif %}
                                     {% if user.is_profesor %}
                                         <li><a href="{% url 'home' %}">Home</a></li>
-                                        <li><a href="{% url 'administracion:tutorias' %}">Mis Tutorías</a></li>
+                                        <li><a href="{% url 'administracion:tutorias:tutorias' %}">Mis Tutorías</a></li>
 
                                     {% endif %}
                                 </ul>

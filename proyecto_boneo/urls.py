@@ -29,11 +29,13 @@ auth_patterns = [
 
 project_patterns = [
     url(r'^$', login_required(home_redirect_router), name='home'),
-    url(r'administracion/', include('proyecto_boneo.apps.administracion.urls', namespace='administracion')),
-    url(r'aula_virtual/', include('proyecto_boneo.apps.aula_virtual.urls', namespace='aula_virtual')),
+    url(r'administracion/', include('proyecto_boneo.apps.administracion.urls')),
+    url(r'aula_virtual/', include('proyecto_boneo.apps.aula_virtual.urls')),
     url(r'^indice/$', IndiceView.as_view(), name='indice'),
-    url(r'^ayuda/proximos_encuentros_tutoria/$', ProximosEncuentrosTutoriaAyudaTemplateView.as_view(), name='ayuda_proximos_encuentros_tutoria'),
-    url(r'^ayuda/nuevas_clases_virtuales/$', NuevasClasesVirtualesAyudaTemplateView.as_view(), name='ayuda_nuevas_clases_virtuales'),
+    url(r'^ayuda/proximos_encuentros_tutoria/$', ProximosEncuentrosTutoriaAyudaTemplateView.as_view(),
+        name='ayuda_proximos_encuentros_tutoria'),
+    url(r'^ayuda/nuevas_clases_virtuales/$', NuevasClasesVirtualesAyudaTemplateView.as_view(),
+        name='ayuda_nuevas_clases_virtuales'),
     url(r'^ayuda/calendario/$', CalendarioAyudaTemplateView.as_view(), name='ayuda_calendario')
 ]
 

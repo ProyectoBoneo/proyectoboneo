@@ -2,7 +2,7 @@
 {% block title %}Tutorias{% endblock %}
 {% block content %}
     <div class="col-md-offset-1 col-md-10">
-    <h3 class="inline-title">Tutorías</h3>  <span class=""><a href="{% url 'administracion:ayuda_tutorias' %}" onclick="window.open('{% url 'administracion:ayuda_tutorias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Tutorías</h3>  <span class=""><a href="{% url 'administracion:tutorias:ayuda_tutorias' %}" onclick="window.open('{% url 'administracion:tutorias:ayuda_tutorias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     {% if user.is_staff %}
     <div class="row">
          <a class="btn btn-success" href="{% url 'administracion:nuevo_tutoria' %}">
@@ -38,19 +38,19 @@
                         <td>{{ tutoria.alumno }}</td>
                         {% if user.is_profesor or user.is_alumno %}
                             <td>
-                                <a class="btn btn-default" href="{% url 'administracion:ver_tutoria' tutoria.id %}">
+                                <a class="btn btn-default" href="{% url 'administracion:tutorias:ver_tutoria' tutoria.id %}">
                                     <i class="fa fa-eye"></i> Ver
                                 </a>
                             </td>
                         {% endif %}
                         {% if user.is_staff %}
                             <td>
-                                <a class="btn btn-primary" href="{% url 'administracion:editar_tutoria' tutoria.id %}">
+                                <a class="btn btn-primary" href="{% url 'administracion:tutorias:editar_tutoria' tutoria.id %}">
                                     <i class="fa fa-edit"></i> Editar
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-danger" href="{% url 'administracion:eliminar_tutoria' tutoria.id %}">
+                                <a class="btn btn-danger" href="{% url 'administracion:tutorias:eliminar_tutoria' tutoria.id %}">
                                     <i class="fa fa-trash"></i> Eliminar
                                 </a>
                             </td>
