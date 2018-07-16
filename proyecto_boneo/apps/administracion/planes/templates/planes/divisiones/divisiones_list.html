@@ -2,7 +2,7 @@
 {% block title %}Divisiones{% endblock %}
 {% block content %}
     <div class="col-md-offset-1 col-md-10">
-        <h3 class="inline-title">Divisiones</h3>  <span class=""><a href="{% url 'administracion:ayuda_divisiones' %}" onclick="window.open('{% url 'administracion:ayuda_divisiones' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+        <h3 class="inline-title">Divisiones</h3>  <span class=""><a href="{% url 'administracion:planes:ayuda_divisiones' %}" onclick="window.open('{% url 'administracion:planes:ayuda_divisiones' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
         <div class="margin-top margin-bottom">
             <label for="anio_lectivo" class="margin-right">Año lectivo</label>
             {% if anio_lectivo %}
@@ -15,9 +15,9 @@
             {% endif %}
         </div>
         <div class="margin-top margin-bottom">
-            <a class="btn btn-default" href="{% url 'administracion:configurar_divisiones' %}">Configurar divisiones</a>
+            <a class="btn btn-default" href="{% url 'administracion:planes:configurar_divisiones' %}">Configurar divisiones</a>
             {% if necesario_generar %}
-                <a class="btn btn-default" href="{% url 'administracion:generar_instancias_cursado' %}">Generar instancias de cursado</a>
+                <a class="btn btn-default" href="{% url 'administracion:planes:generar_instancias_cursado' %}">Generar instancias de cursado</a>
             {% endif %}
         </div>
         {% if object_list %}
@@ -34,17 +34,17 @@
                         <tr>
                             <td>{{ division.anio }}° {{ division.letra }}</td>
                         <td>
-                            <a class="btn btn-default" href="{% url 'administracion:inscripciones_alumno' division.id %}">
+                            <a class="btn btn-default" href="{% url 'administracion:alumnos:inscripciones_alumno' division.id %}">
                                 <i class="fa fa-edit"></i> Inscripciones
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-default" href="{% url 'administracion:configurar_profesores_materias' division.id %}">
+                            <a class="btn btn-default" href="{% url 'administracion:planes:configurar_profesores_materias' division.id %}">
                                 <i class="fa fa-edit"></i> Profesores por Materia
                             </a>
                         </td>
                             <td>
-                                <a class="btn btn-primary" href="{% url 'administracion:configurar_horarios_materias' division.id %}">
+                                <a class="btn btn-primary" href="{% url 'administracion:planes:configurar_horarios_materias' division.id %}">
                                     <i class="fa fa-calendar" aria-hidden="true"></i> Calendario semanal
                                 </a>
                             </td>

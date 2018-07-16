@@ -2,7 +2,7 @@
 {% block title %}Materias{% endblock %}
 {% block content %}
     <div class="col-md-offset-1 col-md-10">
-        <h3 class="inline-title">Materias</h3> <span class=""><a href="{% url 'administracion:ayuda_materias' %}" onclick="window.open('{% url 'administracion:ayuda_materias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+        <h3 class="inline-title">Materias</h3> <span class=""><a href="{% url 'administracion:planes:ayuda_materias' %}" onclick="window.open('{% url 'administracion:planes:ayuda_materias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
         <form action="." method="get" class="margin-bottom-2x">
             <div class="form-group">
                 {{ filter_form.descripcion.label_tag }}
@@ -10,7 +10,7 @@
             </div>
             {{ filter_form.render_xls_report }}
             {{ filter_form.render_pdf_report }}
-            <a class="btn btn-success" href="{% url 'administracion:nueva_materia' %}">
+            <a class="btn btn-success" href="{% url 'administracion:planes:nueva_materia' %}">
                 <i class="fa fa-plus-circle"></i>  Nueva materia
             </a>
             <button class="btn btn-default" type="submit" onclick="filterController.filter_click(this)">
@@ -43,11 +43,11 @@
                             <td>{{ materia.descripcion }}</td>
                             <td>{{ materia.anio }}</td>
                             <td>
-                                <a class="btn btn-primary" href="{% url 'administracion:editar_materia' materia.id %}">
+                                <a class="btn btn-primary" href="{% url 'administracion:planes:editar_materia' materia.id %}">
                                     <i class="fa fa-edit"></i> Editar
                                 </a>
                             </td>
-                            <td><a class="btn btn-danger" href="{% url 'administracion:eliminar_materia' materia.id %}">
+                            <td><a class="btn btn-danger" href="{% url 'administracion:planes:eliminar_materia' materia.id %}">
                                     <i class="fa fa-trash"></i> Eliminar
                                 </a>
                             </td>

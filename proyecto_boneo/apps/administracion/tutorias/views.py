@@ -111,7 +111,7 @@ class EncuentroTutoriaUpdateView(UpdateView):
 
 class EncuentroTutoriaDeleteView(ProtectedDeleteView):
     model = models.EncuentroTutoria
-    success_url = reverse_lazy('administracion:encuentrotutorias')
+    success_url = reverse_lazy('administracion:tutorias:encuentrotutorias')
     template_name = 'encuentrotutorias/encuentrotutorias_confirm_delete.html'
 
 

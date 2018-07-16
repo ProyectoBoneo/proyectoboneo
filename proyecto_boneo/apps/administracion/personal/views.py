@@ -32,21 +32,21 @@ class ProfesoresFilteredListView(FilteredReportListView):
 
 class ProfesoresCreateView(PersonaCreateView):
     model = models.Profesor
-    success_url = reverse_lazy('administracion:profesores')
+    success_url = reverse_lazy('administracion:personal:profesores')
     form_class = forms.ProfesorForm
     template_name = 'personal/profesores/profesores_form.html'
 
 
 class ProfesoresUpdateView(PersonaUpdateView):
     model = models.Profesor
-    success_url = reverse_lazy('administracion:profesores')
+    success_url = reverse_lazy('administracion:personal:profesores')
     form_class = forms.ProfesorForm
     template_name = 'personal/profesores/profesores_form.html'
 
 
 class ProfesoresDeleteView(ProtectedDeleteView):
     model = models.Profesor
-    success_url = reverse_lazy('administracion:profesores')
+    success_url = reverse_lazy('administracion:personal:profesores')
     template_name = 'personal/profesores/profesores_confirm_delete.html'
 
 

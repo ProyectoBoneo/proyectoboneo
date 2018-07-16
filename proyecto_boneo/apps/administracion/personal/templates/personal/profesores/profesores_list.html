@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Profesores{% endblock %}
 {% block content %}
-    <h3 class="inline-title">Profesores</h3>  <span class=""><a href="{% url 'administracion:ayuda_profesores' %}" onclick="window.open('{% url 'administracion:ayuda_profesores' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Profesores</h3>  <span class=""><a href="{% url 'administracion:personal:ayuda_profesores' %}" onclick="window.open('{% url 'administracion:personal:ayuda_profesores' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form action="" method="get" class="margin-bottom-2x">
         <div class="form-group">
             {{ filter_form.nombre.label_tag }}
@@ -13,7 +13,7 @@
         </div>
         {{ filter_form.render_xls_report }}
         {{ filter_form.render_pdf_report }}
-        <a class="btn btn-success" href="{% url 'administracion:nuevo_profesor' %}">
+        <a class="btn btn-success" href="{% url 'administracion:personal:nuevo_profesor' %}">
             <i class="fa fa-plus-circle"></i>  Nuevo profesor
         </a>
         <button class="btn btn-default" type="submit" onclick="filterController.filter_click(this)">
@@ -49,11 +49,11 @@
                         <td>{{ profesor.apellido }}</td>
                         <td>{{ profesor.domicilio }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{% url 'administracion:editar_profesor' profesor.id %}">
+                            <a class="btn btn-primary" href="{% url 'administracion:personal:editar_profesor' profesor.id %}">
                                 <i class="fa fa-edit"></i> Editar
                             </a>
                         </td>
-                        <td><a class="btn btn-danger" href="{% url 'administracion:eliminar_profesor' profesor.id %}">
+                        <td><a class="btn btn-danger" href="{% url 'administracion:personal:eliminar_profesor' profesor.id %}">
                                 <i class="fa fa-trash"></i> Eliminar
                             </a>
                         </td>

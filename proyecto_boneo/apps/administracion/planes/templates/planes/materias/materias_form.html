@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Materia{% endblock %}
 {% block content %}
-    <h3 class="inline-title">Materia</h3> <span class=""><a href="{% url 'administracion:ayuda_nuevo_materia' %}" onclick="window.open('{% url 'administracion:ayuda_nuevo_materia' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Materia</h3> <span class=""><a href="{% url 'administracion:planes:ayuda_nuevo_materia' %}" onclick="window.open('{% url 'administracion:planes:ayuda_nuevo_materia' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action=".">
         {% csrf_token %}
         <div class="form-group">
@@ -18,7 +18,7 @@
         <button type="submit" class="btn btn-success">
             <i class="fa fa-check-circle"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'administracion:materias' %}">
+        <a class="btn btn-default" href="{% url 'administracion:planes:materias' %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>

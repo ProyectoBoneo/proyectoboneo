@@ -15,7 +15,7 @@ class UsuarioDetailView(DetailView):
 
 class UsuarioUpdateView(UpdateView):
     model = models.UsuarioBoneo
-    success_url = reverse_lazy('administracion:usuarios')
+    success_url = reverse_lazy('administracion:usuarios:usuarios')
     form_class = CustomUserChangeForm
     template_name = 'usuarios/usuarios_form.html'
 

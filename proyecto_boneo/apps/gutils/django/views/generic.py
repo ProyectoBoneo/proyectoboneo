@@ -130,7 +130,11 @@ class ProtectedDeleteView(DeleteView, PermissionsBaseView):
             http_succes = super(ProtectedDeleteView, self).delete(request, *args, **kwargs)
             return http_succes
         except ProtectedError:
-            relaciones = self.object._meta.get_all_related_objects()
+            relaciones = [
+                f for f in self.object._meta.get_fields()
+                if (f.one_to_many or f.one_to_one)
+                and f.auto_created and not f.concrete
+            ]
             for relacion in relaciones:
                 relacion.nombre = relacion.model._meta.verbose_name_plural
                 nombre_relacion = relacion.get_accessor_name()

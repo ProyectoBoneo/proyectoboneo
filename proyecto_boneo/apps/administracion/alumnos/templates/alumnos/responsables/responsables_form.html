@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Responsable{% endblock %}
 {% block content %}
-    <h3 class="inline-title">Responsable</h3> <span class=""><a href="{% url 'administracion:ayuda_nuevo_responsable' %}" onclick="window.open('{% url 'administracion:ayuda_nuevo_responsable' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Responsable</h3> <span class=""><a href="{% url 'administracion:alumnos:ayuda_nuevo_responsable' %}" onclick="window.open('{% url 'administracion:ayuda_nuevo_responsable' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action=".">
         {% csrf_token %}
         <div class="formfields">
@@ -44,7 +44,7 @@
         <button type="submit" class="btn btn-success">
             <i class="fa fa-check-circle"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'administracion:responsables' %}">
+        <a class="btn btn-default" href="{% url 'administracion:alumnos:responsables' %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>

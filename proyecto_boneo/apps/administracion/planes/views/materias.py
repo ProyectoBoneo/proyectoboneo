@@ -17,21 +17,21 @@ class MateriasFilteredListView(FilteredReportListView):
 
 class MateriasCreateView(CreateView):
     model = models.Materia
-    success_url = reverse_lazy('administracion:materias')
+    success_url = reverse_lazy('administracion:planes:materias')
     form_class = forms.MateriaForm
     template_name = 'planes/materias/materias_form.html'
 
 
 class MateriasUpdateView(UpdateView):
     model = models.Materia
-    success_url = reverse_lazy('administracion:materias')
+    success_url = reverse_lazy('administracion:planes:materias')
     form_class = forms.MateriaForm
     template_name = 'planes/materias/materias_form.html'
 
 
 class MateriasDeleteView(ProtectedDeleteView):
     model = models.Materia
-    success_url = reverse_lazy('administracion:materias')
+    success_url = reverse_lazy('administracion:planes:materias')
     template_name = 'planes/materias/materias_confirm_delete.html'
 
 
@@ -54,7 +54,7 @@ class MateriasAyudaEliminarTemplateView(TemplateView):
 class ConfigurarProfesoresMateriasView(View):
     template_name = 'planes/profesores_materias/profesores_materias_configurar.html'
     necesario_generar_template_name = 'planes/profesores_materias/necesario_generar_instancias.html'
-    success_url = reverse_lazy('administracion:divisiones')
+    success_url = reverse_lazy('administracion:planes:divisiones')
 
     def get_context_data(self, request):
         division = models.Division.objects.filter(pk=self.kwargs['pk']).first()

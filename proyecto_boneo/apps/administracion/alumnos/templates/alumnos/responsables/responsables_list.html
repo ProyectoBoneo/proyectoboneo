@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Responsables{% endblock %}
 {% block content %}
-    <h3 class="inline-title">Responsables</h3> <span class=""><a href="{% url 'administracion:ayuda_responsables' %}" onclick="window.open('{% url 'administracion:ayuda_responsables' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Responsables</h3> <span class=""><a href="{% url 'administracion:alumnos:ayuda_responsables' %}" onclick="window.open('{% url 'administracion:alumnos:ayuda_responsables' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form action="." method="get" class="margin-bottom-2x">
         <div class="form-group">
             {{ filter_form.nombre.label_tag }}
@@ -13,7 +13,7 @@
         </div>
         {{ filter_form.render_xls_report }}
         {{ filter_form.render_pdf_report }}
-        <a class="btn btn-success" href="{% url 'administracion:nuevo_responsable' %}">
+        <a class="btn btn-success" href="{% url 'administracion:alumnos:nuevo_responsable' %}">
             <i class="fa fa-plus-circle"></i>  Nuevo responsable
         </a>
         <button class="btn btn-default" type="submit" onclick="filterController.filter_click(this)">
@@ -46,12 +46,12 @@
                         <td>{{ responsable.apellido }} {{ responsable.nombre }}</td>
                         <td>{{ responsable.domicilio }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{% url 'administracion:editar_responsable' responsable.id %}">
+                            <a class="btn btn-primary" href="{% url 'administracion:alumnos:editar_responsable' responsable.id %}">
                                 <i class="fa fa-edit"></i> Editar
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="{% url 'administracion:eliminar_responsable' responsable.id %}">
+                            <a class="btn btn-danger" href="{% url 'administracion:alumnos:eliminar_responsable' responsable.id %}">
                                 <i class="fa fa-trash"></i> Eliminar
                             </a>
                         </td>

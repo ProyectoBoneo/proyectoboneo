@@ -63,7 +63,7 @@ def get_formset_instances_from_dict(model, prefix, data, fields=None):
         instance_kwargs = {}
         for attribute_name, value in attributes.items():
             try:
-                field = model._meta.get_field_by_name(attribute_name)[0]
+                field = model._meta.get_field(attribute_name)[0]
             except (IndexError, FieldDoesNotExist):
                 field = None
             if field:

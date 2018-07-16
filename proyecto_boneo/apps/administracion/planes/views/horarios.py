@@ -14,18 +14,18 @@ DIAS_SEMANA_CHOICES = [(1,"Lunes"), (2,"Martes"), (3,"Miercoles"), (4,"Jueves"),
 class ConfigurarHorariosDivisionView(View):
     template_name = 'planes/horarios_materias/horarios_materias_configurar.html'
     necesario_generar_template_name = 'planes/horarios_materias/necesario_generar_instancias.html'
-    success_url = reverse_lazy('administracion:divisiones')
+    success_url = reverse_lazy('administracion:planes:divisiones')
 
     def get_context_data(self, request):
         division = models.Division.objects.filter(pk=self.kwargs['pk']).first()
-        instancia_cursado = models.InstanciaCursado.objects.año_actual().filter(division__pk=self.kwargs['pk'])
+        instancia_cursado = models.InstanciaCursado.objects.año_actual().filter(division__pk=self.kwargs['pk']).first()
         dias_semana = []
         for dia_semana in models.Horario.objects.get_dias_semana_choices()[0:6]:
             dia_semana_id=dia_semana[0]
             prefix = str(dia_semana_id)
             if request.method == 'GET':
-                horarios_existentes = Horario.objects.filter(instancia_cursado = instancia_cursado)\
-                    .filter(dia_semana=dia_semana_id)
+                horarios_existentes = Horario.objects.filter(
+                    instancia_cursado=instancia_cursado).filter(dia_semana=dia_semana_id)
                 if horarios_existentes.exists():
                     initial = []
                     for horario in horarios_existentes.all():
@@ -149,6 +149,6 @@ class HorarioIrAFechaView(View):
         form = HorarioFechaForm(self.request.POST)
         if form.is_valid():
             fecha = form.cleaned_data['fecha']
-            url = reverse_lazy('administracion:horario_por_fecha',
+            url = reverse_lazy('administracion:planes:horario_por_fecha',
                 kwargs={'day': fecha.day, 'month': fecha.month, 'year': fecha.year})
             return HttpResponseRedirect(url)

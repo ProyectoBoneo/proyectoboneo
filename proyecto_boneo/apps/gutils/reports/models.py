@@ -98,7 +98,7 @@ class BaseModelReport(BaseReport):
             field_name = field
 
             if field_name in [f.name for f in self.get_model()._meta.fields]:
-                field_element = self.get_model()._meta.get_field_by_name(field_name)[0]
+                field_element = self.get_model()._meta.get_field(field_name)
 
             field_header = self.headers.get(field, None)
             if not field_header:

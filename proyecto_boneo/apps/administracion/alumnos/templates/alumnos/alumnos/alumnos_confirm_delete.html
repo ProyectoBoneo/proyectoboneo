@@ -1,14 +1,14 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Eliminar alumno{% endblock %}
 {% block content %}
-    <h3 class="inline-title">Eliminar alumno</h3> <span class=""><a href="{% url 'administracion:ayuda_eliminar_alumno' %}" onclick="window.open('{% url 'administracion:ayuda_eliminar_alumno' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Eliminar alumno</h3> <span class=""><a href="{% url 'administracion:alumnos:ayuda_eliminar_alumno' %}" onclick="window.open('{% url 'administracion:alumnos:ayuda_eliminar_alumno' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action=".">
         {% csrf_token %}
         <p>¿Desea eliminar el alumno "{{ object }}"?</p>
         <button type="submit" class="btn btn-danger">
             <i class="fa fa-trash"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'administracion:alumnos' %}">
+        <a class="btn btn-default" href="{% url 'administracion:alumnos:alumnos' %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>

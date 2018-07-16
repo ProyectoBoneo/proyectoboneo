@@ -1,7 +1,7 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Estadia{% endblock %}
 {% block content %}
-    <h3 class="inline-title">Estadía</h3> <span class=""><a href="{% url 'administracion:ayuda_nuevo_estadia' %}" onclick="window.open('{% url 'administracion:ayuda_nuevo_estadia' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Estadía</h3> <span class=""><a href="{% url 'administracion:estadias:ayuda_nuevo_estadia' %}" onclick="window.open('{% url 'administracion:estadias:ayuda_nuevo_estadia' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
 
     <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
@@ -29,7 +29,7 @@
         <button type="submit" class="btn btn-success">
             <i class="fa fa-check-circle"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'administracion:estadias' %}">
+        <a class="btn btn-default" href="{% url 'administracion:estadias:estadias' %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>

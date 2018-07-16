@@ -20,21 +20,21 @@ class AlumnosFilteredListView(FilteredReportListView):
 
 class AlumnosCreateView(PersonaCreateView):
     model = models.Alumno
-    success_url = reverse_lazy('administracion:alumnos')
+    success_url = reverse_lazy('administracion:alumnos:alumnos')
     form_class = forms.AlumnoForm
     template_name = 'alumnos/alumnos/alumnos_form.html'
 
 
 class AlumnosUpdateView(PersonaUpdateView):
     model = models.Alumno
-    success_url = reverse_lazy('administracion:alumnos')
+    success_url = reverse_lazy('administracion:alumnos:alumnos')
     form_class = forms.AlumnoForm
     template_name = 'alumnos/alumnos/alumnos_form.html'
 
 
 class AlumnosDeleteView(ProtectedDeleteView):
     model = models.Alumno
-    success_url = reverse_lazy('administracion:alumnos')
+    success_url = reverse_lazy('administracion:alumnos:alumnos')
     template_name = 'alumnos/alumnos/alumnos_confirm_delete.html'
 
 
@@ -54,7 +54,7 @@ class AlumnosInscripcionesView(View):
         if request.method == 'GET':
             alumno_list = division_query.first().alumnos.all()
             alumno_form_list = []
-            if alumno_list != None and alumno_list.exists() and request.method == 'GET':
+            if alumno_list is not None and alumno_list.exists() and request.method == 'GET':
                 for alumno in alumno_list:
                     alumno_form_list.append({'alumno': alumno.id})
             formset = forms.InscripcionesAlumnoFormset(initial=alumno_form_list)
@@ -101,10 +101,11 @@ class AlumnosInscripcionesView(View):
         mode = request.POST.get('mode-field')
 
         context = self.get_context_data(request)
-        if mode=='confirmar':
-           success_url = reverse_lazy('administracion:divisiones')
+        if mode == 'confirmar':
+           success_url = reverse_lazy('administracion:planes:divisiones')
         else:
-           success_url = reverse_lazy('administracion:inscripciones_alumno', kwargs={'pk':context['division'].id})
+           success_url = reverse_lazy('administracion:alumnos:inscripciones_alumno', kwargs={
+               'pk': context['division'].id})
         if self.validate_formsets(context):
             self.save_formsets(context)
             return redirect(success_url)
@@ -115,14 +116,18 @@ class AlumnosInscripcionesView(View):
 class AlumnosAyudaTemplateView(TemplateView):
     template_name = 'alumnos/alumnos/alumnos_ayuda_list.html'
 
+
 class AlumnosAyudaNuevoTemplateView(TemplateView):
     template_name = 'alumnos/alumnos/alumnos_ayuda_nuevo.html'
+
 
 class AlumnosAyudaEditarTemplateView(TemplateView):
     template_name = 'alumnos/alumnos/alumnos_ayuda_editar.html'
 
+
 class AlumnosAyudaEliminarTemplateView(TemplateView):
     template_name = 'alumnos/alumnos/alumnos_ayuda_eliminar.html'
+
 
 class AlumnosAyudaInscripcionesTemplateView(TemplateView):
     template_name = 'alumnos/alumnos/alumnos_ayuda_inscripciones.html'
@@ -139,31 +144,35 @@ class ResponsablesFilteredListView(FilteredReportListView):
 
 class ResponsablesCreateView(PersonaCreateView):
     model = models.Responsable
-    success_url = reverse_lazy('administracion:responsables')
+    success_url = reverse_lazy('administracion:alumnos:responsables')
     form_class = forms.ResponsableForm
     template_name = 'alumnos/responsables/responsables_form.html'
 
 
 class ResponsablesUpdateView(PersonaUpdateView):
     model = models.Responsable
-    success_url = reverse_lazy('administracion:responsables')
+    success_url = reverse_lazy('administracion:alumnos:responsables')
     form_class = forms.ResponsableForm
     template_name = 'alumnos/responsables/responsables_form.html'
 
 
 class ResponsablesDeleteView(ProtectedDeleteView):
     model = models.Responsable
-    success_url = reverse_lazy('administracion:responsables')
+    success_url = reverse_lazy('administracion:alumnos:responsables')
     template_name = 'alumnos/responsables/responsables_confirm_delete.html'
+
 
 class ResponsablesAyudaTemplateView(TemplateView):
     template_name = 'alumnos/responsables/responsables_ayuda_list.html'
 
+
 class ResponsablesAyudaNuevoTemplateView(TemplateView):
     template_name = 'alumnos/responsables/responsables_ayuda_nuevo.html'
 
+
 class ResponsablesAyudaEditarTemplateView(TemplateView):
     template_name = 'alumnos/responsables/responsables_ayuda_editar.html'
+
 
 class ResponsablesAyudaEliminarTemplateView(TemplateView):
     template_name = 'alumnos/responsables/responsables_ayuda_eliminar.html'
@@ -173,7 +182,7 @@ class ResponsablesAyudaEliminarTemplateView(TemplateView):
 #region Asistencia
 class AsistenciaView(View):
     template_name = 'alumnos/asistencias/asistencias_form.html'
-    fechaAIngresar = None
+    fecha_a_ingresar = None
 
     def get_fecha(self):
         year = int(self.kwargs['year'])
@@ -183,12 +192,12 @@ class AsistenciaView(View):
         return dt
 
     def get_context_data(self, request):
-        self.fechaAIngresar = self.get_fecha()
+        self.fecha_a_ingresar = self.get_fecha()
         division = models.Division.objects.filter(pk=self.kwargs['pk']).first()
-        instancia_cursado = division.instancias_cursado.filter(anio_cursado=self.fechaAIngresar.year).first()
+        instancia_cursado = division.instancias_cursado.filter(anio_cursado=self.fecha_a_ingresar.year).first()
         alumno_list = []
-        asistencia_list = models.Asistencia.objects.filter(division=division).filter(fecha=self.fechaAIngresar).all()
-        if asistencia_list != None and asistencia_list.exists() and request.method == 'GET':
+        asistencia_list = models.Asistencia.objects.filter(division=division).filter(fecha=self.fecha_a_ingresar).all()
+        if asistencia_list is not None and asistencia_list.exists() and request.method == 'GET':
             for asistencia in asistencia_list :
                 prefix = str(asistencia.alumno.id)
                 initial =[{
@@ -229,7 +238,6 @@ class AsistenciaView(View):
     def get(self, request, *args, **kwargs):
             return render(request, self.template_name, self.get_context_data(request))
 
-
     def validate_formsets(self, context):
         valido = True
         for alumno in context['alumno_list']:
@@ -249,7 +257,7 @@ class AsistenciaView(View):
                 else:
                     asistencia = Asistencia()
                 asistencia.division = division
-                asistencia.fecha = self.fechaAIngresar
+                asistencia.fecha = self.fecha_a_ingresar
                 alumno = Alumno.objects.filter(pk=form.cleaned_data['alumno_id']).first()
                 asistencia.alumno = alumno
                 if 'asistio' in form.cleaned_data:
@@ -260,7 +268,8 @@ class AsistenciaView(View):
 
     def post(self, request, *args, **kwargs):
         success_url = reverse_lazy('administracion:horario_por_fecha',
-                kwargs={'day': self.get_fecha().day, 'month': self.get_fecha().month, 'year': self.get_fecha().year})
+                                   kwargs={'day': self.get_fecha().day, 'month': self.get_fecha().month,
+                                           'year': self.get_fecha().year})
         context = self.get_context_data(request)
         if self.validate_formsets(context):
             self.save_formsets(context)

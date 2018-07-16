@@ -28,7 +28,7 @@ class DivisionesListView(ListView):
 
 class DivisionesConfigurationView(View):
     template_name = 'planes/divisiones/divisiones_configurar.html'
-    success_url = reverse_lazy('administracion:divisiones')
+    success_url = reverse_lazy('administracion:planes:divisiones')
 
     def get(self, request, *args, **kwargs):
         context = {'cantidad_anios_form': self._get_form(),
@@ -89,8 +89,7 @@ class DivisionesGenerarInstanciasCursadoView(View):
             return self._instancias_no_necesarias_response(request)
 
     def _instancias_no_necesarias_response(self, request):
-        ctx = {}
-        return render(request, self.no_needed_template_name, ctx)
+        return render(request, self.no_needed_template_name)
 
     def _generar_instancias_cursado(self):
         models.InstanciaCursado.objects.generar_año_actual()
@@ -99,7 +98,7 @@ class DivisionesGenerarInstanciasCursadoView(View):
         if models.InstanciaCursado.objects.necesario_generar():
             self._generar_instancias_cursado()
             ctx = {}
-            return render(request, self.success_template_name,ctx)
+            return render(request, self.success_template_name, ctx)
         else:
             return self._instancias_no_necesarias_response(request)
 

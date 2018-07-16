@@ -35,14 +35,14 @@
                                 <ul>
                                     {% if user.is_staff %}
                                         <li><a href="{% url 'home' %}">Home</a></li>
-                                        <li><a href="{% url 'administracion:alumnos' %}">Alumnos</a></li>
-                                        <li><a href="{% url 'administracion:responsables' %}">Responsables</a></li>
-                                        <li><a href="{% url 'administracion:profesores' %}">Profesores</a></li>
-                                        <li><a href="{% url 'administracion:divisiones' %}">Divisiones</a></li>
-                                        <li><a href="{% url 'administracion:horario_hoy' %}">Asistencia</a></li>
-                                        <li><a href="{% url 'administracion:materias' %}">Materias</a></li>
+                                        <li><a href="{% url 'administracion:alumnos:alumnos' %}">Alumnos</a></li>
+                                        <li><a href="{% url 'administracion:alumnos:responsables' %}">Responsables</a></li>
+                                        <li><a href="{% url 'administracion:personal:profesores' %}">Profesores</a></li>
+                                        <li><a href="{% url 'administracion:planes:divisiones' %}">Divisiones</a></li>
+                                        <li><a href="{% url 'administracion:planes:horario_hoy' %}">Asistencia</a></li>
+                                        <li><a href="{% url 'administracion:planes:materias' %}">Materias</a></li>
                                         <li><a href="{% url 'administracion:tutorias:tutorias' %}">Tutorías</a></li>
-                                        <li><a href="{% url 'administracion:estadias' %}">Estadías</a></li>
+                                        <li><a href="{% url 'administracion:estadias:estadias' %}">Estadías</a></li>
                                     {% endif %}
                                     {% if user.is_alumno %}
                                         <li><a href="{% url 'home' %}">Home</a></li>

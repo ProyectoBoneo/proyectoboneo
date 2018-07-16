@@ -3,13 +3,13 @@
 {% block content %}
     <form method="post" action=".">
         {% csrf_token %}
-        <h3 class="inline-title">Profesores por materia</h3> <span class=""><a href="{% url 'administracion:ayuda_profesores_materias' %}" onclick="window.open('{% url 'administracion:ayuda_profesores_materias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+        <h3 class="inline-title">Profesores por materia</h3> <span class=""><a href="{% url 'administracion:planes:ayuda_profesores_materias' %}" onclick="window.open('{% url 'administracion:planes:ayuda_profesores_materias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
         <h4>División: {{ division }}</h4>
         <div>
             <button type="submit" class="btn btn-success">
                 <i class="fa fa-check-circle"></i> Confirmar
             </button>
-            <a class="btn btn-default" href="{% url 'administracion:divisiones' %}">
+            <a class="btn btn-default" href="{% url 'administracion:planes:divisiones' %}">
                 <i class="fa fa-arrow-circle-left"></i>  Volver
             </a>
         </div>

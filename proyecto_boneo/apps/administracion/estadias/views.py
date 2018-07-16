@@ -23,21 +23,21 @@ class EstadiaDetailView(DetailView):
 
 class EstadiaCreateView(CreateView):
     model = models.Estadia
-    success_url = reverse_lazy('administracion:estadias')
+    success_url = reverse_lazy('administracion:estadias:estadias')
     form_class = forms.EstadiaForm
     template_name = 'estadias/estadias_form.html'
 
 
 class EstadiaUpdateView(UpdateView):
     model = models.Estadia
-    success_url = reverse_lazy('administracion:estadias')
+    success_url = reverse_lazy('administracion:estadias:estadias')
     form_class = forms.EstadiaForm
     template_name = 'estadias/estadias_form.html'
 
 
 class EstadiaDeleteView(ProtectedDeleteView):
     model = models.Estadia
-    success_url = reverse_lazy('administracion:estadias')
+    success_url = reverse_lazy('administracion:estadias:estadias')
     template_name = 'estadias/estadias_confirm_delete.html'
 
 
