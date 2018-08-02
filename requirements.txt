@@ -3,7 +3,7 @@ decorator==4.0.4
 Django==2.0.7
 django-cors-headers==1.1.0
 django-extensions==2.1.0
-djangorestframework==3.1.0
+djangorestframework==3.8.2
 ipython==4.0.0
 ipython-genutils==0.1.0
 path.py==8.1.1

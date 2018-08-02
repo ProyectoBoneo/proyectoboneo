@@ -1,16 +1,20 @@
 import re
 
-from django.core.validators import RegexValidator
+from django.conf import settings
 from django.contrib.auth.models import UserManager, AbstractBaseUser, PermissionsMixin
+from django.core.validators import RegexValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+
+from rest_framework.authtoken.models import Token
 
 
 class UsuarioBoneo(AbstractBaseUser, PermissionsMixin):
     """
-    This class represents a user in platform
-    For the custom fields, see :class:`UserProfile`.
+    User for the boneo platform
     """
 
     username = models.CharField(_('username'), max_length=254, unique=True,
@@ -58,16 +62,14 @@ class UsuarioBoneo(AbstractBaseUser, PermissionsMixin):
         """
         return self.first_name
 
-    def get_profile(self):
-        """
-        Returns the related :class:`UserProfile`.
-        This overrides the original get_profile function in :class:`django.contrib.auth.models.AbstractUser`
-        intended for support the old behaviour in django 1.4
-        """
-        return self.userprofile
-
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
         db_table = 'auth_user'
         permissions = (("can_view_boneouser", "Can view Boneo User"), )
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
