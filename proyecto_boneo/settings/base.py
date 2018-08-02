@@ -30,7 +30,8 @@ DJANGO_APPS = ('django.contrib.admin',
                'django.contrib.messages',
                'django.contrib.staticfiles',)
 
-THIRD_PARTY_APPS = ('django_extensions', )
+THIRD_PARTY_APPS = ('django_extensions',
+                    'rest_framework.authtoken',)
 
 PROJECT_APPS = ('proyecto_boneo.apps.gutils',
                 'proyecto_boneo.apps.gutils.django.forms.typeahead',
@@ -108,6 +109,15 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

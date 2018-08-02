@@ -29,6 +29,7 @@ auth_patterns = [
 
 project_patterns = [
     url(r'^$', login_required(home_redirect_router), name='home'),
+    url(r'api/', include('proyecto_boneo.apps.api.urls')),
     url(r'administracion/', include('proyecto_boneo.apps.administracion.urls')),
     url(r'aula_virtual/', include('proyecto_boneo.apps.aula_virtual.urls')),
     url(r'^indice/$', IndiceView.as_view(), name='indice'),
