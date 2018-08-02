@@ -10,7 +10,7 @@ app_name = 'api'
 router = DefaultRouter()
 
 auth_patterns = [
-    url(r'^get_token/', views.obtain_auth_token)
+    url(r'^get_token/$', views.obtain_auth_token)
 ]
 
 view_patterns = [
