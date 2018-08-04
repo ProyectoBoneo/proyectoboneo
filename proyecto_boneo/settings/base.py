@@ -71,7 +71,7 @@ ROOT_URLCONF = 'proyecto_boneo.urls'
 
 WSGI_APPLICATION = 'proyecto_boneo.wsgi.application'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.0.2.2']
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
