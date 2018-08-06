@@ -3,12 +3,15 @@ from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
+from proyecto_boneo.apps.api.comunicados.views import ComunicadosViewSet
 from proyecto_boneo.apps.api.perfil_academico.views import PerfilAcademicoAPIView
 from proyecto_boneo.apps.api.usuarios.views import UsuarioBoneoView
 
 app_name = 'api'
 
 router = DefaultRouter()
+
+router.register('comunicados', ComunicadosViewSet, base_name='comunicados')
 
 auth_patterns = [
     url(r'^get_token/$', views.obtain_auth_token)
