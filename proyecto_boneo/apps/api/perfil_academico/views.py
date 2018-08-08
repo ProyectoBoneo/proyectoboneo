@@ -1,10 +1,11 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import ListModelMixin
+
+from proyecto_boneo.apps.api.perfil_academico.serializers import InscripcionesSerializer
 
 
-class PerfilAcademicoAPIView(APIView):
+class PerfilAcademicoViewSet(GenericViewSet, ListModelMixin):
+    serializer_class = InscripcionesSerializer
 
-    def get(self, request, *args, **kwargs):
-        return Response({
-            'result': 'ok'
-        }, status=200)
+    def get_queryset(self):
+        return self.request.user.alumno.inscripciones.all()
