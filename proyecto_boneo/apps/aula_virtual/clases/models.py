@@ -19,7 +19,7 @@ class ClaseVirtual(models.Model):
         (EVALUACION, 'Evaluación'),
         (EVALUACION_ESCRITA, 'Evaluación Escrita'),
     )
-
+    fecha = models.DateTimeField(auto_now_add=True)
     materia = models.ForeignKey(Materia, related_name='clases_virtuales', on_delete=models.CASCADE)
     nombre = models.CharField(max_length=30, default='Clase')
     descripcion = models.CharField(max_length=100)
@@ -82,7 +82,7 @@ class RespuestaEjercicioVirtual(models.Model):
     clase_virtual = models.ForeignKey(ClaseVirtual, related_name='respuestas', on_delete=models.CASCADE)
     ejercicio = models.ForeignKey(EjercicioVirtual, related_name='respuestas', on_delete=models.CASCADE)
 
-    texto = models.TextField(null=True,default=None)
+    texto = models.TextField(null=True, default=None)
     opcion_seleccionada = models.ForeignKey(OpcionEjercicio, related_name='+', null=True, on_delete=models.CASCADE)
     puntaje_obtenido = models.FloatField(null=True, blank=True)
     observaciones = models.TextField(null=True, default=None, blank=True)
@@ -92,3 +92,5 @@ class ResultadoEvaluacion(models.Model):
     clase_virtual = models.ForeignKey(ClaseVirtual, related_name='resultados', on_delete=models.CASCADE)
     alumno = models.ForeignKey(Alumno, related_name='resultados_evaluaciones', on_delete=models.CASCADE)
     nota = models.FloatField()
+    fecha_correccion = models.DateTimeField(auto_now=True)
+    fecha_notificado = models.DateTimeField(null=True, default=None)

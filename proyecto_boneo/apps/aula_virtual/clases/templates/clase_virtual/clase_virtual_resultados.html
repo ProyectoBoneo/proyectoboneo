@@ -19,8 +19,8 @@
         </p>
     <ul class="list-group ">
     {% for respuesta in respuestas %}
+        <li class="list-group-item borderless">
         <div class="col-sm-6">
-                <li class="list-group-item borderless">
             <div class="row list-group-item-header">
               <div class="col-xs-12">
                      <h4 class="list-group-item-heading text-default">{{ respuesta.ejercicio }}
@@ -44,7 +44,7 @@
                         {% endif %}
                     </small></h4>
               </div>
-          </div>
+            </div>
 
         {%  if respuesta.ejercicio.tipo_ejercicio == 'mch'  %}
         <div class="row">
@@ -113,8 +113,8 @@
                 </div>
             </div>
         {% endif %}
-        </li>
         </div>
+        </li>
         {% if forloop.counter|divisibleby:2 %}
             <div class="clearfix"></div>
         {% endif %}

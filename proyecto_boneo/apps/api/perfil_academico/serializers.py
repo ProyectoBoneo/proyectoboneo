@@ -1,43 +1,14 @@
 from rest_framework import serializers
 
-from proyecto_boneo.apps.administracion.alumnos.models import Alumno, InscripcionAlumno
-from proyecto_boneo.apps.administracion.planes.models import InstanciaCursado
-from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
+from proyecto_boneo.apps.administracion.alumnos.models import InscripcionAlumno
+from proyecto_boneo.apps.aula_virtual.clases.models import ClaseVirtual, ResultadoEvaluacion
 
 
-class EmisorSerializer(serializers.ModelSerializer):
-    nombre = serializers.SerializerMethodField()
-
-    def _get_persona_model(self, obj):
-        if obj.is_alumno:
-            return obj.alumno
-        elif obj.is_profesor:
-            return obj.profesor
-        elif obj.is_staff:
-            return obj
-        else:
-            return obj.responsable
-
-    def get_nombre(self, obj):
-        return self._get_persona_model(obj).descripcion
-
-    class Meta:
-        model = UsuarioBoneo
-        fields = ['username', 'nombre']
-
-
-class InstanciaCursadoSerializer(serializers.ModelSerializer):
-    emisor = EmisorSerializer()
-
-    class Meta:
-        model = InstanciaCursado
-        fields = ['anio_cursado', 'nombre_materia', 'division']
-
-
-class InscripcionesSerializer(serializers.ModelSerializer):
+class PerfilAcademicoMateriasSerializer(serializers.ModelSerializer):
     anio_cursado = serializers.SerializerMethodField()
     nombre_materia = serializers.SerializerMethodField()
     division = serializers.SerializerMethodField()
+    evaluaciones = serializers.SerializerMethodField()
 
     def get_anio_cursado(self, obj):
         return obj.instancia_cursado.anio_cursado
@@ -48,6 +19,23 @@ class InscripcionesSerializer(serializers.ModelSerializer):
     def get_division(self, obj):
         return str(obj.instancia_cursado.division)
 
+    def get_evaluaciones(self, obj):
+        resultados_evaluaciones = ResultadoEvaluacion.objects.filter(
+            alumno=obj.alumno, clase_virtual__materia=obj.instancia_cursado.materia,
+            clase_virtual__tipo__in=[ClaseVirtual.EVALUACION, ClaseVirtual.EVALUACION_ESCRITA]
+        ).all()
+        return [
+            {
+                'id': resultado_evaluacion.id,
+                'nota': resultado_evaluacion.nota,
+                'evaluacion': resultado_evaluacion.clase_virtual.nombre,
+                'descricpion': resultado_evaluacion.clase_virtual.descripcion,
+                'fecha_notificado': resultado_evaluacion.fecha_notificado,
+                'fecha_correccion': resultado_evaluacion.fecha_correccion,
+
+            } for resultado_evaluacion in resultados_evaluaciones
+        ]
+
     class Meta:
         model = InscripcionAlumno
-        fields = ['promedio', 'anio_cursado', 'nombre_materia', 'division']
+        fields = ['promedio', 'anio_cursado', 'nombre_materia', 'division', 'evaluaciones']
