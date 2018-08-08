@@ -27,6 +27,7 @@ class EstadoAcademicoView(View):
         else:
             raise PermissionDenied
 
+
 class EstadoAcademicoReportView(View):
     report = reports.EstadoAcademicoReport
 
@@ -48,6 +49,7 @@ class EstadoAcademicoReportView(View):
             return report.render_pdf_report(self.get_context_data(), filename)
         else:
             raise PermissionDenied
+
 
 class EstadoAcademicoView(View):
     template_name = 'perfil_academico/estado_academico.html'
