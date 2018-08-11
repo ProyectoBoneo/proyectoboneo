@@ -7,6 +7,6 @@ DATABASES = {
     'NAME': 'proyectoboneo',
     'USER': 'proyectoboneo',
     'PASSWORD': 'proyectoboneo',
-    'HOST': 'proyectoboneo.cvttgl8gstqj.us-west-2.rds.amazonaws.com',
+    'HOST': 'proyecto-boneo.cvttgl8gstqj.us-west-2.rds.amazonaws.com',
     'PORT': '5432',
 }
