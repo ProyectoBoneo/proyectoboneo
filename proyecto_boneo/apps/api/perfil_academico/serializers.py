@@ -4,6 +4,21 @@ from proyecto_boneo.apps.administracion.alumnos.models import InscripcionAlumno
 from proyecto_boneo.apps.aula_virtual.clases.models import ClaseVirtual, ResultadoEvaluacion
 
 
+class ResultadoEvaluacionSerializer(serializers.ModelSerializer):
+    evaluacion = serializers.SerializerMethodField()
+    descripcion = serializers.SerializerMethodField()
+
+    def get_evaluacion(self, obj):
+        return obj.clase_virtual.nombre
+
+    def get_descripcion(self, obj):
+        return obj.clase_virtual.descripcion
+
+    class Meta:
+        model = ResultadoEvaluacion
+        fields = ['id', 'nota', 'evaluacion', 'descripcion', 'fecha_notificado', 'fecha_correccion']
+
+
 class PerfilAcademicoMateriasSerializer(serializers.ModelSerializer):
     anio_cursado = serializers.SerializerMethodField()
     nombre_materia = serializers.SerializerMethodField()
@@ -24,17 +39,7 @@ class PerfilAcademicoMateriasSerializer(serializers.ModelSerializer):
             alumno=obj.alumno, clase_virtual__materia=obj.instancia_cursado.materia,
             clase_virtual__tipo__in=[ClaseVirtual.EVALUACION, ClaseVirtual.EVALUACION_ESCRITA]
         ).all()
-        return [
-            {
-                'id': resultado_evaluacion.id,
-                'nota': resultado_evaluacion.nota,
-                'evaluacion': resultado_evaluacion.clase_virtual.nombre,
-                'descricpion': resultado_evaluacion.clase_virtual.descripcion,
-                'fecha_notificado': resultado_evaluacion.fecha_notificado,
-                'fecha_correccion': resultado_evaluacion.fecha_correccion,
-
-            } for resultado_evaluacion in resultados_evaluaciones
-        ]
+        return ResultadoEvaluacionSerializer(resultados_evaluaciones, many=True).data
 
     class Meta:
         model = InscripcionAlumno
