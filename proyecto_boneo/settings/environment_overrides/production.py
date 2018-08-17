@@ -12,3 +12,5 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+ALLOWED_HOSTS = ['ec2-52-40-113-106.us-west-2.compute.amazonaws.com', '127.0.0.1', 'localhost']
