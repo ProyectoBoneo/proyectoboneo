@@ -46,6 +46,7 @@ PROJECT_APPS = ('proyecto_boneo.apps.gutils',
                 'proyecto_boneo.apps.aula_virtual.clases',
                 'proyecto_boneo.apps.aula_virtual.comunicados',
                 'proyecto_boneo.apps.aula_virtual.perfil_academico',
+                'proyecto_boneo.apps.firebase',
                 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -71,7 +72,7 @@ ROOT_URLCONF = 'proyecto_boneo.urls'
 
 WSGI_APPLICATION = 'proyecto_boneo.wsgi.application'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.0.2.2']
+ALLOWED_HOSTS = ['*']
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

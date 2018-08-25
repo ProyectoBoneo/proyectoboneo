@@ -38,4 +38,4 @@ class DestinatarioComunicadosSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DestinatarioComunicado
-        fields = ['comunicado', 'fecha_leido', 'id']
+        fields = ['comunicado', 'fecha_leido', 'id', 'leido']

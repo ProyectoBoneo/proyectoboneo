@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
 from proyecto_boneo.apps.api.comunicados.views import ComunicadosViewSet
+from proyecto_boneo.apps.api.firebase.views import FireBaseTokenViewSet
 from proyecto_boneo.apps.api.perfil_academico.views import PerfilAcademicoViewSet, ResultadoEvaluacionViewSet
 from proyecto_boneo.apps.api.usuarios.views import UsuarioBoneoView
 
@@ -12,6 +13,7 @@ app_name = 'api'
 router = DefaultRouter()
 
 router.register('comunicados', ComunicadosViewSet, base_name='comunicados')
+router.register('firebase_token', FireBaseTokenViewSet, base_name='firebase_token')
 router.register('perfil_academico', PerfilAcademicoViewSet, base_name='perfil_academico')
 router.register('resultados_evaluaciones', ResultadoEvaluacionViewSet, base_name='resultados_evaluaciones')
 

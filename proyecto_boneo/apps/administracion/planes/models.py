@@ -122,14 +122,16 @@ class InstanciaCursado(models.Model):
         return '{} - {} - {}'.format(self.materia.descripcion, self.division, self.anio_cursado)
 
 
-class HorarioManager(models.Manager):
-    def get_dias_semana_choices(self):
-        return [(0,"Lunes"), (1,"Martes"), (2,"Miercoles"), (3,"Jueves"), (4,"Viernes"),
-                (5,"Sabado"), (6, "Domingo")]
-
-
 class Horario(models.Model):
-    objects = HorarioManager()
+    DIAS_DE_SEMANA_CHOICES = [
+        (0, "Lunes"),
+        (1, "Martes"),
+        (2, "Miercoles"),
+        (3, "Jueves"),
+        (4, "Viernes"),
+        (5, "Sabado"),
+        (6, "Domingo")
+    ]
 
     instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='horarios', on_delete=models.CASCADE)
     dia_semana = models.IntegerField()

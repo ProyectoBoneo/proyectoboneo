@@ -1,15 +1,13 @@
 from datetime import datetime
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from proyecto_boneo.apps.gutils.django.views import View, TemplateView
 from .. import forms, models
-from proyecto_boneo.apps.administracion.planes.forms import ConfigurarHorariosMateriasForm, HorarioFechaForm
+from proyecto_boneo.apps.administracion.planes.forms import HorarioFechaForm
 from proyecto_boneo.apps.administracion.planes.models import Horario
 
-DIAS_SEMANA_CHOICES = [(1,"Lunes"), (2,"Martes"), (3,"Miercoles"), (4,"Jueves"),
-                       (5,"Viernes"), (6,"Sabado"), (7, "Domingo")]
 
 class ConfigurarHorariosDivisionView(View):
     template_name = 'planes/horarios_materias/horarios_materias_configurar.html'
@@ -20,8 +18,8 @@ class ConfigurarHorariosDivisionView(View):
         division = models.Division.objects.filter(pk=self.kwargs['pk']).first()
         instancia_cursado = models.InstanciaCursado.objects.año_actual().filter(division__pk=self.kwargs['pk']).first()
         dias_semana = []
-        for dia_semana in models.Horario.objects.get_dias_semana_choices()[0:6]:
-            dia_semana_id=dia_semana[0]
+        for dia_semana in models.Horario.DIAS_DE_SEMANA_CHOICES[0:6]:
+            dia_semana_id = dia_semana[0]
             prefix = str(dia_semana_id)
             if request.method == 'GET':
                 horarios_existentes = Horario.objects.filter(
@@ -129,7 +127,7 @@ class HorarioPorFechaView(ListView):
     def get_context_data(self, **kwargs):
         context = super(HorarioPorFechaView, self).get_context_data(**kwargs)
         initial = {'fecha': self.get_fecha()}
-        fecha_form = HorarioFechaForm(initial = initial)
+        fecha_form = HorarioFechaForm(initial=initial)
         context['fecha_form'] = fecha_form
         return context
 

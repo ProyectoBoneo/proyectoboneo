@@ -64,14 +64,14 @@ ConfigurarMateriasProfesoresFormset = \
 
 
 class ConfigurarHorariosMateriasForm(BaseFormsetForm):
-    id = forms.IntegerField(required= False)
+    id = forms.IntegerField(required=False)
     dia_semana = forms.IntegerField(widget=forms.Select(choices=
-                                    models.Horario.objects.get_dias_semana_choices()),
+                                    models.Horario.DIAS_DE_SEMANA_CHOICES),
                                     label='Dia semana',
                                     required=False
                                     )
     materia = forms.ModelChoiceField(queryset=Materia.objects.all(), empty_label=None,
-                                      required=False)
+                                     required=False)
     hora_inicio = forms.TimeField(required=False,
                                   widget=forms.TextInput(attrs={'placeholder': 'Hora Inicio'}))
     hora_fin = forms.TimeField(required=False,
@@ -82,8 +82,7 @@ class ConfigurarHorariosMateriasForm(BaseFormsetForm):
         self.fields['id'].widget.attrs['hidden'] = 'hidden'
 
 
-ConfigurarMateriasHorariosFormset = formset_factory(ConfigurarHorariosMateriasForm,
-                                                      can_delete=True, extra=0)
+ConfigurarMateriasHorariosFormset = formset_factory(ConfigurarHorariosMateriasForm, can_delete=True, extra=0)
 
 
 class HorarioFechaForm(BaseForm):

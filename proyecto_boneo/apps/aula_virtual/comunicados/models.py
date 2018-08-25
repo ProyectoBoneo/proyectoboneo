@@ -18,3 +18,7 @@ class DestinatarioComunicado(models.Model):
     comunicado = models.ForeignKey(Comunicado, on_delete=models.CASCADE)
     destinatario = models.ForeignKey(UsuarioBoneo, on_delete=models.CASCADE)
     fecha_leido = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def leido(self):
+        return self.fecha_leido is not None
