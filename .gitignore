@@ -4,5 +4,6 @@ __pycache__/
 *.pyc
 .pdf
 
+proyecto_boneo/apps/firebase/firebase_auth/credentials.json
 proyecto_boneo/settings/environment_overrides/active.py
 proyecto_boneo/settings/local.py
