@@ -46,7 +46,7 @@ PROJECT_APPS = ('proyecto_boneo.apps.gutils',
                 'proyecto_boneo.apps.aula_virtual.clases',
                 'proyecto_boneo.apps.aula_virtual.comunicados',
                 'proyecto_boneo.apps.aula_virtual.perfil_academico',
-                'proyecto_boneo.apps.firebase',
+                'proyecto_boneo.apps.firebase.apps.FirebaseConfig',
                 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
