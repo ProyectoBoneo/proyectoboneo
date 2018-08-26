@@ -137,3 +137,13 @@ class Horario(models.Model):
     dia_semana = models.IntegerField()
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
+
+    @property
+    def descripcion_dia_semana(self):
+        try:
+            return [descripcion for value, descripcion in self.DIAS_DE_SEMANA_CHOICES if value == self.dia_semana][0]
+        except IndexError:
+            return None
+
+    def __str__(self):
+        return '{} - {} - {} - {}'.format(self.instancia_cursado, self.dia_semana, self.hora_inicio, self.hora_fin)

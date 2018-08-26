@@ -16,17 +16,19 @@ class ConfigurarHorariosDivisionView(View):
 
     def get_context_data(self, request):
         division = models.Division.objects.filter(pk=self.kwargs['pk']).first()
-        instancia_cursado = models.InstanciaCursado.objects.año_actual().filter(division__pk=self.kwargs['pk']).first()
+        instancias_cursado = models.InstanciaCursado.objects.año_actual().filter(division__pk=self.kwargs['pk']).all()
         dias_semana = []
         for dia_semana in models.Horario.DIAS_DE_SEMANA_CHOICES[0:6]:
             dia_semana_id = dia_semana[0]
             prefix = str(dia_semana_id)
             if request.method == 'GET':
-                horarios_existentes = Horario.objects.filter(
-                    instancia_cursado=instancia_cursado).filter(dia_semana=dia_semana_id)
-                if horarios_existentes.exists():
+                horarios_existentes = (Horario.objects
+                                       .filter(instancia_cursado__in=instancias_cursado)
+                                       .filter(dia_semana=dia_semana_id)
+                                       .order_by('hora_inicio').all())
+                if horarios_existentes:
                     initial = []
-                    for horario in horarios_existentes.all():
+                    for horario in horarios_existentes:
                         initial.append({
                             'dia_semana': horario.dia_semana,
                             'materia': horario.instancia_cursado.materia.pk,
@@ -37,12 +39,10 @@ class ConfigurarHorariosDivisionView(View):
                 else:
                     initial = [{'dia_semana': dia_semana_id,
                                }]
-                formset = forms.ConfigurarMateriasHorariosFormset(initial=initial,
-                                                                    prefix=prefix)
+                formset = forms.ConfigurarMateriasHorariosFormset(initial=initial, prefix=prefix)
             else:
-                formset = forms.ConfigurarMateriasHorariosFormset(request.POST,
-                                                                    prefix=prefix)
-            dias_semana.append({'dia_id':dia_semana_id,
+                formset = forms.ConfigurarMateriasHorariosFormset(request.POST, prefix=prefix)
+            dias_semana.append({'dia_id': dia_semana_id,
                                 'dia_descripcion': dia_semana[1],
                                 'formset': formset})
 
