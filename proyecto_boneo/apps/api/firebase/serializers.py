@@ -11,7 +11,8 @@ class FireBaseTokenSerializer(ModelSerializer):
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
-        return FireBaseToken.objects.update_or_create(**validated_data)
+        instance, _ = FireBaseToken.objects.update_or_create(**validated_data)
+        return instance
 
     class Meta:
         fields = ['token', 'created_at', 'user']
