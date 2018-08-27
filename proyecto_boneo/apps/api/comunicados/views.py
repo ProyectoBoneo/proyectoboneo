@@ -19,4 +19,4 @@ class ComunicadosViewSet(viewsets.ModelViewSet):
         return Response(self.serializer_class(destinatario_comunicado).data)
 
     def get_queryset(self):
-        return DestinatarioComunicado.objects.filter(destinatario=self.request.user)
+        return DestinatarioComunicado.objects.filter(destinatario=self.request.user).order_by('-comunicado__fecha')

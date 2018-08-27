@@ -7,18 +7,15 @@ from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
 class EmisorSerializer(serializers.ModelSerializer):
     nombre = serializers.SerializerMethodField()
 
-    def _get_persona_model(self, obj):
-        if obj.is_alumno:
-            return obj.alumno
-        elif obj.is_profesor:
-            return obj.profesor
-        elif obj.is_staff:
-            return obj
-        else:
-            return obj.responsable
-
     def get_nombre(self, obj):
-        return self._get_persona_model(obj).descripcion
+        if obj.is_alumno:
+            return obj.alumno.descripcion
+        elif obj.is_profesor:
+            return obj.profesor.descripcion
+        elif obj.is_staff:
+            return obj.username
+        else:
+            return obj.responsable.descripcion
 
     class Meta:
         model = UsuarioBoneo
