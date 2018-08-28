@@ -2,7 +2,7 @@ import datetime
 
 from rest_framework.decorators import action
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.mixins import ListModelMixin
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 
 from proyecto_boneo.apps.aula_virtual.clases.models import ResultadoEvaluacion
@@ -10,7 +10,7 @@ from proyecto_boneo.apps.api.perfil_academico.serializers import (PerfilAcademic
                                                                   ResultadoEvaluacionSerializer)
 
 
-class PerfilAcademicoViewSet(GenericViewSet, ListModelMixin):
+class PerfilAcademicoViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin):
     serializer_class = PerfilAcademicoMateriasSerializer
 
     def get_queryset(self):

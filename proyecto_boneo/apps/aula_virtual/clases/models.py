@@ -1,8 +1,11 @@
 from django.db import models
 from django.db.models import Sum
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from proyecto_boneo.apps.administracion.planes.models import Materia
-from proyecto_boneo.apps.administracion.alumnos.models import Alumno
+from proyecto_boneo.apps.administracion.alumnos.models import Alumno, InscripcionAlumno
+from proyecto_boneo.apps.firebase.models import FireBaseToken
 
 
 class ClaseVirtual(models.Model):
@@ -94,3 +97,16 @@ class ResultadoEvaluacion(models.Model):
     nota = models.FloatField()
     fecha_correccion = models.DateTimeField(auto_now=True)
     fecha_notificado = models.DateTimeField(null=True, default=None)
+
+
+@receiver(post_save, sender=ResultadoEvaluacion)
+def send_firebase_notifications(sender, instance=None, created=False, **kwargs):
+    if created:
+        inscripcion_alumno = InscripcionAlumno.objects.filter(
+            alumno=instance.alumno, instancia_cursado__materia=instance.clase_virtual.materia).first()
+        FireBaseToken.send_notification(instance.alumno.usuario, {
+            'id': str(instance.id),
+            'inscripcion_alumno_id': str(inscripcion_alumno.id),
+            'fecha': instance.clase_virtual.fecha.isoformat(),
+            'evaluacion': instance.clase_virtual.nombre,
+        }, FireBaseToken.NOTIFICATION_TYPE_PERFIL_ACADEMICO)

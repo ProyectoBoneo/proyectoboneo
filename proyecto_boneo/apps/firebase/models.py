@@ -11,8 +11,10 @@ logger = logging.getLogger(__name__)
 
 class FireBaseToken(models.Model):
     NOTIFICATION_TYPE_COMUNICADO = 'comunicado'
+    NOTIFICATION_TYPE_PERFIL_ACADEMICO = 'perfil_academico'
     NOTIFICATION_TYPES = [
-        NOTIFICATION_TYPE_COMUNICADO
+        NOTIFICATION_TYPE_COMUNICADO,
+        NOTIFICATION_TYPE_PERFIL_ACADEMICO,
     ]
     token = models.CharField(max_length=255, primary_key=True)
     user = models.ForeignKey(UsuarioBoneo, related_name='firebase_tokens', on_delete=models.CASCADE)
@@ -21,6 +23,8 @@ class FireBaseToken(models.Model):
 
     @classmethod
     def send_notification(cls, user, data, notification_type):
+        if notification_type not in cls.NOTIFICATION_TYPES:
+            raise ValueError('notification_type must be one of {}'.format(cls.NOTIFICATION_TYPES))
         for firebase_token in user.firebase_tokens.all():
             message = messaging.Message(
                 data={**data, 'notification_type': notification_type},

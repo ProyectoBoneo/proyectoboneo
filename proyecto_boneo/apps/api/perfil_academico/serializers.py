@@ -7,6 +7,7 @@ from proyecto_boneo.apps.aula_virtual.clases.models import ClaseVirtual, Resulta
 class ResultadoEvaluacionSerializer(serializers.ModelSerializer):
     evaluacion = serializers.SerializerMethodField()
     descripcion = serializers.SerializerMethodField()
+    fecha_evaluacion = serializers.SerializerMethodField()
 
     def get_evaluacion(self, obj):
         return obj.clase_virtual.nombre
@@ -14,9 +15,12 @@ class ResultadoEvaluacionSerializer(serializers.ModelSerializer):
     def get_descripcion(self, obj):
         return obj.clase_virtual.descripcion
 
+    def get_fecha_evaluacion(self, obj):
+        return obj.clase_virtual.fecha
+
     class Meta:
         model = ResultadoEvaluacion
-        fields = ['id', 'nota', 'evaluacion', 'descripcion', 'fecha_notificado', 'fecha_correccion']
+        fields = ['id', 'nota', 'evaluacion', 'descripcion', 'fecha_evaluacion', 'fecha_notificado', 'fecha_correccion']
 
 
 class PerfilAcademicoMateriasSerializer(serializers.ModelSerializer):
@@ -43,4 +47,4 @@ class PerfilAcademicoMateriasSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InscripcionAlumno
-        fields = ['promedio', 'anio_cursado', 'nombre_materia', 'division', 'evaluaciones']
+        fields = ['id', 'promedio', 'anio_cursado', 'nombre_materia', 'division', 'evaluaciones']
