@@ -145,3 +145,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 AUTH_USER_MODEL = 'usuarios.UsuarioBoneo'
 
+NOTICIAS_RSS_FEED_URL = 'https://proyectoboneo.wordpress.com/feed/'
+
+RSS_TO_JSON_URL = 'https://api.rss2json.com/v1/api.json'
