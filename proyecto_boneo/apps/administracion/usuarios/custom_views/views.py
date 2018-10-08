@@ -1,11 +1,9 @@
 from proyecto_boneo.apps.gutils.django.views.generic import FilterMixin
-
-__author__ = 'rmotteta'
-
 from proyecto_boneo.apps.gutils.django.views import ProtectedDeleteView
+from django.views.generic import (
+    ListView, CreateView, UpdateView,
+    TemplateView, DetailView)
 
-from django.views.generic import ListView, CreateView, UpdateView, \
-    TemplateView,DetailView,View
 
 class CreateView(CreateView):
 

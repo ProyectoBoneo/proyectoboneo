@@ -23,8 +23,17 @@ class Persona(models.Model):
 
     def crear_usuario(self, email):
         self.usuario = UsuarioBoneo.objects.create(username=email, email=email)
+        self.usuario.first_name = self.nombre
+        self.usuario.last_name = self.apellido
         self.usuario.set_password("pass")
         self.usuario.save()
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.pk and self.usuario:
+            self.usuario.first_name = self.nombre
+            self.usuario.last_name = self.apellido
+        super(Persona, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return self.descripcion

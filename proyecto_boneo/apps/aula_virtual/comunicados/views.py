@@ -4,10 +4,19 @@ import json
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render, HttpResponse
 from django.views.generic import View
-from proyecto_boneo.apps.administracion.usuarios.custom_views.views import ListView, CreateView, DetailView
+from proyecto_boneo.apps.administracion.usuarios.custom_views.views import (ListView, CreateView,
+                                                                            DetailView, TemplateView)
 
 from proyecto_boneo.apps.aula_virtual.comunicados.models import Comunicado, DestinatarioComunicado
 from . import forms, models
+
+
+class ComunicadosListAyudaTemplateView(TemplateView):
+    template_name = 'comunicados/comunicados_ayuda_list.html'
+
+
+class ComunicadosFormAyudaTemplateView(TemplateView):
+    template_name = 'comunicados/comunicados_ayuda_nuevo.html'
 
 
 class ComunicadoRecibidoListView(ListView):
@@ -56,6 +65,16 @@ class ComunicadoCreateView(CreateView):
             DestinatarioComunicado.objects.create(destinatario=destinatario,
                                                   comunicado=comunicado)
         return redirect(self.success_url)
+
+
+class ComunicadoDestinatariosView(View):
+
+    def get(self, request, *args, **kwargs):
+        destinatarios = DestinatarioComunicado.get_possible_destinatarios()
+        search_term = request.GET['term'].lower()
+        return HttpResponse(json.dumps({'results': [destinatario for destinatario in destinatarios
+                            if search_term in destinatario['text'].lower() or
+                            search_term in destinatario['subtext'].lower()]}))
 
 
 class ComunicadoDetailView(DetailView):

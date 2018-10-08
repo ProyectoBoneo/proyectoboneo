@@ -1,17 +1,36 @@
 {% extends 'utils/base.html' %}
 {% block title %}Comunicado{% endblock %}
 {% block content %}
-    <h3>Comunicado</h3>
+    <h3 class="inline-title">Comunicado</h3> <span class=""><a href="{% url 'aula_virtual:ayuda_nuevo_comunicado' %}" onclick="window.open('{% url 'aula_virtual:ayuda_comunicados' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <script>
-
-        $( document ).ready(function() {
-            $('#grp-destinatarios').removeClass('hidden');
-            var options = {
-                  selectableHeader: "<div class='bg-default'><div class='col-sm-12'><b>Destinatarios</b></div></div>",
-                  selectionHeader: "<div class='bg-default'><div class='col-sm-12'><b>Destinatarios Seleccionados</b></div><div>"
+        $(document).ready(function() {
+            var formatRecord = function (item) {
+                  var markup = "<div class='select2-result clearfix'>" +
+                  "<div class='select2-result-text'>" + item.text + "</div>";
+                  if (item.subtext) {
+                    markup += "<div class='select2-result-subtext'>" + item.subtext + "</div>";
+                  }
+                  markup += "</div>";
+                  return markup
             };
-            $('#id_destinatarios').multiSelect(options);
-
+            var formatRecordSelection = function (item) {
+                return item.text || item.subtext;
+            };
+            $('#id_destinatarios').select2({
+                ajax: {
+                    url: "{% url 'aula_virtual:destinatarios_posibles' %}",
+                    dataType: "json",
+                    delay: 250
+                },
+                debug: true,
+                placeholder: "Seleccione un destinatario",
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 1,
+                multiple: true,
+                allowClear: true,
+                templateResult: formatRecord,
+                templateSelection: formatRecordSelection
+            });
         });
     </script>
     <form method="post" action="">
@@ -21,7 +40,8 @@
             {{ form.asunto }}
             {{ form.asunto.errors }}
         </div>
-        <div id="grp-destinatarios" class="form-group hidden">
+        <div class="form-group">
+            {{ form.destinatarios.label_tag }}
             {{ form.destinatarios }}
             {{ form.destinatarios.errors }}
         </div>

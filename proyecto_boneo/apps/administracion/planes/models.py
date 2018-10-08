@@ -72,7 +72,7 @@ class Division(models.Model):
     objects = DivisionManager()
 
     def __str__(self):
-        return '{}° {}'.format(self.anio, self.letra)
+        return '{}º {}'.format(self.anio, self.letra)
 
 
 class InstanciaCursadoManager(models.Manager):

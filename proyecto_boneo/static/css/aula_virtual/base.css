@@ -5230,3 +5230,9 @@ div[data-toggle="buttons"] label.active {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+.select2-result-text {
+  font-size: 14px;
+}
+.select2-result-subtext {
+  font-size: 12px;
+}

@@ -5098,3 +5098,9 @@ div[data-toggle="buttons"] label.active {
   background-color: #ebebeb;
   margin: 0;
 }
+.select2-result-text {
+  font-size: 14px;
+}
+.select2-result-subtext {
+  font-size: 12px;
+}
