@@ -12,9 +12,6 @@ urlpatterns = [
         login_required(views.ComunicadosFormAyudaTemplateView.as_view()),
         name='ayuda_nuevo_comunicado'),
 
-    url(r'^destinatarios_posibles/$', login_required(views.ComunicadoDestinatariosView.as_view()),
-        name='destinatarios_posibles'),
-
     url(r'^recibidos/$', login_required(views.ComunicadoRecibidoListView.as_view()),
         name='comunicados_recibidos'),
 

@@ -67,16 +67,6 @@ class ComunicadoCreateView(CreateView):
         return redirect(self.success_url)
 
 
-class ComunicadoDestinatariosView(View):
-
-    def get(self, request, *args, **kwargs):
-        destinatarios = DestinatarioComunicado.get_possible_destinatarios()
-        search_term = request.GET['term'].lower()
-        return HttpResponse(json.dumps({'results': [destinatario for destinatario in destinatarios
-                            if search_term in destinatario['text'].lower() or
-                            search_term in destinatario['subtext'].lower()]}))
-
-
 class ComunicadoDetailView(DetailView):
     model = models.Comunicado
     form_class = forms.ComunicadoForm

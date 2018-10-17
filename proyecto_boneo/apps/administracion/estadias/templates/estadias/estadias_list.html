@@ -3,10 +3,10 @@
 {% block content %}
     <div class="col-md-offset-1 col-md-10">
     <h3 class="inline-title">Estadías</h3> <span class=""><a href="{% url 'administracion:estadias:ayuda_estadias' %}" onclick="window.open('{% url 'administracion:estadias:ayuda_estadias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
-    <div class="row">
-             <a class="btn btn-success" href="{% url 'administracion:estadias:nuevo_estadia' %}">
-                <i class="fa fa-plus-circle"></i> Nuevo
-             </a>
+    <div>
+         <a class="btn btn-success" href="{% url 'administracion:estadias:nuevo_estadia' %}">
+            <i class="fa fa-plus-circle"></i> Nuevo
+         </a>
     </div>
 
     {% if object_list %}

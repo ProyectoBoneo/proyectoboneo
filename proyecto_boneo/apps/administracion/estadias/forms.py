@@ -1,5 +1,3 @@
-from django import forms
-
 from . import models
 
 # place form definition here
@@ -15,6 +13,7 @@ class EstadiaForm(BaseModelForm):
         model = models.Estadia
         exclude = []
         labels = {}
-        widgets = {'responsable': TypeaheadDropDownModelWidget(ResponsableSearchLookup),
-           'alumno': TypeaheadDropDownModelWidget(AlumnoLookup)}
-        # widgets = {'destinatarios': forms.CheckboxSelectMultiple}
+        widgets = {
+            'responsable': TypeaheadDropDownModelWidget(ResponsableSearchLookup),
+            'alumno': TypeaheadDropDownModelWidget(AlumnoLookup)
+        }

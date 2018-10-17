@@ -41,6 +41,7 @@
                                         <li><a href="{% url 'administracion:planes:materias' %}">Materias</a></li>
                                         <li><a href="{% url 'administracion:tutorias:tutorias' %}">Tutorías</a></li>
                                         <li><a href="{% url 'administracion:estadias:estadias' %}">Estadías</a></li>
+                                        <li><a href="{% url 'administracion:eventos:eventos' %}">Eventos</a></li>
                                     {% endif %}
                                     {% if user.is_alumno %}
                                         <li><a href="{% url 'home' %}">Home</a></li>
@@ -50,7 +51,7 @@
                                     {% if user.is_profesor %}
                                         <li><a href="{% url 'home' %}">Home</a></li>
                                         <li><a href="{% url 'administracion:tutorias:tutorias' %}">Mis Tutorías</a></li>
-
+                                        <li><a href="{% url 'administracion:eventos:eventos' %}">Eventos</a></li>
                                     {% endif %}
                                 </ul>
                             </nav>

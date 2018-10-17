@@ -1,7 +1,8 @@
-{% extends 'utils/base.html' %}
-{% block title %}Comunicado{% endblock %}
+{% extends 'administracion/base.html' %}
+{% block title %}Evento{% endblock %}
 {% block content %}
-    <h3 class="inline-title">Comunicado</h3> <span class=""><a href="{% url 'aula_virtual:ayuda_nuevo_comunicado' %}" onclick="window.open('{% url 'aula_virtual:ayuda_comunicados' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Evento</h3> <span class=""><a href="{% url 'administracion:eventos:ayuda_nuevo_evento' %}" onclick="window.open('{% url 'administracion:eventos:ayuda_nuevo_evento' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+
     <script>
         $(document).ready(function() {
             var formatRecord = function (item) {
@@ -16,14 +17,14 @@
             var formatRecordSelection = function (item) {
                 return item.text || item.subtext;
             };
-            $('#id_destinatarios').select2({
+            $('#id_participantes').select2({
                 ajax: {
                     url: "{% url 'administracion:usuarios:grupos_usuarios' %}",
                     dataType: "json",
                     delay: 250
                 },
                 debug: true,
-                placeholder: "Seleccione un destinatario",
+                placeholder: "Seleccione un participante",
                 escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
                 minimumInputLength: 1,
                 multiple: true,
@@ -33,33 +34,38 @@
             });
         });
     </script>
-    <form method="post" action="">
+
+    <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
-            {{ form.asunto.label_tag }}
-            {{ form.asunto }}
-            {{ form.asunto.errors }}
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
+            {{ form.nombre.errors }}
         </div>
         <div class="form-group">
-            {{ form.destinatarios.label_tag }}
-            {{ form.destinatarios }}
-            {{ form.destinatarios.errors }}
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
+            {{ form.descripcion.errors }}
         </div>
         <div class="form-group">
-            {{ form.mensaje.label_tag }}
-            {{ form.mensaje }}
-            {{ form.mensaje.errors }}
+            {{ form.fecha_inicio.label_tag }}
+            {{ form.fecha_inicio }}
+            {{ form.fecha_inicio.errors }}
         </div>
         <div class="form-group">
-            {{ form.fecha.label_tag }}
-            {{ form.fecha }}
-            {{ form.fecha.errors }}
+            {{ form.fecha_fin.label_tag }}
+            {{ form.fecha_fin }}
+            {{ form.fecha_fin.errors }}
         </div>
-
+        <div class="form-group">
+            {{ form.participantes.label_tag }}
+            {{ form.participantes }}
+            {{ form.participantes.errors }}
+        </div>
         <button type="submit" class="btn btn-success">
             <i class="fa fa-check-circle"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'aula_virtual:comunicados_recibidos' %}">
+        <a class="btn btn-default" href="{% url 'administracion:eventos:eventos' %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>

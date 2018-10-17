@@ -11,4 +11,4 @@ class Estadia(models.Model):
     fecha_fin = models.DateField()
 
     def __str__(self):
-        return '{} - {}'.format(self.usuario, self.alumno)
+        return '{} - {}'.format(self.responsable, self.alumno)

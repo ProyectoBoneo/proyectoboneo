@@ -16,6 +16,20 @@ class UsuarioBoneo(AbstractBaseUser, PermissionsMixin):
     """
     User for the boneo platform
     """
+    TYPE_USER = 'usuario'
+    TYPE_DIVISION = 'division'
+    TYPE_YEAR = 'anio'
+    TYPE_USER_GROUP = 'user_group'
+
+    USER_GROUP_ALUMNOS = 'alumnos'
+    USER_GROUP_PROFESORES = 'profesores'
+    USER_GROUP_ADMIN = 'admin'
+
+    USER_GROUPS = [
+        ('Alumnos', USER_GROUP_ALUMNOS),
+        ('Profesores', USER_GROUP_PROFESORES),
+        ('Administración', USER_GROUP_ADMIN),
+    ]
 
     username = models.CharField(_('username'), max_length=254, unique=True,
                                 help_text=_('Required. 254 characters or fewer. Letters, numbers and '
@@ -61,6 +75,39 @@ class UsuarioBoneo(AbstractBaseUser, PermissionsMixin):
         Returns the short name for the user.
         """
         return self.first_name
+
+    @classmethod
+    def build_user_grouping_id(cls, grouping_type, grouping_id):
+        """
+        Build unique id for the user grouping
+        """
+        return '{}_{}'.format(grouping_type, grouping_id)
+
+    @classmethod
+    def get_user_groupings(cls):
+        """
+        Build possible user groupings for the platform
+        """
+        from proyecto_boneo.apps.administracion.planes.models import Division
+        possible_destinatarios = []
+        possible_destinatarios.extend({'id': cls.build_user_grouping_id(cls.TYPE_USER, user.id),
+                                       'text': user.get_full_name(),
+                                       'subtext': user.username}
+                                      for user in UsuarioBoneo.objects.all())
+        possible_destinatarios.extend({'id': cls.build_user_grouping_id(cls.TYPE_DIVISION, division.id),
+                                       'text': str(division),
+                                       'subtext': 'División'}
+                                      for division in Division.objects.filter(activa=True).all())
+        possible_destinatarios.extend({'id': cls.build_user_grouping_id(cls.TYPE_YEAR, anio),
+                                       'text': '{}º'.format(anio),
+                                       'subtext': 'Año de cursado'}
+                                      for anio in Division.objects.años_plan())
+        possible_destinatarios.extend({
+            'id': cls.build_user_grouping_id(cls.TYPE_USER_GROUP, group[1]),
+            'text': group[0],
+            'subtext': 'Grupo de usuarios'
+        } for group in cls.USER_GROUPS)
+        return possible_destinatarios
 
     class Meta:
         verbose_name = 'User'

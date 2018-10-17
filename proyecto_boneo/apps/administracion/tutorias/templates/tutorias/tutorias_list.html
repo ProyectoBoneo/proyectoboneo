@@ -4,7 +4,7 @@
     <div class="col-md-offset-1 col-md-10">
     <h3 class="inline-title">Tutorías</h3>  <span class=""><a href="{% url 'administracion:tutorias:ayuda_tutorias' %}" onclick="window.open('{% url 'administracion:tutorias:ayuda_tutorias' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     {% if user.is_staff %}
-    <div class="row">
+    <div>
          <a class="btn btn-success" href="{% url 'administracion:tutorias:nuevo_tutoria' %}">
             <i class="fa fa-plus-circle"></i> Nuevo
          </a>

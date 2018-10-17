@@ -1,0 +1,15 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Eliminar evento{% endblock %}
+{% block content %}
+    <h3 class="inline-title">Eliminar evento</h3> <span class=""><a href="{% url 'administracion:eventos:ayuda_eliminar_evento' %}" onclick="window.open('{% url 'administracion:eventos:ayuda_eliminar_evento' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <form method="post" action="">
+        {% csrf_token %}
+        <p>¿Desea eliminar el evento "{{ object }}"?</p>
+        <button type="submit" class="btn btn-danger">
+            <i class="fa fa-trash"></i> Confirmar
+        </button>
+        <a class="btn btn-default" href="{% url 'administracion:eventos:eventos' %}">
+            <i class="fa fa-arrow-circle-left"></i>  Volver
+        </a>
+    </form>
+{% endblock %}

@@ -3,7 +3,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
-from proyecto_boneo.apps.administracion.planes.models import Division
 from proyecto_boneo.apps.firebase.models import FireBaseToken
 
 
@@ -20,21 +19,6 @@ class Comunicado(models.Model):
 
 
 class DestinatarioComunicado(models.Model):
-    TYPE_USER = 'usuario'
-    TYPE_DIVISION = 'division'
-    TYPE_YEAR = 'anio'
-    TYPE_USER_GROUP = 'user_group'
-
-    USER_GROUP_ALUMNOS = 'alumnos'
-    USER_GROUP_PROFESORES = 'profesores'
-    USER_GROUP_ADMIN = 'admin'
-
-    USER_GROUPS = [
-        ('Alumnos', USER_GROUP_ALUMNOS),
-        ('Profesores', USER_GROUP_PROFESORES),
-        ('Administración', USER_GROUP_ADMIN),
-    ]
-
     comunicado = models.ForeignKey(Comunicado, on_delete=models.CASCADE)
     destinatario = models.ForeignKey(UsuarioBoneo, on_delete=models.CASCADE)
     fecha_leido = models.DateTimeField(null=True, blank=True)
@@ -42,32 +26,6 @@ class DestinatarioComunicado(models.Model):
     @property
     def leido(self):
         return self.fecha_leido is not None
-
-    @classmethod
-    def build_destinatario_id(cls, destinatario_type, destinatario_id):
-        return '{}_{}'.format(destinatario_type, destinatario_id)
-
-    @classmethod
-    def get_possible_destinatarios(cls):
-        possible_destinatarios = []
-        possible_destinatarios.extend({'id': cls.build_destinatario_id(cls.TYPE_USER, user.id),
-                                       'text': user.get_full_name(),
-                                       'subtext': user.username}
-                                      for user in UsuarioBoneo.objects.all())
-        possible_destinatarios.extend({'id': cls.build_destinatario_id(cls.TYPE_DIVISION, division.id),
-                                       'text': str(division),
-                                       'subtext': 'División'}
-                                      for division in Division.objects.filter(activa=True).all())
-        possible_destinatarios.extend({'id': cls.build_destinatario_id(cls.TYPE_YEAR, anio),
-                                       'text': '{}º'.format(anio),
-                                       'subtext': 'Año de cursado'}
-                                      for anio in Division.objects.años_plan())
-        possible_destinatarios.extend({
-            'id': cls.build_destinatario_id(cls.TYPE_USER_GROUP, group[1]),
-            'text': group[0],
-            'subtext': 'Grupo de usuarios'
-        } for group in cls.USER_GROUPS)
-        return possible_destinatarios
 
 
 @receiver(post_save, sender=DestinatarioComunicado)

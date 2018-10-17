@@ -1,0 +1,56 @@
+{% extends 'administracion/base.html' %}
+{% block title %}Eventos{% endblock %}
+{% block content %}
+    <div class="col-md-offset-1 col-md-10">
+    <h3 class="inline-title">Eventos</h3> <span class=""><a href="{% url 'administracion:eventos:ayuda_eventos' %}" onclick="window.open('{% url 'administracion:eventos:ayuda_eventos' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    {% if user.is_profesor or user.is_staff %}
+        <div>
+             <a class="btn btn-success" href="{% url 'administracion:eventos:nuevo_evento' %}">
+                <i class="fa fa-plus-circle"></i> Nuevo
+             </a>
+        </div>
+    {% endif %}
+
+    {% if object_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    {% if user.is_profesor or user.is_staff %}
+                        <th></th>
+                        <th></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for evento in object_list %}
+                    <tr>
+                        <td>{{ evento.nombre}}</td>
+                        <td>{{ evento.descripcion }}</td>
+                        <td>{{ evento.fecha_inicio }}</td>
+                        <td>{{ evento.fecha_fin }}</td>
+                        {% if user.is_profesor or user.is_staff %}
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'administracion:eventos:editar_evento' evento.id %}">
+                                    <i class="fa fa-edit"></i> Editar
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="{% url 'administracion:eventos:eliminar_evento' evento.id %}">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay eventos que coincidan con el criterio de filtrado</p>
+    {% endif %}
+    </div>
+
+{% endblock %}

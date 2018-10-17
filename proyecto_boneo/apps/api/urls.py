@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
 from proyecto_boneo.apps.api.comunicados.views import ComunicadosViewSet
+from proyecto_boneo.apps.api.eventos.views import EventosView
 from proyecto_boneo.apps.api.firebase.views import FireBaseTokenViewSet
 from proyecto_boneo.apps.api.horarios.views import HorariosViewSet
 from proyecto_boneo.apps.api.noticias.views import NoticiasView
@@ -26,6 +27,7 @@ auth_patterns = [
 
 view_patterns = [
     url('^usuario/$', UsuarioBoneoView.as_view()),
+    url('^eventos/$', EventosView.as_view()),
     url('^noticias/$', NoticiasView.as_view()),
 ]
 
