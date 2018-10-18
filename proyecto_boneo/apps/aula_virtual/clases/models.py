@@ -23,7 +23,7 @@ class ClaseVirtual(models.Model):
         (EVALUACION, 'Evaluación'),
         (EVALUACION_ESCRITA, 'Evaluación Escrita'),
     )
-    fecha = models.DateField(auto_now_add=True)
+    fecha = models.DateTimeField(auto_now_add=True)
     materia = models.ForeignKey(Materia, related_name='clases_virtuales', on_delete=models.CASCADE)
     nombre = models.CharField(max_length=30, default='Clase')
     descripcion = models.CharField(max_length=100)
