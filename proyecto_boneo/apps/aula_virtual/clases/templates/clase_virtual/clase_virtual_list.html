@@ -12,14 +12,15 @@
         </div>
     {% endif %}
 <div class="row">
-    <div class="col-xs-10">
+    <div class="col-xs-15">
     {% if object_list %}
         <table class="table">
             <thead>
                 <tr>
+                    <th>Fecha</th>
+                    <th>Materia</th>
                     <th>Tipo</th>
                     <th>Nombre</th>
-                    <th>Materia</th>
                     <th>Descripcion</th>
                     {% if activateViewingButtons %}
                         <th></th>
@@ -33,17 +34,10 @@
             <tbody>
                 {% for clase_virtual in object_list %}
                     <tr>
-                        <td>
-                            {% if clase_virtual.tipo == 'eva' %}
-                                Evaluación
-                            {% elif clase_virtual.tipo == 'esc' %}
-                                Evaluación Escrita
-                            {% elif clase_virtual.tipo == 'nor' %}
-                                Clase Virtual
-                            {% endif %}
-                        </td>
-                        <td>{{ clase_virtual.nombre}}</td>
+                        <td>{{ clase_virtual.fecha}}</td>
                         <td>{{ clase_virtual.materia }}</td>
+                        <td>{{  clase_virtual.descripcion_tipo }}</td>
+                        <td>{{ clase_virtual.nombre}}</td>
                         <td>{{ clase_virtual.descripcion }}</td>
                         {% if user.is_profesor %}
                             <td>

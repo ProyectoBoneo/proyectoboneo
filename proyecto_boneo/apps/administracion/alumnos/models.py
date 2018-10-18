@@ -3,7 +3,7 @@ import datetime
 from django.db import models
 
 from proyecto_boneo.apps.administracion.personal.models import Persona, PersonaLegajo
-from proyecto_boneo.apps.administracion.planes.models import InstanciaCursado, Division
+from proyecto_boneo.apps.administracion.planes.models import InstanciaCursado, Division, Materia
 from proyecto_boneo.apps.administracion.usuarios.models import UsuarioBoneo
 
 
@@ -30,6 +30,11 @@ class Alumno(PersonaLegajo):
             self._promedio = round(sum([i.promedio for i in inscripciones]) / len(inscripciones), 2)
             self.save()
 
+    def get_materias_en_curso(self):
+        return Materia.objects.filter(id__in=InstanciaCursado.objects.año_actual().filter(
+            inscripciones__in=self.inscripciones.all()
+        ).values_list('materia', flat=True))
+
     @property
     def promedio(self):
         if (not self.last_promedio_date or
@@ -44,6 +49,9 @@ class InscripcionAlumno(models.Model):
     instancia_cursado = models.ForeignKey(InstanciaCursado, related_name='inscripciones', on_delete=models.CASCADE)
     _promedio = models.FloatField(null=True, blank=True)
     last_promedio_date = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return '{} - {}'.format(self.alumno, self.instancia_cursado)
 
     def calcular_promedio(self):
         from proyecto_boneo.apps.aula_virtual.clases.models import ClaseVirtual, ResultadoEvaluacion

@@ -13,8 +13,8 @@ class Evento(models.Model):
     """
     nombre = models.CharField(max_length=255)
     descripcion = models.TextField()
-    fecha_inicio = models.DateTimeField()
-    fecha_fin = models.DateTimeField()
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
     participantes = models.ManyToManyField(UsuarioBoneo, related_name='eventos')
 
     def __str__(self):

@@ -13,6 +13,5 @@ class ClasesVirtualesViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin)
 
     def get_queryset(self):
         return ClaseVirtual.objects.filter(
-            materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno,
-            fecha__gte=datetime.date.today(),
-            publicado=True).order_by('fecha').distinct()
+            materia__in=self.request.user.alumno.get_materias_en_curso(),
+            fecha__gte=datetime.date.today()).order_by('fecha').distinct()

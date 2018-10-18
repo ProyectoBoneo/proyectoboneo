@@ -12,7 +12,7 @@ from proyecto_boneo.apps.firebase.models import FireBaseToken
 class ClaseVirtual(models.Model):
 
     class Meta:
-        ordering = ('tipo', 'descripcion')
+        ordering = ('fecha', 'materia', 'tipo')
 
     EVALUACION = 'eva'
     EVALUACION_ESCRITA = 'esc'
@@ -23,12 +23,14 @@ class ClaseVirtual(models.Model):
         (EVALUACION, 'Evaluación'),
         (EVALUACION_ESCRITA, 'Evaluación Escrita'),
     )
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha = models.DateField()
     materia = models.ForeignKey(Materia, related_name='clases_virtuales', on_delete=models.CASCADE)
     nombre = models.CharField(max_length=30, default='Clase')
     descripcion = models.CharField(max_length=100)
     tipo = models.CharField(max_length=3, choices=TIPO_CHOICES)
-    publicado = models.BooleanField(null=False, default=True)
+
+    def __str__(self):
+        return '{}: {} de {}'.format(self.nombre, self.descripcion_tipo, self.materia.descripcion)
 
     @property
     def descripcion_tipo(self):
