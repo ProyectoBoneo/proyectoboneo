@@ -5,6 +5,7 @@ from django.dispatch import receiver
 
 from proyecto_boneo.apps.administracion.planes.models import Materia
 from proyecto_boneo.apps.administracion.alumnos.models import Alumno, InscripcionAlumno
+from proyecto_boneo.apps.administracion.planes.models import InstanciaCursado
 from proyecto_boneo.apps.firebase.models import FireBaseToken
 
 
@@ -22,7 +23,7 @@ class ClaseVirtual(models.Model):
         (EVALUACION, 'Evaluación'),
         (EVALUACION_ESCRITA, 'Evaluación Escrita'),
     )
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha = models.DateField(auto_now_add=True)
     materia = models.ForeignKey(Materia, related_name='clases_virtuales', on_delete=models.CASCADE)
     nombre = models.CharField(max_length=30, default='Clase')
     descripcion = models.CharField(max_length=100)
@@ -100,7 +101,7 @@ class ResultadoEvaluacion(models.Model):
 
 
 @receiver(post_save, sender=ResultadoEvaluacion)
-def send_firebase_notifications(sender, instance=None, created=False, **kwargs):
+def send_resultado_evaluacion_firebase_notifications(sender, instance=None, created=False, **kwargs):
     if created:
         inscripcion_alumno = InscripcionAlumno.objects.filter(
             alumno=instance.alumno, instancia_cursado__materia=instance.clase_virtual.materia).first()
@@ -110,3 +111,17 @@ def send_firebase_notifications(sender, instance=None, created=False, **kwargs):
             'fecha': instance.clase_virtual.fecha.isoformat(),
             'evaluacion': instance.clase_virtual.nombre,
         }, FireBaseToken.NOTIFICATION_TYPE_PERFIL_ACADEMICO)
+
+
+@receiver(post_save, sender=ClaseVirtual)
+def send_clase_virtual_firebase_notifications(sender, instance=None, created=False, **kwargs):
+    if created:
+        alumnos = Alumno.objects.filter(inscripciones__instancia_cursado__in=InstanciaCursado.objects.año_actual(),
+                                        inscripciones__instancia_cursado__materia=instance.materia).distinct()
+        for alumno in alumnos:
+            FireBaseToken.send_notification(alumno.usuario, {
+                'id': str(instance.id),
+                'fecha': instance.fecha.isoformat(),
+                'nombre': instance.nombre,
+                'materia': str(instance.materia),
+            }, FireBaseToken.NOTIFICATION_TYPE_CLASE_VIRTUAL)

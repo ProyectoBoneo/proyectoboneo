@@ -35,4 +35,4 @@ def send_firebase_notifications(sender, instance=None, action=None, pk_set=None,
                 'nombre': instance.nombre,
                 'fecha_inicio': instance.fecha_inicio.isoformat(),
                 'fecha_fin': instance.fecha_fin.isoformat()
-            }, FireBaseToken.NOTIFICATION_TYPE_COMUNICADO)
+            }, FireBaseToken.NOTIFICATION_TYPE_EVENTO)

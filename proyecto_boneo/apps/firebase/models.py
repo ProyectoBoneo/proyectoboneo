@@ -12,9 +12,12 @@ logger = logging.getLogger(__name__)
 class FireBaseToken(models.Model):
     NOTIFICATION_TYPE_COMUNICADO = 'comunicado'
     NOTIFICATION_TYPE_EVENTO = 'evento'
+    NOTIFICATION_TYPE_CLASE_VIRTUAL = 'clase_virtual'
     NOTIFICATION_TYPE_PERFIL_ACADEMICO = 'perfil_academico'
     NOTIFICATION_TYPES = [
+        NOTIFICATION_TYPE_CLASE_VIRTUAL,
         NOTIFICATION_TYPE_COMUNICADO,
+        NOTIFICATION_TYPE_EVENTO,
         NOTIFICATION_TYPE_PERFIL_ACADEMICO,
     ]
     token = models.CharField(max_length=255, primary_key=True)

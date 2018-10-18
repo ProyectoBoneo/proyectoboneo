@@ -22,7 +22,7 @@ class EjercicioVirtualTextoForm(BaseModelForm):
 
     class Meta:
         model = models.EjercicioVirtual
-        fields = ['ayuda', 'puntaje','consigna']
+        fields = ['ayuda', 'puntaje', 'consigna']
 
 
 class EjercicioVirtualMultipleChoiceForm(BaseModelForm):
