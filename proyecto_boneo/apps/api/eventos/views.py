@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -9,9 +11,11 @@ from proyecto_boneo.apps.api.eventos.serializers import ClaseVirtualSerializer, 
 
 class EventosView(APIView):
     def get(self, request, *args, **kwargs):
-        eventos = Evento.objects.filter(participantes__in=[request.user])
+        today = datetime.date.today()
+        eventos = Evento.objects.filter(participantes__in=[request.user], fecha_fin__gte=today)
         clases = ClaseVirtual.objects.filter(
-            materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno, publicado=True).distinct()
+            materia__instancias_cursado__inscripciones__alumno=self.request.user.alumno, fecha__gte=today,
+            publicado=True).distinct()
         return Response({
             'eventos': EventoSerializer(eventos, many=True).data,
             'clases': ClaseVirtualSerializer(clases, many=True).data,
