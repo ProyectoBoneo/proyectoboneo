@@ -47,6 +47,7 @@ PROJECT_APPS = ('proyecto_boneo.apps.gutils',
                 'proyecto_boneo.apps.aula_virtual.clases',
                 'proyecto_boneo.apps.aula_virtual.comunicados',
                 'proyecto_boneo.apps.aula_virtual.perfil_academico',
+                'proyecto_boneo.apps.api',
                 'proyecto_boneo.apps.firebase.apps.FirebaseConfig',
                 )
 

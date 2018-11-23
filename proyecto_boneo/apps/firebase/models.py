@@ -36,5 +36,5 @@ class FireBaseToken(models.Model):
             )
             try:
                 messaging.send(message)
-            except HTTPError as e:
-                logger.error('There was an error while sending firebase notification', e)
+            except Exception as e:
+                logger.exception('There was an error while sending firebase notification', e)

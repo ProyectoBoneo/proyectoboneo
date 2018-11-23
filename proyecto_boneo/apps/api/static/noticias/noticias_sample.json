@@ -1,0 +1,38 @@
+[
+    {
+        "date": "2018-08-28 23:34:22",
+        "title": "Temporada de mariposas",
+        "description": "Comienza la temporada de mariposas Nuestro patio tiene varias",
+        "content": "Comienza la temporada de mariposas\nNuestro patio tiene varias",
+        "images": [
+            "http://{request_host}:{request_port}/static/noticias/butterfly.jpg"
+        ]
+    },
+    {
+        "date": "2018-08-28 23:32:26",
+        "title": "Festival musical en la escuela",
+        "description": "Este es un post sobre un festival musical de la escuela",
+        "content": "Este es un post sobre un festival musical de la escuela",
+        "images": [
+            "http://{request_host}:{request_port}/static/noticias/guitar.jpg"
+        ]
+    },
+    {
+        "date": "2018-08-28 23:26:37",
+        "title": "Se prepara la jornada educativa",
+        "description": "Habrá una jornada educativa Presentamos una imagen en alta resolución Esta imagen muestra una linda ciudad",
+        "content": "Habrá una jornada educativa\nPresentamos una imagen en alta resolución\nEsta imagen muestra una linda ciudad",
+        "images": [
+            "http://{request_host}:{request_port}/static/noticias/edificio.jpg"
+        ]
+    },
+    {
+        "date": "2018-08-28 23:24:35",
+        "title": "Don Orione",
+        "description": "Este es un post sobre don Orione. Aquí adjunto una imagen.",
+        "content": "Este es un post sobre don Orione.\nAquí adjunto una imagen.",
+        "images": [
+            "http://{request_host}:{request_port}/static/noticias/orione.jpg"
+        ]
+    }
+]

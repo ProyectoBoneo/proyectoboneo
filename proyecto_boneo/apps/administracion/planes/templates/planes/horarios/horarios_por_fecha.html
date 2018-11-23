@@ -28,7 +28,7 @@
                             <tr>
                                 <td style="text-align:right;"><h5>{{ division}}</h5></td>
                                 <td>
-                                    <a class="btn btn-primary" href="{% url 'administracion:planes:asistencia' division.id fecha_form.fecha.value.day fecha_form.fecha.value.month fecha_form.fecha.value.year %}">
+                                    <a class="btn btn-primary" href="{% url 'administracion:alumnos:asistencia' division.id fecha_form.fecha.value.day fecha_form.fecha.value.month fecha_form.fecha.value.year %}">
                                         <i class="fa fa-calendar-o"></i> Asistencia
                                     </a>
                                 </td>
