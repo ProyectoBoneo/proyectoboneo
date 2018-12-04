@@ -1,14 +1,14 @@
 {% extends 'administracion/base.html' %}
 {% block title %}Eliminar encuentro tutorias{% endblock %}
 {% block content %}
-    <h3 class="inline-title">Eliminar encuentro tutoria</h3> <span class=""><a href="{% url 'administracion:ayuda_eliminar_encuentrotutoria' %}" onclick="window.open('{% url 'administracion:ayuda_eliminar_encuentrotutoria' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
+    <h3 class="inline-title">Eliminar encuentro tutoria</h3> <span class=""><a href="{% url 'administracion:tutorias:ayuda_eliminar_encuentrotutoria' %}" onclick="window.open('{% url 'administracion:tutorias:ayuda_eliminar_encuentrotutoria' %}', 'newwindow', 'width=600, height=400'); return false;"><i class="fa fa-question-circle"></i></a></span>
     <form method="post" action="">
         {% csrf_token %}
         <p>¿Desea eliminar el encuentro tutoria "{{ object }}"?</p>
         <button type="submit" class="btn btn-danger">
             <i class="fa fa-trash"></i> Confirmar
         </button>
-        <a class="btn btn-default" href="{% url 'administracion:encuentrotutorias' %}">
+        <a class="btn btn-default" href="{% url 'administracion:tutorias:encuentrotutorias' %}">
             <i class="fa fa-arrow-circle-left"></i>  Volver
         </a>
     </form>

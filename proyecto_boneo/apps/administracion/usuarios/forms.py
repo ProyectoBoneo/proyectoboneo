@@ -35,7 +35,7 @@ class UserGroupsField(fields.Field):
                     instancia_cursado__in=InstanciaCursado.objects.filter(division_id=destinatario_id)))
             elif destinatario_type == UsuarioBoneo.TYPE_YEAR:
                 filters |= Q(alumno__inscripciones__in=InscripcionAlumno.objects.filter(
-                    instancia_cursado__in=InstanciaCursado.objects.filter(anio_cursado=destinatario_id)))
+                    instancia_cursado__in=InstanciaCursado.objects.filter(division__anio=destinatario_id)))
             elif destinatario_type == UsuarioBoneo.TYPE_USER_GROUP:
                 if destinatario_id == UsuarioBoneo.USER_GROUP_PROFESORES:
                     filters |= Q(is_profesor=True)
