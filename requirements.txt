@@ -46,7 +46,7 @@ pytz==2018.5
 regex==2018.8.17
 reportlab==3.1.44
 requests==2.19.1
-rsa==3.4.2
+rsa==4.7
 simplegeneric==0.8.1
 six==1.10.0
 South==1.0.2
