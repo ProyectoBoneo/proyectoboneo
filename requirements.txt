@@ -44,7 +44,7 @@ pyasn1-modules==0.2.2
 pyparsing==2.2.0
 pytz==2018.5
 regex==2018.8.17
-reportlab==3.1.44
+reportlab==3.5.55
 requests==2.19.1
 rsa==3.4.2
 simplegeneric==0.8.1
